@@ -104,13 +104,17 @@ void GlossaryFile::findInnerConflicts() {
 
 void GlossaryFile::findDuplicated(QMultiHash<FuzzyStrings, ContentRecord* >::iterator key) {
     QList<ContentRecord* >& vals = _content->values(*key);
+    QMultiHash<FuzzyStrings, ContentRecord* > toRemove;
     for(QList<ContentRecord* >::iterator ii = vals.begin(); ii != vals.end(); ++ii) {
         for(QList<ContentRecord* >::iterator jj = ii; ii != vals.end(); ++ii) {
             ++jj;
             if(jj == vals.end())
                 break;
             if((*ii)->source() == (*jj)->source()) {
-
+                if((*ii)->target() == (*jj)->target())
+                    toRemove[*key] = *jj;
+                else
+                    _conflicts[*key] =
             }
         }
     }

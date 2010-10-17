@@ -26,7 +26,8 @@ SOURCES += main.cpp \
     glossaryfile.cpp \
     tmfile.cpp \
     filemerger.cpp \
-    conflictscontainer.cpp
+    conflictscontainer.cpp \
+    conflictrecord.cpp
 HEADERS += mainwindow.h \
     contentmanagerwindow.h \
     conflictresolverwindow.h \
@@ -48,7 +49,8 @@ HEADERS += mainwindow.h \
     glossaryfile.h \
     tmfile.h \
     filemerger.h \
-    conflictscontainer.h
+    conflictscontainer.h \
+    conflictrecord.h
 FORMS += mainwindow.ui \
     contentmanagerwindow.ui \
     conflictresolverwindow.ui \
