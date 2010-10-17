@@ -6,6 +6,14 @@ ConflictsContainer::ConflictsContainer(QObject *parent) :
 {
 }
 
+unsigned ConflictsContainer::conflictedRecordsCount() const
+{
+    unsigned count = 0;
+    foreach(unsigned i, _sortedConflicts.keys())
+        count = count + i;
+    return count;
+}
+
 /**
   *
   */

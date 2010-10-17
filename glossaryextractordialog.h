@@ -22,7 +22,7 @@ public:
     inline unsigned minWordCount() const { return _minWordCount; }
     inline unsigned maxWordCount() const { return _maxWordCount; }
     inline bool ok() const { return _ok; }
-    inline void setContent(QHash<FuzzyStrings, QList<ContentRecord* > > cont) { _content = cont; }
+    inline void setContent(QMultiHash<FuzzyStrings, ContentRecord* > cont) { _content = cont; }
 
 protected:
     void changeEvent(QEvent *e);
@@ -35,8 +35,8 @@ private:
     unsigned _maxWordCount;
     unsigned _minOccurence;
     unsigned _maxOccurence;
-    QHash<FuzzyStrings, QList<ContentRecord* > > _content;
-    QHash<FuzzyStrings, QList<ContentRecord* > > _found;
+    QMultiHash<FuzzyStrings, ContentRecord* > _content;
+    QMultiHash<FuzzyStrings, ContentRecord* > _found;
 
 private slots:
     void on__close_clicked();

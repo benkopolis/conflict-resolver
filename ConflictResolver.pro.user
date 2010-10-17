@@ -77,7 +77,7 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-DwsKJ9IQCJ,guid=ec45953e37e10cb2a360430d4cb9ba9e</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-ajYymBzRDW,guid=8576f5e674f569551b695e3e4cbb5654</value>
     <value type="QString">DEFAULTS_PATH=/usr/share/gconf/gnome.default.path</value>
     <value type="QString">DESKTOP_SESSION=gnome</value>
     <value type="QString">DISPLAY=:0.0</value>
@@ -85,8 +85,8 @@
     <value type="QString">GDM_KEYBOARD_LAYOUT=pl</value>
     <value type="QString">GDM_LANG=pl_PL.utf8</value>
     <value type="QString">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</value>
-    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-1MJ5Ln</value>
-    <value type="QString">GNOME_KEYRING_PID=1605</value>
+    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-G5COgR</value>
+    <value type="QString">GNOME_KEYRING_PID=1615</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
     <value type="QString">HOME=/home/zby</value>
     <value type="QString">LANG=pl_PL.utf8</value>
@@ -97,17 +97,17 @@
     <value type="QString">PATH=/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games</value>
     <value type="QString">PWD=/home/zby</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
-    <value type="QString">SESSION_MANAGER=local/zby-laptop2:@/tmp/.ICE-unix/1623,unix/zby-laptop2:/tmp/.ICE-unix/1623</value>
+    <value type="QString">SESSION_MANAGER=local/zby-laptop2:@/tmp/.ICE-unix/1633,unix/zby-laptop2:/tmp/.ICE-unix/1633</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SPEECHD_PORT=7560</value>
-    <value type="QString">SSH_AGENT_PID=1657</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/keyring-1MJ5Ln/ssh</value>
+    <value type="QString">SSH_AGENT_PID=1667</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/keyring-G5COgR/ssh</value>
     <value type="QString">USER=zby</value>
     <value type="QString">USERNAME=zby</value>
-    <value type="QString">XAUTHORITY=/var/run/gdm/auth-for-zby-bW4YwF/database</value>
+    <value type="QString">XAUTHORITY=/var/run/gdm/auth-for-zby-pEcpud/database</value>
     <value type="QString">XDG_CONFIG_DIRS=/etc/xdg/xdg-gnome:/etc/xdg</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share/:/usr/share/</value>
-    <value type="QString">XDG_SESSION_COOKIE=ae92a9db0ead892a86ddc3794bf59db0-1287240350.247117-365248085</value>
+    <value type="QString">XDG_SESSION_COOKIE=ae92a9db0ead892a86ddc3794bf59db0-1287345747.713888-71288381</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
     <value type="QString">/home/zby/qtWorkspace/ConflictResolver/ConflictResolver.pro</value>
@@ -126,7 +126,7 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-DwsKJ9IQCJ,guid=ec45953e37e10cb2a360430d4cb9ba9e</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-ajYymBzRDW,guid=8576f5e674f569551b695e3e4cbb5654</value>
     <value type="QString">DEFAULTS_PATH=/usr/share/gconf/gnome.default.path</value>
     <value type="QString">DESKTOP_SESSION=gnome</value>
     <value type="QString">DISPLAY=:0.0</value>
@@ -134,8 +134,8 @@
     <value type="QString">GDM_KEYBOARD_LAYOUT=pl</value>
     <value type="QString">GDM_LANG=pl_PL.utf8</value>
     <value type="QString">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</value>
-    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-1MJ5Ln</value>
-    <value type="QString">GNOME_KEYRING_PID=1605</value>
+    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-G5COgR</value>
+    <value type="QString">GNOME_KEYRING_PID=1615</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
     <value type="QString">HOME=/home/zby</value>
     <value type="QString">LANG=pl_PL.utf8</value>
@@ -146,17 +146,17 @@
     <value type="QString">PATH=/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games</value>
     <value type="QString">PWD=/home/zby</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
-    <value type="QString">SESSION_MANAGER=local/zby-laptop2:@/tmp/.ICE-unix/1623,unix/zby-laptop2:/tmp/.ICE-unix/1623</value>
+    <value type="QString">SESSION_MANAGER=local/zby-laptop2:@/tmp/.ICE-unix/1633,unix/zby-laptop2:/tmp/.ICE-unix/1633</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SPEECHD_PORT=7560</value>
-    <value type="QString">SSH_AGENT_PID=1657</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/keyring-1MJ5Ln/ssh</value>
+    <value type="QString">SSH_AGENT_PID=1667</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/keyring-G5COgR/ssh</value>
     <value type="QString">USER=zby</value>
     <value type="QString">USERNAME=zby</value>
-    <value type="QString">XAUTHORITY=/var/run/gdm/auth-for-zby-bW4YwF/database</value>
+    <value type="QString">XAUTHORITY=/var/run/gdm/auth-for-zby-pEcpud/database</value>
     <value type="QString">XDG_CONFIG_DIRS=/etc/xdg/xdg-gnome:/etc/xdg</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share/:/usr/share/</value>
-    <value type="QString">XDG_SESSION_COOKIE=ae92a9db0ead892a86ddc3794bf59db0-1287240350.247117-365248085</value>
+    <value type="QString">XDG_SESSION_COOKIE=ae92a9db0ead892a86ddc3794bf59db0-1287345747.713888-71288381</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
