@@ -5,6 +5,7 @@
 #include <QAbstractListModel>
 #include "contentrecord.h"
 #include "filemerger.h"
+#include "conflictrecord.h"
 
 
 class ConflictsContainer : public QAbstractListModel
@@ -56,7 +57,7 @@ public slots:
 
 protected:
 
-    QMultiMap<unsigned, QList<ContentRecord* > > _conflicts;
+    QMultiMap<unsigned, ConflictRecord* > _conflicts;
 
 };
 
