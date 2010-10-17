@@ -1,4 +1,5 @@
 #include "glossaryfile.h"
+#include <QStack>
 #include <QTextStream>
 #include <QRegExp>
 #include "inifile.h"
@@ -79,12 +80,40 @@ bool GlossaryFile::processWithTabs(QFile & file) {
 	}
 	text = text.mid(0, text.length() - 1);
 	tmr->setComment(text);
-	_conflicts[FuzzyStrings(tmr->source())].push_back(tmr);
+        this->_content[FuzzyStrings(tmr->source())].push_back(tmr);
 	text.clear();
 	++_all;
     }
     dump.close();
     return true;
+}
+
+void GlossaryFile::findInnerConflicts() {
+    QMultiHash<FuzzyStrings, ContentRecord* >::iterator outer = _content->begin(), inner=_content->begin();
+    QStack<FuzzyStrings> toRemove;
+    for(;outer != _content->end();++outer) {
+// find dulicates and with the same source
+        for(inner = outer; inner != _content->end(); ++inner) {
+            ++inner;
+            if(inner == _content->end())
+                break;
+        }
+    }
+}
+
+
+void GlossaryFile::findDuplicated(QMultiHash<FuzzyStrings, ContentRecord* >::iterator key) {
+    QList<ContentRecord* >& vals = _content->values(*key);
+    for(QList<ContentRecord* >::iterator ii = vals.begin(); ii != vals.end(); ++ii) {
+        for(QList<ContentRecord* >::iterator jj = ii; ii != vals.end(); ++ii) {
+            ++jj;
+            if(jj == vals.end())
+                break;
+            if((*ii)->source() == (*jj)->source()) {
+
+            }
+        }
+    }
 }
 
 /**
