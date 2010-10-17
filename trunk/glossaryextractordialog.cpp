@@ -63,9 +63,9 @@ void GlossaryExtractorDialog::on__find_clicked()
 		}
 		if(occ >= ui->_minOccurence->value() && (ui->_maxOccurence->value() == 0 || ui->_maxOccurence->value() >= occ)) {
 		    ContentRecord* cr = new ContentRecord();
-		    cr->setSource(this->_content.value(fs).at(0)->source());
-		    cr->setTarget(this->_content.value(fs).at(0)->target());
-		    _found[fs].push_back(cr);
+                    cr->setSource(this->_content.value(fs)->source());
+                    cr->setTarget(this->_content.value(fs)->target());
+                    _found.insertMulti(fs, cr);
 		}
 	    }
 	} else if(wc >= this->_maxWordCount && this->_maxWordCount)
@@ -80,9 +80,9 @@ void GlossaryExtractorDialog::on__find_clicked()
 	    }
 	    if(occ >= ui->_minOccurence->value() && (ui->_maxOccurence->value() == 0 || ui->_maxOccurence->value() >= occ)) {
 		ContentRecord* cr = new ContentRecord();
-		cr->setSource(this->_content.value(fs).at(0)->source());
-		cr->setTarget(this->_content.value(fs).at(0)->target());
-		_found[fs].push_back(cr);
+                cr->setSource(this->_content.value(fs)->source());
+                cr->setTarget(this->_content.value(fs)->target());
+                _found.insertMulti(fs, cr);
 	    }
 	}
     }

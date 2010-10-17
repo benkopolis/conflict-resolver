@@ -9,8 +9,10 @@
 GlossaryFile::GlossaryFile(QObject *parent) :
     QObject(parent)
 {
-    _conflicts = new QMultiHash<FuzzyStrings, QList<ContentRecord* > >();
-    _content = new QMultiHash<FuzzyStrings, QList<ContentRecord* > >();
+    _conflicts = new QMultiHash<FuzzyStrings, ConflictRecord* >();
+    _content = new QMultiHash<FuzzyStrings, ContentRecord* >();
+    _corrupted = 0;
+    _all = 0;
 }
 
 /**
@@ -23,10 +25,10 @@ bool GlossaryFile::processWithTabs(QFile & file) {
     QTextStream dstream(&dump);
     QString temp, ln1, ln2;
     QString text;
-    _header.clear();
-    QTextStream forHeader(&_header);
-    forHeader << f.readLine(); // przeczytany naglowek
-    processHeader();
+//    _header.clear();
+//    QTextStream forHeader(&_header);
+//    forHeader << f.readLine(); // przeczytany naglowek
+//    processHeader();
     ContentRecord* tmr=0;
     QRegExp rexp(IniFile::instance()->m_regex, Qt::CaseInsensitive);
     bool con = false;
@@ -59,7 +61,7 @@ bool GlossaryFile::processWithTabs(QFile & file) {
 	tempChar = QChar();
 	do {
 	    if(tempChar != QChar())
-		text = text.append(" ");
+                text = text.append(" ");
 	    iline >> temp;
 	    text = text.append(temp);
 	    iline >> tempChar;
@@ -80,7 +82,7 @@ bool GlossaryFile::processWithTabs(QFile & file) {
 	}
 	text = text.mid(0, text.length() - 1);
 	tmr->setComment(text);
-        this->_content[FuzzyStrings(tmr->source())].push_back(tmr);
+        this->_content->insertMulti(FuzzyStrings(tmr->source()), tmr);
 	text.clear();
 	++_all;
     }
@@ -102,19 +104,19 @@ void GlossaryFile::findInnerConflicts() {
 }
 
 
-void GlossaryFile::findDuplicated(QMultiHash<FuzzyStrings, ContentRecord* >::iterator key) {
-    QList<ContentRecord* >& vals = _content->values(*key);
+void GlossaryFile::findDuplicated(const FuzzyStrings& key) const {
+    const QList<ContentRecord* > vals = _content->values(key);
     QMultiHash<FuzzyStrings, ContentRecord* > toRemove;
-    for(QList<ContentRecord* >::iterator ii = vals.begin(); ii != vals.end(); ++ii) {
-        for(QList<ContentRecord* >::iterator jj = ii; ii != vals.end(); ++ii) {
+    for(QList<ContentRecord* >::const_iterator ii = vals.begin(); ii != vals.end(); ++ii) {
+        for(QList<ContentRecord* >::const_iterator jj = ii; ii != vals.end(); ++ii) {
             ++jj;
             if(jj == vals.end())
                 break;
             if((*ii)->source() == (*jj)->source()) {
                 if((*ii)->target() == (*jj)->target())
-                    toRemove[*key] = *jj;
+                    toRemove.insertMulti(key, *jj);
                 else
-                    _conflicts[*key] =
+                    _conflicts->value(key)->addRecord(*jj);
             }
         }
     }
@@ -126,7 +128,7 @@ void GlossaryFile::findDuplicated(QMultiHash<FuzzyStrings, ContentRecord* >::ite
 bool GlossaryFile::saveContent(QString file) {
     bool r=false;
     TMSaver tms;
-    r = tms.saveContent(file, TMHeade(), this->_conflicts, this->_conflictsCount);
+    r = tms.saveContent(file, TMHeader(), *this->_content, this->_all);
     return r;
 }
 
@@ -136,7 +138,7 @@ bool GlossaryFile::saveContent(QString file) {
 bool GlossaryFile::saveReversedContent(QString file) {
     bool r=false;
     TMSaver tms;
-    r = tms.saveReversedContent(file, this->_rheader, this->_conflicts, this->_conflictsCount);
+    r = tms.saveReversedContent(file, this->_rheader, this->_content, this->_all);
     return r;
 }
 

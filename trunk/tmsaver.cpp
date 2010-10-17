@@ -6,7 +6,7 @@ TMSaver::TMSaver(QObject *parent) :
 {
 }
 
-bool TMSaver::saveContent(QString& file, TMHeader& rheader, QHash<FuzzyStrings, QList<ContentRecord* > >& conflicts, unsigned all) {
+bool TMSaver::saveContent(QString& file, TMHeader& rheader, QMultiHash<FuzzyStrings, ContentRecord* >& conflicts, unsigned all) {
     QFile f(file);
     if(f.open(QIODevice::Append | QIODevice::Text) == false) {
 	qDebug() << " nie udalo sie otworzyc " << endl;
@@ -35,19 +35,16 @@ bool TMSaver::saveContent(QString& file, TMHeader& rheader, QHash<FuzzyStrings, 
 
 	}
     }
-    QHash<FuzzyStrings, QList<ContentRecord* > >::iterator currentList = conflicts.begin();
-    QList<ContentRecord* >::iterator ii;
+    QHash<FuzzyStrings, ContentRecord* >::iterator currentList = conflicts.begin();
     while(currentList != conflicts.end()) {
-	for(ii = currentList->begin(); ii != currentList->end() ; ++ii) {
-	    fs << (*ii)->toRecordString() << endl;
-	}
-	++currentList;
+        fs << (*currentList)->toRecordString() << endl;
+        ++currentList;
     }
     f.close();
     return true;
 }
 
-bool TMSaver::saveReversedContent(const QString& file, TMHeader& rheader, QHash<FuzzyStrings, QList<ContentRecord* > >& conflicts, unsigned all) {
+bool TMSaver::saveReversedContent(const QString& file, TMHeader& rheader, QMultiHash<FuzzyStrings, ContentRecord* >& conflicts, unsigned all) {
 /// TODO ooooooooooooooooooooooooooooooooooooooooooooooooooooo
     QFile f(file);
     if(f.open(QIODevice::Append | QIODevice::Text) == false) {
@@ -60,12 +57,10 @@ bool TMSaver::saveReversedContent(const QString& file, TMHeader& rheader, QHash<
 	QString header = rheader.writeReversedHeader();
 	fs << header << endl;
     }
-    QHash<FuzzyStrings, QList<ContentRecord* > >::iterator currentList = conflicts.begin();
+    QHash<FuzzyStrings,ContentRecord* >::iterator currentList = conflicts.begin();
     QList<ContentRecord* >::iterator ii;
     while(currentList != conflicts.end()) {
-	for(ii = currentList->begin(); ii != currentList->end() ; ++ii) {
-	    fs << (*ii)->toReversedRecordString() << endl;
-	}
+        fs << (*currentList)->toReversedRecordString() << endl;
 	++currentList;
     }
     f.close();

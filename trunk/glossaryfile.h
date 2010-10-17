@@ -7,6 +7,7 @@
 #include "contentrecord.h"
 #include <QFile>
 #include <QDate>
+#include "conflictrecord.h"
 
 class GlossaryFile : public QObject
 {
@@ -18,8 +19,9 @@ public:
 
     bool isDateTime(const QString& str, QDate* date, QTime* time) const;
     inline QMultiHash<FuzzyStrings, ContentRecord* > * content() { return _content; }
-    inline QMultiHash<FuzzyStrings, ContentRecord* > * conflicts() { return _conflicts; }
-
+    inline QMultiHash<FuzzyStrings, ConflictRecord* > * conflicts() { return _conflicts; }
+    inline unsigned corrupted() const { return _corrupted; }
+    inline unsigned allCount() const { return _all; }
 
 
 signals:
@@ -27,14 +29,18 @@ signals:
 public slots:
 
     void findInnerConflicts();
+    bool saveContent(QString file);
+    bool saveReversedContent(QString file);
 
 protected:
 
-    void findDuplicated(QMultiHash<FuzzyStrings, ContentRecord* >::iterator key);
+    void findDuplicated(const FuzzyStrings& key) const;
 
     QMultiHash<FuzzyStrings, ContentRecord* > * _content;
-    QMultiHash<FuzzyStrings, ContentRecord* > * _conflicts;
+    QMultiHash<FuzzyStrings, ConflictRecord* > * _conflicts;
     QString _header;
+    unsigned _corrupted;
+    unsigned _all;
 
 
 

@@ -16,7 +16,8 @@ public:
     bool operator != (const ConflictRecord& another) const;
 
     bool addRecord(ContentRecord* record);
-    inline QList<ContentRecord* > conflictedRecords() { return _conflictedRecords.keys(); };
+    inline QList<ContentRecord* > conflictedRecords() { return _conflictedRecords->keys(); };
+    inline unsigned conflictedRecordsCount() { return _conflictedRecords->keys().size(); };
 
 signals:
 

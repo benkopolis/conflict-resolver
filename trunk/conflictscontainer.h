@@ -17,6 +17,9 @@ public:
     friend class FileMerger;
     friend class ContentModel;
 
+    inline unsigned conflictsCount() const { return _conflicts.size(); };
+    unsigned conflictedRecordsCount() const;
+
 signals:
 
 
@@ -57,7 +60,10 @@ public slots:
 
 protected:
 
-    QMultiMap<unsigned, ConflictRecord* > _conflicts;
+    QMultiMap<unsigned, ConflictRecord* > _sortedConflicts;
+    QHash<ConflictRecord* , short> _conflicts;
+    QMultiMap<unsigned, ConflictRecord* >::iterator _currentConflict;
+
 
 };
 

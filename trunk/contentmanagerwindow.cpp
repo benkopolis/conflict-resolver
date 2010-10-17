@@ -138,6 +138,6 @@ void ContentManagerWindow::on__saveReversed_clicked()
 void ContentManagerWindow::on__saveGloss_clicked()
 {
     GlossaryExtractorDialog* ged = new GlossaryExtractorDialog(this);
-    ged->setContent(*(this->_content->conflicts()));
+    //ged->setContent(*(this->_content->conflicts()));
     ged->show();
 }
