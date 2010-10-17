@@ -20,11 +20,17 @@ public:
     inline QMultiHash<FuzzyStrings, ContentRecord* > * content() { return _content; }
     inline QMultiHash<FuzzyStrings, ContentRecord* > * conflicts() { return _conflicts; }
 
+
+
 signals:
 
 public slots:
 
+    void findInnerConflicts();
+
 protected:
+
+    void findDuplicated(QMultiHash<FuzzyStrings, ContentRecord* >::iterator key);
 
     QMultiHash<FuzzyStrings, ContentRecord* > * _content;
     QMultiHash<FuzzyStrings, ContentRecord* > * _conflicts;

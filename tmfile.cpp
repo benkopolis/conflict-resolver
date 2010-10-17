@@ -1,4 +1,8 @@
 #include "tmfile.h"
+#include <QTextStream>
+#include <QRegExp>
+#include "tmrecord.h"
+#include "inifile.h"
 
 TMFile::TMFile(QObject *parent) :
     GlossaryFile(parent)
@@ -9,7 +13,7 @@ TMFile::TMFile(QObject *parent) :
 /**
   *
   */
-bool  ContentModel::processTmWithTabs(QFile & file) {
+bool  TMFile::processTmWithTabs(QFile & file) {
     QTextStream f(&file);
     QFile dump("dump.txt");
     dump.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
@@ -103,7 +107,7 @@ bool  ContentModel::processTmWithTabs(QFile & file) {
 	} while(iline.atEnd() == false);
 	if(con) continue;
 	tmr->setTarget(text);
-	_conflicts[FuzzyStrings(tmr->source())].push_back(tmr);
+        _content[FuzzyStrings(tmr->source())].push_back(tmr);
 	text.clear();
 	++_all;
     }
@@ -115,6 +119,6 @@ bool  ContentModel::processTmWithTabs(QFile & file) {
 /**
   *
   */
-void ContentModel::processHeader() {
+void TMFile::processHeader() {
     _rheader.readHeader(_header);
 }
