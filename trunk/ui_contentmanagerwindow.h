@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'contentmanagerwindow.ui'
 **
-** Created: Fri 8. Oct 05:29:43 2010
-**      by: Qt User Interface Compiler version 4.6.0
+** Created: Mon Oct 18 08:12:57 2010
+**      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -56,6 +56,10 @@ public:
     QLineEdit *_corrupted;
     QPushButton *_saveReversed;
     QPushButton *_saveGloss;
+    QLabel *label_6;
+    QLineEdit *_antiDict;
+    QPushButton *_chooseAntiDict;
+    QPushButton *_checkDict;
     QMenuBar *menubar;
     QStatusBar *statusbar;
     QToolBar *toolBar;
@@ -64,7 +68,7 @@ public:
     {
         if (ContentManagerWindow->objectName().isEmpty())
             ContentManagerWindow->setObjectName(QString::fromUtf8("ContentManagerWindow"));
-        ContentManagerWindow->resize(491, 394);
+        ContentManagerWindow->resize(624, 394);
         actionUsu_wiersz = new QAction(ContentManagerWindow);
         actionUsu_wiersz->setObjectName(QString::fromUtf8("actionUsu_wiersz"));
         actionEdit_row = new QAction(ContentManagerWindow);
@@ -139,27 +143,27 @@ public:
         _filterContent = new QPushButton(centralwidget);
         _filterContent->setObjectName(QString::fromUtf8("_filterContent"));
 
-        gridLayout->addWidget(_filterContent, 5, 0, 1, 1);
+        gridLayout->addWidget(_filterContent, 6, 0, 1, 1);
 
         _saveContent = new QPushButton(centralwidget);
         _saveContent->setObjectName(QString::fromUtf8("_saveContent"));
 
-        gridLayout->addWidget(_saveContent, 5, 1, 1, 2);
+        gridLayout->addWidget(_saveContent, 6, 1, 1, 2);
 
         _resolveConflicts = new QPushButton(centralwidget);
         _resolveConflicts->setObjectName(QString::fromUtf8("_resolveConflicts"));
 
-        gridLayout->addWidget(_resolveConflicts, 5, 3, 1, 1);
+        gridLayout->addWidget(_resolveConflicts, 6, 3, 1, 1);
 
         _confront = new QPushButton(centralwidget);
         _confront->setObjectName(QString::fromUtf8("_confront"));
 
-        gridLayout->addWidget(_confront, 5, 4, 1, 1);
+        gridLayout->addWidget(_confront, 6, 4, 1, 1);
 
         _autoSeachOnFiltered = new QCheckBox(centralwidget);
         _autoSeachOnFiltered->setObjectName(QString::fromUtf8("_autoSeachOnFiltered"));
 
-        gridLayout->addWidget(_autoSeachOnFiltered, 6, 0, 1, 4);
+        gridLayout->addWidget(_autoSeachOnFiltered, 7, 0, 1, 4);
 
         label_4 = new QLabel(centralwidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
@@ -187,10 +191,30 @@ public:
 
         gridLayout->addWidget(_saveGloss, 4, 3, 1, 1);
 
+        label_6 = new QLabel(centralwidget);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+
+        gridLayout->addWidget(label_6, 5, 0, 1, 1);
+
+        _antiDict = new QLineEdit(centralwidget);
+        _antiDict->setObjectName(QString::fromUtf8("_antiDict"));
+
+        gridLayout->addWidget(_antiDict, 5, 1, 1, 2);
+
+        _chooseAntiDict = new QPushButton(centralwidget);
+        _chooseAntiDict->setObjectName(QString::fromUtf8("_chooseAntiDict"));
+
+        gridLayout->addWidget(_chooseAntiDict, 5, 3, 1, 1);
+
+        _checkDict = new QPushButton(centralwidget);
+        _checkDict->setObjectName(QString::fromUtf8("_checkDict"));
+
+        gridLayout->addWidget(_checkDict, 5, 4, 1, 1);
+
         ContentManagerWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(ContentManagerWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 491, 21));
+        menubar->setGeometry(QRect(0, 0, 624, 25));
         ContentManagerWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(ContentManagerWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -283,6 +307,9 @@ public:
         label_4->setText(QApplication::translate("ContentManagerWindow", "Uszkodzone rekordy:", 0, QApplication::UnicodeUTF8));
         _saveReversed->setText(QApplication::translate("ContentManagerWindow", "Zapisz odwr\303\263con\304\205 baz\304\231", 0, QApplication::UnicodeUTF8));
         _saveGloss->setText(QApplication::translate("ContentManagerWindow", "Zapisz glosariusz ...", 0, QApplication::UnicodeUTF8));
+        label_6->setText(QApplication::translate("ContentManagerWindow", "Antys\305\202ownik:", 0, QApplication::UnicodeUTF8));
+        _chooseAntiDict->setText(QApplication::translate("ContentManagerWindow", "Wybierz ...", 0, QApplication::UnicodeUTF8));
+        _checkDict->setText(QApplication::translate("ContentManagerWindow", "Sprawd\305\272", 0, QApplication::UnicodeUTF8));
         toolBar->setWindowTitle(QApplication::translate("ContentManagerWindow", "toolBar", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

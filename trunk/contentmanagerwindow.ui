@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>491</width>
+    <width>624</width>
     <height>394</height>
    </rect>
   </property>
@@ -126,7 +126,7 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="0">
+    <item row="6" column="0">
      <widget class="QPushButton" name="_filterContent">
       <property name="toolTip">
        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -140,7 +140,7 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
-    <item row="5" column="1" colspan="2">
+    <item row="6" column="1" colspan="2">
      <widget class="QPushButton" name="_saveContent">
       <property name="toolTip">
        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -154,7 +154,7 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
-    <item row="5" column="3">
+    <item row="6" column="3">
      <widget class="QPushButton" name="_resolveConflicts">
       <property name="toolTip">
        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -168,7 +168,7 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
-    <item row="5" column="4">
+    <item row="6" column="4">
      <widget class="QPushButton" name="_confront">
       <property name="toolTip">
        <string>Otwiera dodatkowy plik, którego zawartość jest przeglądana z już otawrtą zawartością, wyszukiwana są konflikty według wybranych opcji,
@@ -179,7 +179,7 @@ a następnie można zapisać wyniki pracy do tego dodatkowego pliku.</string>
       </property>
      </widget>
     </item>
-    <item row="6" column="0" colspan="4">
+    <item row="7" column="0" colspan="4">
      <widget class="QCheckBox" name="_autoSeachOnFiltered">
       <property name="text">
        <string>Po odfiltrowaniu automatycznie wyszukaj konflikty od nowa.</string>
@@ -223,6 +223,30 @@ a następnie można zapisać wyniki pracy do tego dodatkowego pliku.</string>
       </property>
      </widget>
     </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>Antysłownik:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1" colspan="2">
+     <widget class="QLineEdit" name="_antiDict"/>
+    </item>
+    <item row="5" column="3">
+     <widget class="QPushButton" name="_chooseAntiDict">
+      <property name="text">
+       <string>Wybierz ...</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="4">
+     <widget class="QPushButton" name="_checkDict">
+      <property name="text">
+       <string>Sprawdź</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -230,8 +254,8 @@ a następnie można zapisać wyniki pracy do tego dodatkowego pliku.</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>491</width>
-     <height>21</height>
+     <width>624</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>

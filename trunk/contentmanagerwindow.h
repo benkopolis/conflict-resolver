@@ -41,6 +41,8 @@ private:
     ContentModel* _content;
 
 private slots:
+    void on__checkDict_clicked();
+    void on__chooseAntiDict_clicked();
     void on__saveGloss_clicked();
     void on__saveReversed_clicked();
     void on__confront_clicked();

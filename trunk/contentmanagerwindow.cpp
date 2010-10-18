@@ -141,3 +141,16 @@ void ContentManagerWindow::on__saveGloss_clicked()
     //ged->setContent(*(this->_content->conflicts()));
     ged->show();
 }
+
+void ContentManagerWindow::on__chooseAntiDict_clicked()
+{
+    QString file = QFileDialog::getOpenFileName(this, QString("Wybierz antys?ownik."), IniFile::instance()->m_dir);
+    IniFile::instance()->m_dir = file.mid(0, file.lastIndexOf(QString("\\"), 0, Qt::CaseInsensitive));
+    this->ui->_antiDict->setText(file);
+}
+
+void ContentManagerWindow::on__checkDict_clicked()
+{
+    QString dict = this->ui->_antiDict->text();
+
+}

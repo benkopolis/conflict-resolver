@@ -1,4 +1,5 @@
 #include <QFile>
+#include <QStack>
 #include <QIODevice>
 #include <QTextStream>
 #include <QDebug>
@@ -156,6 +157,47 @@ QStringList ContentModel::itemsTargetStrings(const QModelIndex& index) {
 QRect ContentModel::itemsRect(const QModelIndex& index) {
     return (*_sortedList).at(index.row())->boundingRect();
 }
+
+
+bool ContentModel::checkWithAntiDict(QString dict) {
+    QFile f(dict);
+    if(f.open(QFile::ReadOnly) == false || this->_openedFiles.isEmpty())
+        return false;
+    QHash<QString, unsigned> d;
+    QString space(" ");
+    while(f.atEnd() == false) {
+        QString temp(f.readLine());
+        temp.append(QChar(' '));
+        space.append(temp);
+        d[space] = 0;
+        space = QString(" ");
+    }
+    f.close();
+    QStack<ContentRecord* > toRemove;
+    GlossaryFile* gf = this->_openedFiles.begin().value();
+    QMultiHash<FuzzyStrings, ContentRecord* > *con = gf->content();
+    foreach(ContentRecord* cr, con->values()) {
+        foreach(QString word, d.keys()) {
+            if(cr->source().contains(word, Qt::CaseSensitive))
+                toRemove.push_front(cr);
+        }
+    }
+    QFile rejected(QString("rejected.txt"));
+    if(rejected.open(QFile::Append | QFile::WriteOnly) == false)
+        return false;
+    rejected.close();
+    QTextStream rej("rejected.txt", QFile::Append | QFile::WriteOnly);
+    foreach(ContentRecord* cr, toRemove) {
+        QString line = cr->toRecordString();
+        rej << line << endl;
+        FuzzyStrings fk = con->key(cr);
+        con->remove(fk, cr);
+    }
+
+    return true;
+}
+
+
 
 /**
   *
