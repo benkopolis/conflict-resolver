@@ -11,13 +11,17 @@ Q_OBJECT
 public:
     explicit FileMerger(QObject *parent = 0);
 
-
+    static void findInnerConflicts(GlossaryFile* it);
 
 signals:
 
 public slots:
 
     GlossaryFile* mergeFiles(GlossaryFile* one, GlossaryFile* two) const;
+
+private:
+
+    static void findDuplicated(const FuzzyStrings& key, GlossaryFile *it);
 
 };
 

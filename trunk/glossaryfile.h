@@ -9,10 +9,15 @@
 #include <QDate>
 #include "conflictrecord.h"
 
+class FileMerger;
+
 class GlossaryFile : public QObject
 {
 Q_OBJECT
 public:
+
+    friend class FileMerger;
+
     explicit GlossaryFile(QObject *parent = 0);
 
     virtual bool processWithTabs(QFile & file) ;
@@ -28,13 +33,11 @@ signals:
 
 public slots:
 
-    void findInnerConflicts();
+
     bool saveContent(QString file);
     bool saveReversedContent(QString file);
 
 protected:
-
-    void findDuplicated(const FuzzyStrings& key);
 
     QMultiHash<FuzzyStrings, ContentRecord* > * _content;
     QMultiHash<FuzzyStrings, ConflictRecord* > * _conflicts;
