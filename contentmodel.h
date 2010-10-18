@@ -70,6 +70,8 @@ public:
 
     inline QHash<FuzzyStrings, QList<ContentRecord* > >* conflicts() { return &_conflicts; }
 
+    bool checkWithAntiDict(QString dict);
+
 signals:
 
     void conflictsCount(unsigned count);
