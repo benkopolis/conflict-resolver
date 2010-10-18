@@ -63,6 +63,8 @@ protected:
     QMultiMap<unsigned, ConflictRecord* > _sortedConflicts;
     QHash<ConflictRecord* , short> _conflicts;
     QMultiMap<unsigned, ConflictRecord* >::iterator _currentConflict;
+    QModelIndex _selected;
+    QList<ContentRecord* > _dump;
 
 
 };

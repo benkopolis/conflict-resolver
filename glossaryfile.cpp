@@ -104,7 +104,7 @@ void GlossaryFile::findInnerConflicts() {
 }
 
 
-void GlossaryFile::findDuplicated(const FuzzyStrings& key) const {
+void GlossaryFile::findDuplicated(const FuzzyStrings& key) {
     const QList<ContentRecord* > vals = _content->values(key);
     QMultiHash<FuzzyStrings, ContentRecord* > toRemove;
     for(QList<ContentRecord* >::const_iterator ii = vals.begin(); ii != vals.end(); ++ii) {
@@ -128,7 +128,8 @@ void GlossaryFile::findDuplicated(const FuzzyStrings& key) const {
 bool GlossaryFile::saveContent(QString file) {
     bool r=false;
     TMSaver tms;
-    r = tms.saveContent(file, TMHeader(), *this->_content, this->_all);
+    TMHeader tmh;
+    r = tms.saveContent(file, tmh, *this->_content, this->_all);
     return r;
 }
 
@@ -138,7 +139,8 @@ bool GlossaryFile::saveContent(QString file) {
 bool GlossaryFile::saveReversedContent(QString file) {
     bool r=false;
     TMSaver tms;
-    r = tms.saveReversedContent(file, this->_rheader, this->_content, this->_all);
+    TMHeader tmh;
+    r = tms.saveReversedContent(file, tmh, *this->_content, this->_all);
     return r;
 }
 

@@ -13,7 +13,7 @@ TMFile::TMFile(QObject *parent) :
 /**
   *
   */
-bool  TMFile::processTmWithTabs(QFile & file) {
+bool  TMFile::processWithTabs(QFile & file) {
     QTextStream f(&file);
     QFile dump("dump.txt");
     dump.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
@@ -107,7 +107,7 @@ bool  TMFile::processTmWithTabs(QFile & file) {
 	} while(iline.atEnd() == false);
 	if(con) continue;
 	tmr->setTarget(text);
-        _content[FuzzyStrings(tmr->source())].push_back(tmr);
+        _content->insertMulti(FuzzyStrings(tmr->source()), tmr);
 	text.clear();
 	++_all;
     }

@@ -18,24 +18,24 @@ unsigned ConflictsContainer::conflictedRecordsCount() const
   *
   */
 void ConflictsContainer::onNext() {
-    emit dataChanged(this->index(0, 0), this->index((*_sortedList).size()*2-1, 0));
-    if(_sortedList != _sortedConflicts.end())
-	++_sortedList;
-    if(_sortedList == _sortedConflicts.end()) {
-	--_sortedList;
+    emit dataChanged(this->index(0, 0), this->index((*_currentConflict)->size()*2-1, 0));
+    if(_currentConflict != _sortedConflicts.end())
+        ++_currentConflict;
+    if(_currentConflict == _sortedConflicts.end()) {
+        --_currentConflict;
 	return;
     }
-    emit dataChanged(this->index(0, 0), this->index((*_sortedList).size()*2-1, 0));
+    emit dataChanged(this->index(0, 0), this->index((*_currentConflict)->size()*2-1, 0));
 }
 
 /**
   *
   */
 void ConflictsContainer::onPrev() {
-    emit dataChanged(this->index(0, 0), this->index((*_sortedList).size()*2-1, 0));
-    if(_sortedList != _sortedConflicts.begin()) {
-	--_sortedList;
-	emit dataChanged(this->index(0, 0), this->index((*_sortedList).size()*2-1, 0));
+    emit dataChanged(this->index(0, 0), this->index((*_currentConflict)->size()*2-1, 0));
+    if(_currentConflict != _sortedConflicts.begin()) {
+        --_currentConflict;
+        emit dataChanged(this->index(0, 0), this->index((*_currentConflict)->size()*2-1, 0));
     }
 }
 
@@ -53,15 +53,15 @@ void ConflictsContainer::selectOnClick(const QModelIndex& index) {
   *
   */
 void ConflictsContainer::forceBegin() {
-    _sortedList = _sortedConflicts.begin();
-    emit dataChanged(this->index(0, 0), this->index((*_sortedList).size()*2-1, 0));
+    _currentConflict = _sortedConflicts.begin();
+    emit dataChanged(this->index(0, 0), this->index((*_currentConflict)->size()*2-1, 0));
 }
 
 /**
   *
   */
 void ConflictsContainer::onRequestRowDeletion(const QModelIndex& index) {
-    (*_currentList).removeAt(index.row()/2);
+    (*_currentConflict)->removeRecordAtRow(index.row()/2);
     emit dataChanged(index, index);
 }
 
@@ -69,19 +69,19 @@ void ConflictsContainer::onRequestRowDeletion(const QModelIndex& index) {
   *
   */
 void ConflictsContainer::onRequestAllDeletion() {
-    QList<ContentRecord* >::iterator fd = (*_sortedList).begin();
-    while(!(*_sortedList).isEmpty())
-	fd = (*_sortedList).erase(fd);
-    _sortedList = _sortedConflicts.erase(_sortedList);
-    emit dataChanged(this->index(0, 0), this->index((*_sortedList).size()*2-1, 0));
+    QList<ContentRecord* >::iterator fd = (*_currentConflict)->begin();
+    while(!(*_currentConflict)->isEmpty())
+        fd = (*_currentConflict)->erase(fd);
+    _currentConflict = _sortedConflicts.erase(_currentConflict);
+    emit dataChanged(this->index(0, 0), this->index((*_currentConflict)->size()*2-1, 0));
 }
 
 /**
   * Slot wolany, gdy cos ma byc odlozone na poxniej
   */
 void ConflictsContainer::onRequestDump() {
-   QList<ContentRecord* > list = *_sortedList;
-   QMultiMap<int, QList<ContentRecord* > >::iterator tmp = _sortedList;
+   QList<ContentRecord* > list = (*_currentConflict)->conflictedRecords();
+   QMultiMap<unsigned, ConflictRecord* >::iterator tmp = _currentConflict;
    _dump.append(list);
    ++tmp;
    if(tmp == _sortedConflicts.end()) {
@@ -96,14 +96,14 @@ void ConflictsContainer::onRequestDump() {
   *
   */
 void ConflictsContainer::onRequestDuplicatedDeletion() {
-    QList<ContentRecord* >::iterator fd = (*_sortedList).begin();
+    QList<ContentRecord* >::iterator fd = (*_currentConflict)->begin();
     QList<ContentRecord* >::iterator look;
-    while(fd != (*_sortedList).end()) {
+    while(fd != (*_currentConflict)->end()) {
 	look = fd;
 	++look;
-	for(; look != (*_sortedList).end(); ) {
+        for(; look != (*_currentConflict)->end(); ) {
 	    if(QString::compare((*fd)->target(), (*look)->target()) == 0) {
-		look = (*_sortedList).erase(look);
+                look = (*_currentConflict)->erase(look);
 	    } else ++look;
 	}
 	++fd;
