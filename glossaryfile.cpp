@@ -90,38 +90,6 @@ bool GlossaryFile::processWithTabs(QFile & file) {
     return true;
 }
 
-void GlossaryFile::findInnerConflicts() {
-    QMultiHash<FuzzyStrings, ContentRecord* >::iterator outer = _content->begin(), inner=_content->begin();
-    QStack<FuzzyStrings> toRemove;
-    for(;outer != _content->end();++outer) {
-// find dulicates and with the same source
-        for(inner = outer; inner != _content->end(); ++inner) {
-            ++inner;
-            if(inner == _content->end())
-                break;
-        }
-    }
-}
-
-
-void GlossaryFile::findDuplicated(const FuzzyStrings& key) {
-    const QList<ContentRecord* > vals = _content->values(key);
-    QMultiHash<FuzzyStrings, ContentRecord* > toRemove;
-    for(QList<ContentRecord* >::const_iterator ii = vals.begin(); ii != vals.end(); ++ii) {
-        for(QList<ContentRecord* >::const_iterator jj = ii; ii != vals.end(); ++ii) {
-            ++jj;
-            if(jj == vals.end())
-                break;
-            if((*ii)->source() == (*jj)->source()) {
-                if((*ii)->target() == (*jj)->target())
-                    toRemove.insertMulti(key, *jj);
-                else
-                    _conflicts->value(key)->addRecord(*jj);
-            }
-        }
-    }
-}
-
 /**
   *
   */
