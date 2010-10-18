@@ -7,7 +7,7 @@
 #include "tmrecord.h"
 #include "inifile.h"
 #include "tmsaver.h"
-
+#include "tmfile.h"
 
 bool operator < (const QList<ContentRecord* >& one, const QList<ContentRecord* >& two) {
     return one.size() < two.size();
@@ -112,12 +112,18 @@ bool ContentModel::addFile(QString fileName) {
 	//qDebug() << "Nie udalo sie otworzyc pliku" << endl;
 	return false;
     }
-    if(_type == TM)
+    GlossaryFile* gf = 0;
+    if(_type == TM) {
+        gf = new TMFile(this);
+        res = gf->processWithTabs(file);
 	;//res = this->processTmWithTabs(file);
-    else if(_type == GLOSSARY) {
+    } else if(_type == GLOSSARY) {
+        gf = new GlossaryFile(this);
+        res = gf->processWithTabs(file);
 	;//res = this->processGlossaryWithTabs(file); /// TODO !!!!!!!!!!!!!!!!!!!
     }
     file.close();
+    this->_openedFiles.insert(fileName, gf);
 //    _currentList = _conflicts.begin();
 //    for(; _currentList != _conflicts.end(); ++_currentList) {
 //	if(_currentList->size() > 1)
@@ -183,6 +189,21 @@ void ContentModel::sort() {
     _sortedList = _sortedConflicts.begin();
 }
 
+bool ContentModel::saveContent(QString file) {
+    if(_mainFile == 0)
+        return false;
+    return _mainFile->saveContent(file);
+}
+
+/**
+  *
+  */
+bool ContentModel::saveReversedContent(QString file) {
+    if(_mainFile == 0)
+        return false;
+    return _mainFile->saveReversedContent(file);
+}
+
 /**
   *
   */
@@ -207,8 +228,9 @@ bool ContentModel::onRequestSaveDump(QString dumpFile) {
 	return false;
     }
     QTextStream fs(&f);
-    if(f.size() == 0)
+    if(f.size() == 0) {
 ;//	fs << _header << endl;
+    }
     QList<ContentRecord* >::iterator ii;
     for(ii = _dump.begin(); ii != _dump.end() ; ++ii) {
 	fs << (*ii)->toRecordString() << endl;

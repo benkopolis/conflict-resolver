@@ -34,7 +34,7 @@ public slots:
 
 protected:
 
-    void findDuplicated(const FuzzyStrings& key) const;
+    void findDuplicated(const FuzzyStrings& key);
 
     QMultiHash<FuzzyStrings, ContentRecord* > * _content;
     QMultiHash<FuzzyStrings, ConflictRecord* > * _conflicts;

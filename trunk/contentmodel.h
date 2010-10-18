@@ -13,6 +13,8 @@
 #include "tmrecord.h"
 #include "fuzzystrings.h"
 #include "tmheader.h"
+#include "glossaryfile.h"
+
 
 bool operator < (const QList<ContentRecord* >& one, const QList<ContentRecord* >& two);
 //bool operator == (const QList<ContentRecord* >& one, const QList<ContentRecord* >& two);
@@ -153,6 +155,9 @@ private:
     QHash<FuzzyStrings, QList<ContentRecord* > > _conflicts;
     QMultiMap<int, QList<ContentRecord* > > _sortedConflicts; // TODO
     bool _dontFilterConflicts;
+
+    GlossaryFile* _mainFile;
+    QHash<QString, GlossaryFile* > _openedFiles;
 
     unsigned _fuzzyValue;
 };
