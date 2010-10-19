@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'contentmanagerwindow.ui'
 **
-** Created: Mon Oct 18 08:12:57 2010
+** Created: Tue Oct 19 06:32:31 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -60,6 +60,8 @@ public:
     QLineEdit *_antiDict;
     QPushButton *_chooseAntiDict;
     QPushButton *_checkDict;
+    QCheckBox *_cSource;
+    QCheckBox *_cTarget;
     QMenuBar *menubar;
     QStatusBar *statusbar;
     QToolBar *toolBar;
@@ -143,27 +145,27 @@ public:
         _filterContent = new QPushButton(centralwidget);
         _filterContent->setObjectName(QString::fromUtf8("_filterContent"));
 
-        gridLayout->addWidget(_filterContent, 6, 0, 1, 1);
+        gridLayout->addWidget(_filterContent, 7, 0, 1, 1);
 
         _saveContent = new QPushButton(centralwidget);
         _saveContent->setObjectName(QString::fromUtf8("_saveContent"));
 
-        gridLayout->addWidget(_saveContent, 6, 1, 1, 2);
+        gridLayout->addWidget(_saveContent, 7, 1, 1, 2);
 
         _resolveConflicts = new QPushButton(centralwidget);
         _resolveConflicts->setObjectName(QString::fromUtf8("_resolveConflicts"));
 
-        gridLayout->addWidget(_resolveConflicts, 6, 3, 1, 1);
+        gridLayout->addWidget(_resolveConflicts, 7, 3, 1, 1);
 
         _confront = new QPushButton(centralwidget);
         _confront->setObjectName(QString::fromUtf8("_confront"));
 
-        gridLayout->addWidget(_confront, 6, 4, 1, 1);
+        gridLayout->addWidget(_confront, 7, 4, 1, 1);
 
         _autoSeachOnFiltered = new QCheckBox(centralwidget);
         _autoSeachOnFiltered->setObjectName(QString::fromUtf8("_autoSeachOnFiltered"));
 
-        gridLayout->addWidget(_autoSeachOnFiltered, 7, 0, 1, 4);
+        gridLayout->addWidget(_autoSeachOnFiltered, 8, 0, 1, 4);
 
         label_4 = new QLabel(centralwidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
@@ -210,6 +212,17 @@ public:
         _checkDict->setObjectName(QString::fromUtf8("_checkDict"));
 
         gridLayout->addWidget(_checkDict, 5, 4, 1, 1);
+
+        _cSource = new QCheckBox(centralwidget);
+        _cSource->setObjectName(QString::fromUtf8("_cSource"));
+        _cSource->setChecked(true);
+
+        gridLayout->addWidget(_cSource, 6, 0, 1, 1);
+
+        _cTarget = new QCheckBox(centralwidget);
+        _cTarget->setObjectName(QString::fromUtf8("_cTarget"));
+
+        gridLayout->addWidget(_cTarget, 6, 3, 1, 1);
 
         ContentManagerWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(ContentManagerWindow);
@@ -310,6 +323,8 @@ public:
         label_6->setText(QApplication::translate("ContentManagerWindow", "Antys\305\202ownik:", 0, QApplication::UnicodeUTF8));
         _chooseAntiDict->setText(QApplication::translate("ContentManagerWindow", "Wybierz ...", 0, QApplication::UnicodeUTF8));
         _checkDict->setText(QApplication::translate("ContentManagerWindow", "Sprawd\305\272", 0, QApplication::UnicodeUTF8));
+        _cSource->setText(QApplication::translate("ContentManagerWindow", "Sprawdzaj \305\272r\303\263d\305\202owe", 0, QApplication::UnicodeUTF8));
+        _cTarget->setText(QApplication::translate("ContentManagerWindow", "Sprawdzaj docelowe", 0, QApplication::UnicodeUTF8));
         toolBar->setWindowTitle(QApplication::translate("ContentManagerWindow", "toolBar", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

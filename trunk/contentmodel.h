@@ -16,6 +16,10 @@
 #include "glossaryfile.h"
 
 
+//////
+////// duties.txt - plik na bledne itp rekordy
+//////
+
 bool operator < (const QList<ContentRecord* >& one, const QList<ContentRecord* >& two);
 //bool operator == (const QList<ContentRecord* >& one, const QList<ContentRecord* >& two);
 bool operator > (const QList<ContentRecord* >& one, const QList<ContentRecord* >& two);
@@ -70,7 +74,7 @@ public:
 
     inline QHash<FuzzyStrings, QList<ContentRecord* > >* conflicts() { return &_conflicts; }
 
-    bool checkWithAntiDict(QString dict);
+    bool checkWithAntiDict(QString dict, bool s, bool t);
 
 signals:
 
