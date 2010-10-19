@@ -152,5 +152,6 @@ void ContentManagerWindow::on__chooseAntiDict_clicked()
 void ContentManagerWindow::on__checkDict_clicked()
 {
     QString dict = this->ui->_antiDict->text();
+    this->_content->checkWithAntiDict(dict, this->ui->_cSource->isChecked(), this->ui->_cTarget->isChecked());
 
 }

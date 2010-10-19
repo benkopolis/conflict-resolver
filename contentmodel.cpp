@@ -159,18 +159,15 @@ QRect ContentModel::itemsRect(const QModelIndex& index) {
 }
 
 
-bool ContentModel::checkWithAntiDict(QString dict) {
+bool ContentModel::checkWithAntiDict(QString dict, bool s, bool t) {
     QFile f(dict);
     if(f.open(QFile::ReadOnly) == false || this->_openedFiles.isEmpty())
         return false;
     QHash<QString, unsigned> d;
-    QString space(" ");
     while(f.atEnd() == false) {
         QString temp(f.readLine());
-        temp.append(QChar(' '));
-        space.append(temp);
-        d[space] = 0;
-        space = QString(" ");
+//        temp.append(QChar(' '));
+        d[temp] = 0;
     }
     f.close();
     QStack<ContentRecord* > toRemove;
@@ -178,15 +175,17 @@ bool ContentModel::checkWithAntiDict(QString dict) {
     QMultiHash<FuzzyStrings, ContentRecord* > *con = gf->content();
     foreach(ContentRecord* cr, con->values()) {
         foreach(QString word, d.keys()) {
-            if(cr->source().contains(word, Qt::CaseSensitive))
+            if(s && cr->source().contains(word, Qt::CaseInsensitive))
+                toRemove.push_front(cr);
+            else if(t && cr->target().contains(word, Qt::CaseInsensitive))
                 toRemove.push_front(cr);
         }
     }
-    QFile rejected(QString("rejected.txt"));
+    QFile rejected(QString("duties.txt"));
     if(rejected.open(QFile::Append | QFile::WriteOnly) == false)
         return false;
     rejected.close();
-    QTextStream rej("rejected.txt", QFile::Append | QFile::WriteOnly);
+    QTextStream rej("duties.txt", QFile::Append | QFile::WriteOnly);
     foreach(ContentRecord* cr, toRemove) {
         QString line = cr->toRecordString();
         rej << line << endl;
