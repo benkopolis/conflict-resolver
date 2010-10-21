@@ -4,6 +4,46 @@
 #include "mainwindow.h"
 #include "inifile.h"
 
+QString correctText(const QString& text)
+{
+    QStringList words = text.split(QRegExp(QString("(?:\\s)")));
+    QString res;
+    QRegExp r(QString("(?:\\.|,|;|:)"));
+    foreach(QString s, words)
+    {
+	if(s.contains(r))
+	{
+	    QStringList inner = s.split(r);
+	    QString ires;
+	    foreach(QString is, inner)
+	    {
+		ires.append(is);
+		ires.append(QChar(' '));
+	    }
+	    res.append(ires);
+	} else
+	    res.append(s);
+	res.append(QChar(' '));
+    }
+    return res;
+}
+
+bool validateText(const QString& text)
+{
+    QRegExp numCount("(?:[0-9])");
+    QRegExp wsCount("(?:\\s)");
+    QRegExp nonCount("(?:\\W)");
+    numCount.indexIn(text);
+    int cc = numCount.captureCount();
+    wsCount.indexIn(text);
+    int wc = wsCount.captureCount();
+    nonCount.indexIn(text);
+    int nc = nonCount.captureCount();
+    return (text.length() - wc)/2 > cc ? ((text.length() - wc)/2 > nc ? true : false) : false;
+}
+
+
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

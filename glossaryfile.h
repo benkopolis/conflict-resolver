@@ -28,6 +28,9 @@ public:
     inline unsigned corrupted() const { return _corrupted; }
     inline unsigned allCount() const { return _all; }
 
+    static QString correctText(const QString& text);
+    static bool validateText(const QString& text);
+
 
 signals:
 
