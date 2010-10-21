@@ -8,12 +8,12 @@ TMSaver::TMSaver(QObject *parent) :
 
 bool TMSaver::saveContent(QString& file, TMHeader& rheader, QMultiHash<FuzzyStrings, ContentRecord* >& conflicts, unsigned all) {
     QFile f(file);
-    if(f.open(QIODevice::Append | QIODevice::Text) == false) {
+    if(f.open(QIODevice::Text |  QIODevice::ReadWrite) == false) {
 	qDebug() << " nie udalo sie otworzyc " << endl;
 	return false;
     }
-    f.close();
-    QTextStream fs(&file, QIODevice::ReadWrite);
+//    f.close();
+    QTextStream fs(&f);
     if(rheader != TMHeader())
     {
 	if(f.size() == 0) { /// TODO zmiana ilosci rekordow w istniejacym naglowku

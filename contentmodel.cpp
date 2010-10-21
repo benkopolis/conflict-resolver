@@ -130,10 +130,10 @@ bool ContentModel::addFile(QString fileName) {
 //	if(_currentList->size() > 1)
 //	    this->onRequestDuplicatedDeletion();
 //    }
-    this->countConflicts();
+//    this->countConflicts();
     _currentList = _conflicts.begin();
-    emit totalRecords(_all);
-    emit corruptedCount(_corrupted);
+    emit totalRecords(gf->allCount());
+    emit corruptedCount(gf->corrupted());
     return res;
 }
 
@@ -159,7 +159,7 @@ QRect ContentModel::itemsRect(const QModelIndex& index) {
 }
 
 
-bool ContentModel::checkWithAntiDict(QString dict, bool s, bool t) {
+bool ContentModel::checkWithAntiDict(QString dict, bool s, bool t, QString duties) {
     QFile f(dict);
     if(f.open(QFile::ReadOnly) == false || this->_openedFiles.isEmpty())
         return false;
@@ -169,10 +169,12 @@ bool ContentModel::checkWithAntiDict(QString dict, bool s, bool t) {
 //        temp.append(QChar(' '));
         d[temp] = 0;
     }
+    qDebug() << "Wielkosc anty: " << d.size();
     f.close();
     QStack<ContentRecord* > toRemove;
     GlossaryFile* gf = this->_openedFiles.begin().value();
     QMultiHash<FuzzyStrings, ContentRecord* > *con = gf->content();
+    qDebug() << "Wielkosc content: " << con->size();
     foreach(ContentRecord* cr, con->values()) {
         foreach(QString word, d.keys()) {
             if(s && cr->source().contains(word, Qt::CaseInsensitive))
@@ -181,18 +183,22 @@ bool ContentModel::checkWithAntiDict(QString dict, bool s, bool t) {
                 toRemove.push_front(cr);
         }
     }
-    QFile rejected(QString("duties.txt"));
-    if(rejected.open(QFile::Append | QFile::WriteOnly) == false)
-        return false;
-    rejected.close();
-    QTextStream rej("duties.txt", QFile::Append | QFile::WriteOnly);
+    qDebug() << "Wielkosc remove: " << toRemove.size();
+    QFile rejected(duties);
+    if(rejected.open(QFile::Append | QFile::ReadWrite) == false) {
+	qDebug() << "Nie udalo sie otworzyc duties.txt";
+	return false;
+    }
+//    rejected.close();
+    QTextStream rej(&rejected);
+    rej << "moge pisac?" << endl;
     foreach(ContentRecord* cr, toRemove) {
         QString line = cr->toRecordString();
         rej << line << endl;
         FuzzyStrings fk = con->key(cr);
         con->remove(fk, cr);
     }
-
+    rejected.close();
     return true;
 }
 
