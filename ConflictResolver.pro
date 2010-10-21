@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     filemerger.cpp \
     conflictscontainer.cpp \
     conflictrecord.cpp \
-    tests/filemergertests.cpp
+    tests/filemergertests.cpp \
+    tests/glossaryfiletests.cpp
 HEADERS += mainwindow.h \
     contentmanagerwindow.h \
     conflictresolverwindow.h \
@@ -53,7 +54,8 @@ HEADERS += mainwindow.h \
     filemerger.h \
     conflictscontainer.h \
     conflictrecord.h \
-    tests/filemergertests.h
+    tests/filemergertests.h \
+    tests/glossaryfiletests.h
 FORMS += mainwindow.ui \
     contentmanagerwindow.ui \
     conflictresolverwindow.ui \
