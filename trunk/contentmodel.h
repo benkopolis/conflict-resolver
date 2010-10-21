@@ -74,7 +74,7 @@ public:
 
     inline QHash<FuzzyStrings, QList<ContentRecord* > >* conflicts() { return &_conflicts; }
 
-    bool checkWithAntiDict(QString dict, bool s, bool t);
+    bool checkWithAntiDict(QString dict, bool s, bool t, QString duties);
 
 signals:
 
