@@ -1,7 +1,8 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-04-15T20:56:14
 # -------------------------------------------------
-QT += gui
+QT += gui \
+    qtestlib
 TARGET = ConflictResolver
 TEMPLATE = app
 SOURCES += main.cpp \
@@ -27,7 +28,8 @@ SOURCES += main.cpp \
     tmfile.cpp \
     filemerger.cpp \
     conflictscontainer.cpp \
-    conflictrecord.cpp
+    conflictrecord.cpp \
+    tests/filemergertests.cpp
 HEADERS += mainwindow.h \
     contentmanagerwindow.h \
     conflictresolverwindow.h \
@@ -50,7 +52,8 @@ HEADERS += mainwindow.h \
     tmfile.h \
     filemerger.h \
     conflictscontainer.h \
-    conflictrecord.h
+    conflictrecord.h \
+    tests/filemergertests.h
 FORMS += mainwindow.ui \
     contentmanagerwindow.ui \
     conflictresolverwindow.ui \
