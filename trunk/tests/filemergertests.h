@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QtTest/QtTest>
+#include "Tests.h"
 
 class FileMergerTests : public QObject
 {
@@ -22,5 +23,7 @@ private slots:
     void cleanupTestCase();
 
 };
+
+DECLARE_TEST(FileMergerTests)
 
 #endif // FILEMERGERTESTS_H

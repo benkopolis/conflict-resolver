@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'glossaryextractordialog.ui'
 **
-** Created: Tue 21. Sep 07:26:45 2010
+** Created: Sat 23. Oct 10:22:53 2010
 **      by: Qt User Interface Compiler version 4.6.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
