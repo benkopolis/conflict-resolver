@@ -2,6 +2,7 @@
 #include <QStack>
 #include <QTextStream>
 #include <QRegExp>
+#include <QDebug>
 #include "inifile.h"
 #include "tmsaver.h"
 
@@ -114,9 +115,16 @@ bool GlossaryFile::saveReversedContent(QString file) {
 
 QString GlossaryFile::correctText(const QString& text)
 {
-    QStringList words = text.split(QRegExp(QString("(?:\\s)")));
-    QString res;
-    QRegExp r(QString("(?:\\.|,|;|:)"));
+    qDebug() << "in: " << text;
+    QRegExp exc("(\\.{3,3}\\s)");
+    QRegExp threedots("((\\s|\\w)\\.\\.\\.\\s)");
+    QRegExp space(QString("(?:\\s)"));
+    int ex = exc.indexIn(text);
+    QString cleared = removeMultiple(text);
+    qDebug() << "cleared: " << cleared;
+    QStringList words = cleared.split(space);
+    QString res;/*
+    QRegExp r(QString("((\\.{1,1}|,|;|\\:)|\\S)"));
     foreach(QString s, words)
     {
 	if(s.contains(r))
@@ -127,27 +135,61 @@ QString GlossaryFile::correctText(const QString& text)
 	    {
 		ires.append(is);
 		ires.append(QChar(' '));
+
 	    }
 	    res.append(ires);
 	} else
 	    res.append(s);
 	res.append(QChar(' '));
-    }
+    }*/
+    res.trimmed();
+
+    qDebug() << "out: " << res;
     return res;
 }
 
 bool GlossaryFile::validateText(const QString& text)
 {
-    QRegExp numCount("(?:[0-9])");
-    QRegExp wsCount("(?:\\s)");
-    QRegExp nonCount("(?:\\W)");
-    numCount.indexIn(text);
-    int cc = numCount.captureCount();
-    wsCount.indexIn(text);
-    int wc = wsCount.captureCount();
-    nonCount.indexIn(text);
-    int nc = nonCount.captureCount();
-    return (text.length() - wc)/2 > cc ? ((text.length() - wc)/2 > nc ? true : false) : false;
+    if(text.isEmpty())
+	return false;
+    QRegExp numCount("([0-9])");
+    QRegExp wsCount("(\\s)");
+    QRegExp nonCount("(\\W|\\.|,|\\:|;)");
+    qDebug() << text;
+    int cc=0, wc=0, nc=0;
+    int pos1 = numCount.indexIn(text);
+    qDebug() << "pos: " << pos1;
+    if(pos1 != -1)
+	cc = numCount.capturedTexts().size() -1;
+    qDebug() << "numbers: " << cc;
+    int pos2 = wsCount.indexIn(text);
+    qDebug() << "pos: " << pos2;
+    if(pos2 != -1)
+	wc = wsCount.capturedTexts().size() - 1;
+    qDebug() << "white spaces: " << wc;
+    int pos3 = nonCount.indexIn(text);
+    qDebug() << "pos: " << pos3;
+    if(pos3 != -1)
+	nc = nonCount.capturedTexts().size() - 1;
+    qDebug() << "non word: " << nc;
+    int badness = cc + wc + nc;
+    qDebug() << "badness: " << badness << " and text.length/2: " << text.length()/2;
+    if(badness > text.length()/2)
+	return false;
+    return true;
+}
+
+QString GlossaryFile::removeMultiple(const QString& text)
+{
+    QString res = text;
+    res.replace(QRegExp("(?:\\.{3,3}\\s)"), "^^^ ");
+    res.replace(QRegExp("(?:\\.{2,})"), ".");
+    res.replace(QRegExp("(?:,{2,})"), ",");
+    res.replace(QRegExp("(?:\\:{2,}"), ":");
+    res.replace(QRegExp("(?:;{2,}"), ";");
+    res.replace("^^^ ", "... ");
+    res.replace(QRegExp("(\\s{2,})"), QString(" "));
+    return res;
 }
 
 /**
