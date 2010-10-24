@@ -40,9 +40,9 @@ void GlossaryFileTests::validateTest()
 
 void GlossaryFileTests::correctTest()
 {
-    QCOMPARE(_gloss->correctText(_testStrings.at(0)), QString("Ala 1111dmfg1111 . . . . . . d. . . . d. d dadla. . ."));
-    QCOMPARE(_gloss->correctText(_testStrings.at(1)), QString("11111mmmmm1mm1; mm1m: 1m1111m, aaaaaaaaa44444444444444aaaaaaaaa, , ,"));
+    QCOMPARE(_gloss->correctText(_testStrings.at(0)), QString("Ala 1111dmfg1111 . d. d. d dadla."));
+    QCOMPARE(_gloss->correctText(_testStrings.at(1)), QString("11111mmmmm1mm1; mm1m: 1m1111m, aaaaaaaaa44444444444444aaaaaaaaa,"));
     QCOMPARE(_gloss->correctText(_testStrings.at(2)), QString("Ala, ma 3 koty"));
-    QCOMPARE(_gloss->correctText(_testStrings.at(3)), QString("ala. 333 ma, jeden, dwa trzy. . . . . . . . . . "));//tutaj ze spacja na koncu
+    QCOMPARE(_gloss->correctText(_testStrings.at(3)), QString("ala. 333 ma, jeden, dwa trzy. "));//tutaj ze spacja na koncu
 
 }

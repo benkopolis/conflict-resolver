@@ -1,10 +1,8 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-04-15T20:56:14
 # -------------------------------------------------
-QT += gui \
-    QT \
-    += \
-    testlib
+QT += gui
+QT += testlib
 TARGET = ConflictResolver
 TEMPLATE = app
 SOURCES += main.cpp \

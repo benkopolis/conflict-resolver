@@ -30,6 +30,9 @@ public:
 
     static QString correctText(const QString& text);
     static bool validateText(const QString& text);
+    static QString removeMultiple(const QString& text);
+
+private:
 
 
 signals:
