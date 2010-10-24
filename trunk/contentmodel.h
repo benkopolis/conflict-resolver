@@ -14,6 +14,7 @@
 #include "fuzzystrings.h"
 #include "tmheader.h"
 #include "glossaryfile.h"
+#include "filemerger.h"
 
 
 //////
@@ -166,6 +167,7 @@ private:
     QHash<QString, GlossaryFile* > _openedFiles;
 
     unsigned _fuzzyValue;
+    FileMerger _merger;
 };
 
 #endif // CONTENTMODEL_H

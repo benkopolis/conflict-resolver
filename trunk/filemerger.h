@@ -12,6 +12,9 @@ public:
     explicit FileMerger(QObject *parent = 0);
 
     void findInnerConflicts(GlossaryFile* it);
+    inline unsigned duplicatedCount() const { return _duplicatedCount; }
+    inline unsigned conflictsCount() const { return _conflictsCount; }
+    inline unsigned fuzzyCount() const { return _fuzzyCount; }\
 
 signals:
 

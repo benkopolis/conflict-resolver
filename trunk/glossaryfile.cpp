@@ -26,15 +26,10 @@ TMHeader GlossaryFile::header() const
   */
 bool GlossaryFile::processWithTabs(QFile & file) {
     QTextStream f(&file);
-    QFile dump("dump.txt");
+    QFile dump("duties.txt"); // TODO - wybor pliku, tak zeby dawalo rade zapisywac na win7
     dump.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
     QTextStream dstream(&dump);
-    QString temp, ln1, ln2;
-    QString text;
-//    _header.clear();
-//    QTextStream forHeader(&_header);
-//    forHeader << f.readLine(); // przeczytany naglowek
-//    processHeader();
+    QString temp, text;
     ContentRecord* tmr=0;
     QRegExp rexp(IniFile::instance()->m_regex, Qt::CaseInsensitive);
     bool con = false;
@@ -62,6 +57,13 @@ bool GlossaryFile::processWithTabs(QFile & file) {
 	    }
 	} while(tempChar != tab);
 	if(con) continue;
+	text = correctText(text);
+	if(validateText(text) == false) {
+	    ++_corrupted;
+	    dstream << line << endl;
+	    text.clear();
+	    continue;
+	}
 	tmr->setSource(text);
 	text.clear();
 	tempChar = QChar();
@@ -79,6 +81,12 @@ bool GlossaryFile::processWithTabs(QFile & file) {
 	    }
 	} while(iline.atEnd() == false || tempChar != tab);
 	if(con) continue;
+	if(validateText(text) == false) {
+	    ++_corrupted;
+	    dstream << line << endl;
+	    text.clear();
+	    continue;
+	}
 	tmr->setTarget(text);
 	text.clear();
 	while(iline.atEnd() == false) {
