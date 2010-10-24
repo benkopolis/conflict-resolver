@@ -16,10 +16,13 @@ class TMHeader : public QObject
 Q_OBJECT
 public:
     explicit TMHeader(QObject *parent = 0);
+    TMHeader(const TMHeader& another);
 
     bool readHeader(const QString& h);
     QString writeHeader();
     QString writeReversedHeader();
+    inline QString sourceCode() const { return _sourceCode; }
+    inline QString targetCode() const { return _targetCode; }
 
     inline void setRecordCount(const unsigned rc) { _recordsCount = rc; }
     bool operator != (const TMHeader& another) const;

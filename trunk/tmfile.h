@@ -11,6 +11,7 @@ public:
     explicit TMFile(QObject *parent = 0);
 
     virtual bool processWithTabs(QFile & file) ;
+    virtual TMHeader header() const;
 
     void processHeader();
 

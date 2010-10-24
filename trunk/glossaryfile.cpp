@@ -16,6 +16,11 @@ GlossaryFile::GlossaryFile(QObject *parent) :
     _all = 0;
 }
 
+TMHeader GlossaryFile::header() const
+{
+    return TMHeader();
+}
+
 /**
   *
   */
