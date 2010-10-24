@@ -5,6 +5,8 @@
 #include "contentrecord.h"
 #include <QHash>
 
+#define SIMVAL 75
+
 class ConflictRecord : public QObject
 {
 Q_OBJECT
@@ -16,6 +18,7 @@ public:
     bool operator != (const ConflictRecord& another) const;
 
     bool addRecord(ContentRecord* record);
+    bool recordMatch(ContentRecord* record);
     inline QList<ContentRecord* > conflictedRecords() { return _keys; }
     inline unsigned conflictedRecordsCount() { return _keys.size(); }
     inline unsigned size() { return _conflictedRecords->keys().size(); }

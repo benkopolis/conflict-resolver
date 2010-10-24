@@ -26,11 +26,11 @@ QString TMRecord::toListString() const {
 //    ret.append(QString(" | "));
     ret.append(_sourceCode);
     ret.append(QString(" | "));
-    ret.append(_source);
+    ret.append(source());
     ret.append(QString(" | "));
     ret.append(_targetCode);
     ret.append(QString(" | "));
-    ret.append(_target);
+    ret.append(target());
     return ret;
 }
 
@@ -46,11 +46,11 @@ QString TMRecord::toRecordString() const {
     ret.append(QChar('\t'));
     ret.append(_sourceCode);
     ret.append(QChar('\t'));
-    ret.append(_source);
+    ret.append(source());
     ret.append(QChar('\t'));
     ret.append(_targetCode);
     ret.append(QChar('\t'));
-    ret.append(_target);
+    ret.append(target());
     return ret;
 }
 
@@ -66,10 +66,10 @@ QString TMRecord::toReversedRecordString() const {
     ret.append(QChar('\t'));
     ret.append(_targetCode); //
     ret.append(QChar('\t')); // switched
-    ret.append(_target);     //
+    ret.append(target());     //
     ret.append(QChar('\t'));
     ret.append(_sourceCode); //
     ret.append(QChar('\t')); // with this
-    ret.append(_source);     //
+    ret.append(source());     //
     return ret;
 }

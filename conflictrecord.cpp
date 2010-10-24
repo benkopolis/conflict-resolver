@@ -41,6 +41,18 @@ bool ConflictRecord::addRecord(ContentRecord* record)
     return true;
 }
 
+bool ConflictRecord::recordMatch(ContentRecord* record)
+{
+    foreach(ContentRecord* r, this->_conflictedRecords->keys())
+    {
+        if(r->sourceF() == record->sourceF() || r->targetF() == record->targetF())
+            continue;
+        if(r->sourceF().similarity(record->sourceF()) <= SIMVAL && r->targetF().similarity(record->targetF()) <= SIMVAL)
+            return false;
+    }
+    return true;
+}
+
 void ConflictRecord::removeRecordAtRow(unsigned row) 
 {
     QHash<ContentRecord* , short>::iterator ii = this->_conflictedRecords->begin();

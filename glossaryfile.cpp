@@ -116,34 +116,21 @@ bool GlossaryFile::saveReversedContent(QString file) {
 QString GlossaryFile::correctText(const QString& text)
 {
     qDebug() << "in: " << text;
-    QRegExp exc("(\\.{3,3}\\s)");
-    QRegExp threedots("((\\s|\\w)\\.\\.\\.\\s)");
     QRegExp space(QString("(?:\\s)"));
-    int ex = exc.indexIn(text);
     QString cleared = removeMultiple(text);
     qDebug() << "cleared: " << cleared;
     QStringList words = cleared.split(space);
-    QString res;/*
-    QRegExp r(QString("((\\.{1,1}|,|;|\\:)|\\S)"));
+    QString res;
     foreach(QString s, words)
     {
-	if(s.contains(r))
-	{
-	    QStringList inner = s.split(r);
-	    QString ires;
-	    foreach(QString is, inner)
-	    {
-		ires.append(is);
-		ires.append(QChar(' '));
-
-	    }
-	    res.append(ires);
-	} else
-	    res.append(s);
-	res.append(QChar(' '));
-    }*/
+        qDebug() << "before replace: " << s;
+        QString tmp = replaceSplitters(s);
+        qDebug() << "after replace: " << tmp;
+        res.append(tmp);
+        res.append(QChar(' '));
+    }
     res.trimmed();
-
+    res.replace(QRegExp("(?:\\s{2,})"), QString(" "));
     qDebug() << "out: " << res;
     return res;
 }
@@ -155,25 +142,11 @@ bool GlossaryFile::validateText(const QString& text)
     QRegExp numCount("([0-9])");
     QRegExp wsCount("(\\s)");
     QRegExp nonCount("(\\W|\\.|,|\\:|;)");
-    qDebug() << text;
     int cc=0, wc=0, nc=0;
-    int pos1 = numCount.indexIn(text);
-    qDebug() << "pos: " << pos1;
-    if(pos1 != -1)
-	cc = numCount.capturedTexts().size() -1;
-    qDebug() << "numbers: " << cc;
-    int pos2 = wsCount.indexIn(text);
-    qDebug() << "pos: " << pos2;
-    if(pos2 != -1)
-	wc = wsCount.capturedTexts().size() - 1;
-    qDebug() << "white spaces: " << wc;
-    int pos3 = nonCount.indexIn(text);
-    qDebug() << "pos: " << pos3;
-    if(pos3 != -1)
-	nc = nonCount.capturedTexts().size() - 1;
-    qDebug() << "non word: " << nc;
+    cc =  getCapCount(numCount, text);
+    wc = getCapCount(wsCount, text);
+    nc = getCapCount(nonCount, text);
     int badness = cc + wc + nc;
-    qDebug() << "badness: " << badness << " and text.length/2: " << text.length()/2;
     if(badness > text.length()/2)
 	return false;
     return true;
@@ -182,14 +155,57 @@ bool GlossaryFile::validateText(const QString& text)
 QString GlossaryFile::removeMultiple(const QString& text)
 {
     QString res = text;
-    res.replace(QRegExp("(?:\\.{3,3}\\s)"), "^^^ ");
+    res.replace(QRegExp("(?:\\.{3,3}(\\s|\\.)"), "__THREEZMDOTS__ ");
     res.replace(QRegExp("(?:\\.{2,})"), ".");
     res.replace(QRegExp("(?:,{2,})"), ",");
     res.replace(QRegExp("(?:\\:{2,}"), ":");
     res.replace(QRegExp("(?:;{2,}"), ";");
-    res.replace("^^^ ", "... ");
-    res.replace(QRegExp("(\\s{2,})"), QString(" "));
+    res.replace("__THREEZMDOTS__ ", "... ");
+    res.replace(QRegExp("(?:\\s{2,})"), QString(" "));
     return res;
+}
+
+QString GlossaryFile::replaceSplitters(const QString& word)
+{
+    QString w = word;
+    static QRegExp splitters[4] = {QRegExp("(?:\\.)"), QRegExp("(?:,)"), QRegExp("(?:\\:)"), QRegExp("(?:;)")};
+    w.replace(QRegExp("(?:\\.{3,3}(\\s|\\.)"), "__THREEZMDOTS__ ");
+    QRegExp end("(\\.|,|;|\\:)");
+    int e = getCapCount(end, w), iter = 0;
+    while(iter < e)
+    {
+        iter++;
+        if(w.contains(splitters[GlossaryFile::Dot]))
+        {
+            w.replace(splitters[GlossaryFile::Dot], QString(". "));
+        }
+        else if(w.contains(splitters[GlossaryFile::Coma]))
+        {
+            w.replace(splitters[GlossaryFile::Coma], QString(", "));
+        }
+        else if(w.contains(splitters[GlossaryFile::Colon]))
+        {
+            w.replace(splitters[GlossaryFile::Colon], QString(": "));
+        }
+        else if(w.contains(splitters[GlossaryFile::Semicolon]))
+        {
+            w.replace(splitters[GlossaryFile::Semicolon], QString("; "));
+        }
+    }
+    w.replace("__THREEZMDOTS__ ", "... ");
+    return w;
+}
+
+int GlossaryFile::getCapCount(const QRegExp& r, const QString& t)
+{
+    int pos = 0;
+    int count = 0;
+    while((pos = r.indexIn(t, pos)) > -1)
+    {
+        ++count;
+        pos += r.matchedLength();
+    }
+    return count;
 }
 
 /**

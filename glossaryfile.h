@@ -31,6 +31,8 @@ public:
     static QString correctText(const QString& text);
     static bool validateText(const QString& text);
     static QString removeMultiple(const QString& text);
+    static int getCapCount(const QRegExp& r, const QString& t);
+    static QString replaceSplitters(const QString& word);
 
 private:
 
@@ -44,6 +46,13 @@ public slots:
     bool saveReversedContent(QString file);
 
 protected:
+
+    enum Splitters {
+        Dot=0,
+        Coma=1,
+        Colon=2,
+        Semicolon=3
+    };
 
     QMultiHash<FuzzyStrings, ContentRecord* > * _content;
     QMultiHash<FuzzyStrings, ConflictRecord* > * _conflicts;

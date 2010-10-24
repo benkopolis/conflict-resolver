@@ -84,10 +84,13 @@ QVariant ContentModel::data ( const QModelIndex & index, int role ) const {
   */
 bool ContentModel::setData ( const QModelIndex & index, const QVariant & value, int role ) {
     QString val = qvariant_cast<QString>(value);
-    if(index.row()%2 == 0) {
+    if(index.row()%2 == 0)
+    {
 	(*_sortedList).at(index.row()/2)->setSource(val);
 	return true;
-    } else if(index.row()%2 == 1) {
+    }
+    else if(index.row()%2 == 1)
+    {
 	(*_sortedList).at(index.row()/2)->setTarget(val);
 	return true;
     }

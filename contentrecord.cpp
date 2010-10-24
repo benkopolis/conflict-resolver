@@ -21,17 +21,17 @@ ContentRecord::ContentRecord(QString source , QString target , unsigned lineNumb
 
 QString ContentRecord::toListString() const {
     QString ret;
-    ret.append(this->_source);
+    ret.append(this->source());
     ret.append(QString(" | "));
-    ret.append(this->_target);
+    ret.append(this->target());
     return ret;
 }
 
 QString ContentRecord::toRecordString() const {
     QString ret;
-    ret = ret.append(this->_source);
+    ret = ret.append(this->source());
     ret = ret.append(QChar('\t'));
-    ret = ret.append(this->_target);
+    ret = ret.append(this->target());
     if(_comment.length() > 0) {
 	ret = ret.append(QChar('\t'));
 	ret = ret.append(_comment);
@@ -41,9 +41,9 @@ QString ContentRecord::toRecordString() const {
 
 QString ContentRecord::toReversedRecordString() const {
     QString ret;
-    ret = ret.append(this->_target);
+    ret = ret.append(this->target());
     ret = ret.append(QChar('\t'));
-    ret = ret.append(this->_source);
+    ret = ret.append(this->source());
     if(_comment.length() > 0) {
 	ret = ret.append(QChar('\t'));
 	ret = ret.append(_comment);
@@ -61,17 +61,17 @@ void ContentRecord::countDrawDate(const QFontMetrics& metrics, const QRect& size
     _sourceStrings.clear();
     _targetStrings.clear();
     _bounding.setX(0); _bounding.setY(0); _bounding.setWidth(0); _bounding.setHeight(0);
-    QRect f = _metrics.boundingRect(_source);
-    int charWidth = f.width() / _source.length();
+    QRect f = _metrics.boundingRect(source());
+    int charWidth = f.width() / source().length();
     int charsInLine = size.width() / charWidth;
     qDebug() << "w: " << size.width() << endl;
     QRect p;
     p.setY(offsetFromTop - f.height());
     p.setWidth(size.width());
     p.setHeight(f.height());
-    makeLists(_source, p, f.height(), charsInLine, _sourceStrings, _sourceRects);
+    makeLists(source(), p, f.height(), charsInLine, _sourceStrings, _sourceRects);
     p.setY(p.y() + f.height() * (_sourceStrings.size() - 1));
-    makeLists(_target, p, f.height(), charsInLine, _targetStrings, _targetRects);
+    makeLists(target(), p, f.height(), charsInLine, _targetStrings, _targetRects);
 }
 
 void ContentRecord::makeLists(QString tmp, QRect p, int lineH, int charsInLine,
