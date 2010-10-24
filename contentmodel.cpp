@@ -37,6 +37,7 @@ ContentModel::ContentModel(QObject *parent) :
     _corrupted = 0;
     _all = 0;
     _fuzzyValue=0;
+    _mainFile = 0;
     _fuzzyCount=0;
 }
 
@@ -54,6 +55,7 @@ ContentModel::ContentModel(ContentType type, QObject *parent):
     _all = 0;
     _fuzzyValue=0;
     _fuzzyCount=0;
+    _mainFile = 0;
 }
 
 ///
@@ -117,26 +119,26 @@ bool ContentModel::addFile(QString fileName) {
 	return false;
     }
     GlossaryFile* gf = 0;
-    if(_type == TM) {
+    if(_type == TM)
         gf = new TMFile(this);
-        res = gf->processWithTabs(file);
-	;//res = this->processTmWithTabs(file);
-    } else if(_type == GLOSSARY) {
+    else if(_type == GLOSSARY)
         gf = new GlossaryFile(this);
-        res = gf->processWithTabs(file);
-	;//res = this->processGlossaryWithTabs(file); /// TODO !!!!!!!!!!!!!!!!!!!
-    }
+    res = gf->processWithTabs(file);
     file.close();
     this->_openedFiles.insert(fileName, gf);
-//    _currentList = _conflicts.begin();
-//    for(; _currentList != _conflicts.end(); ++_currentList) {
-//	if(_currentList->size() > 1)
-//	    this->onRequestDuplicatedDeletion();
-//    }
-//    this->countConflicts();
+    if(_mainFile == 0)
+	_mainFile = gf;
+    else
+    {
+	GlossaryFile *tmp_gf = _merger.mergeFiles(_mainFile, gf);
+	if(tmp_gf == 0)
+	    return false;
+	_mainFile = tmp_gf;
+    }
     _currentList = _conflicts.begin();
-    emit totalRecords(gf->allCount());
-    emit corruptedCount(gf->corrupted());
+    emit totalRecords(_mainFile->allCount());
+    emit corruptedCount(_mainFile->corrupted());
+    emit fuzzyCount(_merger.fuzzyCount());
     return res;
 }
 

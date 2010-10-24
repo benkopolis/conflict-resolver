@@ -19,7 +19,7 @@ TMHeader TMFile::header() const
   */
 bool  TMFile::processWithTabs(QFile & file) {
     QTextStream f(&file);
-    QFile dump("dump.txt");
+    QFile dump("duties.txt"); // TODO - wybor pliku, tak zeby dawalo rade zapisywac na win7
     dump.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
     QTextStream dstream(&dump);
     QString temp, ln1, ln2;
@@ -86,6 +86,12 @@ bool  TMFile::processWithTabs(QFile & file) {
 	    }
 	} while(tempChar != tab);
 	if(con) continue;
+	if(validateText(text) == false) {
+	    ++_corrupted;
+	    dstream << line << endl;
+	    text.clear();
+	    continue;
+	}
 	tmr->setSource(text);
 	text.clear();
 	iline >> ln2;
@@ -110,6 +116,12 @@ bool  TMFile::processWithTabs(QFile & file) {
 	    }
 	} while(iline.atEnd() == false);
 	if(con) continue;
+	if(validateText(text) == false) {
+	    ++_corrupted;
+	    dstream << line << endl;
+	    text.clear();
+	    continue;
+	}
 	tmr->setTarget(text);
         _content->insertMulti(FuzzyStrings(tmr->source()), tmr);
 	text.clear();
