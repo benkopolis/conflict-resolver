@@ -50,14 +50,14 @@
  </data>
  <data>
   <variable>activebuildconfiguration</variable>
-  <value type="QString">Release</value>
+  <value type="QString">Debug</value>
  </data>
  <data>
   <variable>buildConfiguration-Debug</variable>
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <value key="QtVersionId" type="int">0</value>
-   <value key="ToolChain" type="int">2</value>
+   <value key="ToolChain" type="int">0</value>
    <value key="addQDumper" type=""></value>
    <value key="buildConfiguration" type="int">2</value>
   </valuemap>
@@ -67,7 +67,7 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
    <value key="QtVersionId" type="int">0</value>
-   <value key="ToolChain" type="int">2</value>
+   <value key="ToolChain" type="int">0</value>
    <value key="addQDumper" type=""></value>
    <value key="buildConfiguration" type="int">0</value>
   </valuemap>
@@ -77,51 +77,48 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">ALLUSERSPROFILE=C:\ProgramData</value>
-    <value type="QString">APPDATA=C:\Users\zby\AppData\Roaming</value>
-    <value type="QString">CLASSPATH=.;C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
-    <value type="QString">COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
-    <value type="QString">COMPUTERNAME=ZBY-LAP2</value>
-    <value type="QString">COMSPEC=C:\windows\system32\cmd.exe</value>
-    <value type="QString">FP_NO_HOST_CHECK=NO</value>
-    <value type="QString">HOMEDRIVE=C:</value>
-    <value type="QString">HOMEPATH=\Users\zby</value>
-    <value type="QString">LOCALAPPDATA=C:\Users\zby\AppData\Local</value>
-    <value type="QString">LOGONSERVER=\\ZBY-LAP2</value>
-    <value type="QString">NUMBER_OF_PROCESSORS=4</value>
-    <value type="QString">OS=Windows_NT</value>
-    <value type="QString">PATH=C:\Qt\2009.05\mingw\bin;C:\Qt\2009.05\qt\bin;C:\Program Files\MiKTeX 2.8\miktex\bin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\WIDCOMM\Bluetooth Software\;C:\Program Files\Microsoft SQL Server\90\Tools\binn\;C:\MinGW\bin;C:\Program Files\Samsung\Samsung PC Studio 3\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Boost\lib;C:\Boost\include\boost-1_43;C:\Boost\include;C:\Program Files\TortoiseSVN\bin;C:\Qt\2010.03\qt\bin;C:\Program Files\QuickTime\QTSystem\;C:\Users\zby\AppData\Roaming\MiKTeX\2.8\miktex\bin\</value>
-    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
-    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
-    <value type="QString">PROCESSOR_IDENTIFIER=x86 Family 6 Model 37 Stepping 2, GenuineIntel</value>
-    <value type="QString">PROCESSOR_LEVEL=6</value>
-    <value type="QString">PROCESSOR_REVISION=2502</value>
-    <value type="QString">PROGRAMDATA=C:\ProgramData</value>
-    <value type="QString">PROGRAMFILES=C:\Program Files</value>
-    <value type="QString">PSMODULEPATH=C:\windows\system32\WindowsPowerShell\v1.0\Modules\</value>
-    <value type="QString">PUBLIC=C:\Users\Public</value>
-    <value type="QString">QTDIR=C:/Qt/2009.05/qt</value>
-    <value type="QString">QTJAVA=C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
-    <value type="QString">SESSIONNAME=Console</value>
-    <value type="QString">SYSTEMDRIVE=C:</value>
-    <value type="QString">SYSTEMROOT=C:\windows</value>
-    <value type="QString">TEMP=C:\Users\zby\AppData\Local\Temp</value>
-    <value type="QString">TMP=C:\Users\zby\AppData\Local\Temp</value>
-    <value type="QString">USERDOMAIN=zby-lap2</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-5xjtCpgVyC,guid=71ed1cc455a1c2dc24d1a36e4cc46749</value>
+    <value type="QString">DEFAULTS_PATH=/usr/share/gconf/gnome.default.path</value>
+    <value type="QString">DESKTOP_SESSION=gnome</value>
+    <value type="QString">DISPLAY=:0.0</value>
+    <value type="QString">GDMSESSION=gnome</value>
+    <value type="QString">GDM_KEYBOARD_LAYOUT=pl</value>
+    <value type="QString">GDM_LANG=pl_PL.utf8</value>
+    <value type="QString">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</value>
+    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-adLGry</value>
+    <value type="QString">GNOME_KEYRING_PID=1561</value>
+    <value type="QString">GTK_MODULES=canberra-gtk-module</value>
+    <value type="QString">HOME=/home/zby</value>
+    <value type="QString">LANG=pl_PL.utf8</value>
+    <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator</value>
+    <value type="QString">LOGNAME=zby</value>
+    <value type="QString">MANDATORY_PATH=/usr/share/gconf/gnome.mandatory.path</value>
+    <value type="QString">ORBIT_SOCKETDIR=/tmp/orbit-zby</value>
+    <value type="QString">PATH=/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games</value>
+    <value type="QString">PWD=/home/zby</value>
+    <value type="QString">QTDIR=/usr/share/qt4</value>
+    <value type="QString">SESSION_MANAGER=local/zby-laptop2:@/tmp/.ICE-unix/1579,unix/zby-laptop2:/tmp/.ICE-unix/1579</value>
+    <value type="QString">SHELL=/bin/bash</value>
+    <value type="QString">SPEECHD_PORT=7560</value>
+    <value type="QString">SSH_AGENT_PID=1613</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/keyring-adLGry/ssh</value>
+    <value type="QString">USER=zby</value>
     <value type="QString">USERNAME=zby</value>
-    <value type="QString">USERPROFILE=C:\Users\zby</value>
-    <value type="QString">VS90COMNTOOLS=C:\Program Files\Microsoft Visual Studio 9.0\Common7\Tools\</value>
-    <value type="QString">WINDIR=C:\windows</value>
+    <value type="QString">XAUTHORITY=/var/run/gdm/auth-for-zby-J4ZkCQ/database</value>
+    <value type="QString">XDG_CONFIG_DIRS=/etc/xdg/xdg-gnome:/etc/xdg</value>
+    <value type="QString">XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share/:/usr/share/</value>
+    <value type="QString">XDG_SESSION_COOKIE=ae92a9db0ead892a86ddc3794bf59db0-1287939913.421260-2001830636</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">C:/Users/zby/qtWorkspace/ConflictResolver/ConflictResolver.pro</value>
+    <value type="QString">/home/zby/qtWorkspace/ConflictResolver/ConflictResolver.pro</value>
     <value type="QString">-spec</value>
-    <value type="QString">win32-g++</value>
+    <value type="QString">linux-g++</value>
     <value type="QString">-r</value>
+    <value type="QString">CONFIG+=debug</value>
    </valuelist>
-   <value key="abstractProcess.command" type="QString">c:/qt/2009.05/qt/bin/qmake.exe</value>
+   <value key="abstractProcess.command" type="QString">/usr/bin/qmake-qt4</value>
    <value key="abstractProcess.enabled" type="bool">false</value>
-   <value key="abstractProcess.workingDirectory" type="QString">C:/Users/zby/qtWorkspace/ConflictResolver</value>
+   <value key="abstractProcess.workingDirectory" type="QString">/home/zby/qtWorkspace/ConflictResolver</value>
   </valuemap>
  </data>
  <data>
@@ -129,49 +126,45 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">ALLUSERSPROFILE=C:\ProgramData</value>
-    <value type="QString">APPDATA=C:\Users\zby\AppData\Roaming</value>
-    <value type="QString">CLASSPATH=.;C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
-    <value type="QString">COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
-    <value type="QString">COMPUTERNAME=ZBY-LAP2</value>
-    <value type="QString">COMSPEC=C:\windows\system32\cmd.exe</value>
-    <value type="QString">FP_NO_HOST_CHECK=NO</value>
-    <value type="QString">HOMEDRIVE=C:</value>
-    <value type="QString">HOMEPATH=\Users\zby</value>
-    <value type="QString">LOCALAPPDATA=C:\Users\zby\AppData\Local</value>
-    <value type="QString">LOGONSERVER=\\ZBY-LAP2</value>
-    <value type="QString">NUMBER_OF_PROCESSORS=4</value>
-    <value type="QString">OS=Windows_NT</value>
-    <value type="QString">PATH=C:\Qt\2009.05\mingw\bin;C:\Qt\2009.05\qt\bin;C:\Program Files\MiKTeX 2.8\miktex\bin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\WIDCOMM\Bluetooth Software\;C:\Program Files\Microsoft SQL Server\90\Tools\binn\;C:\MinGW\bin;C:\Program Files\Samsung\Samsung PC Studio 3\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Boost\lib;C:\Boost\include\boost-1_43;C:\Boost\include;C:\Program Files\TortoiseSVN\bin;C:\Qt\2010.03\qt\bin;C:\Program Files\QuickTime\QTSystem\;C:\Users\zby\AppData\Roaming\MiKTeX\2.8\miktex\bin\</value>
-    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
-    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
-    <value type="QString">PROCESSOR_IDENTIFIER=x86 Family 6 Model 37 Stepping 2, GenuineIntel</value>
-    <value type="QString">PROCESSOR_LEVEL=6</value>
-    <value type="QString">PROCESSOR_REVISION=2502</value>
-    <value type="QString">PROGRAMDATA=C:\ProgramData</value>
-    <value type="QString">PROGRAMFILES=C:\Program Files</value>
-    <value type="QString">PSMODULEPATH=C:\windows\system32\WindowsPowerShell\v1.0\Modules\</value>
-    <value type="QString">PUBLIC=C:\Users\Public</value>
-    <value type="QString">QTDIR=C:/Qt/2009.05/qt</value>
-    <value type="QString">QTJAVA=C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
-    <value type="QString">SESSIONNAME=Console</value>
-    <value type="QString">SYSTEMDRIVE=C:</value>
-    <value type="QString">SYSTEMROOT=C:\windows</value>
-    <value type="QString">TEMP=C:\Users\zby\AppData\Local\Temp</value>
-    <value type="QString">TMP=C:\Users\zby\AppData\Local\Temp</value>
-    <value type="QString">USERDOMAIN=zby-lap2</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-5xjtCpgVyC,guid=71ed1cc455a1c2dc24d1a36e4cc46749</value>
+    <value type="QString">DEFAULTS_PATH=/usr/share/gconf/gnome.default.path</value>
+    <value type="QString">DESKTOP_SESSION=gnome</value>
+    <value type="QString">DISPLAY=:0.0</value>
+    <value type="QString">GDMSESSION=gnome</value>
+    <value type="QString">GDM_KEYBOARD_LAYOUT=pl</value>
+    <value type="QString">GDM_LANG=pl_PL.utf8</value>
+    <value type="QString">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</value>
+    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-adLGry</value>
+    <value type="QString">GNOME_KEYRING_PID=1561</value>
+    <value type="QString">GTK_MODULES=canberra-gtk-module</value>
+    <value type="QString">HOME=/home/zby</value>
+    <value type="QString">LANG=pl_PL.utf8</value>
+    <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator</value>
+    <value type="QString">LOGNAME=zby</value>
+    <value type="QString">MANDATORY_PATH=/usr/share/gconf/gnome.mandatory.path</value>
+    <value type="QString">ORBIT_SOCKETDIR=/tmp/orbit-zby</value>
+    <value type="QString">PATH=/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games</value>
+    <value type="QString">PWD=/home/zby</value>
+    <value type="QString">QTDIR=/usr/share/qt4</value>
+    <value type="QString">SESSION_MANAGER=local/zby-laptop2:@/tmp/.ICE-unix/1579,unix/zby-laptop2:/tmp/.ICE-unix/1579</value>
+    <value type="QString">SHELL=/bin/bash</value>
+    <value type="QString">SPEECHD_PORT=7560</value>
+    <value type="QString">SSH_AGENT_PID=1613</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/keyring-adLGry/ssh</value>
+    <value type="QString">USER=zby</value>
     <value type="QString">USERNAME=zby</value>
-    <value type="QString">USERPROFILE=C:\Users\zby</value>
-    <value type="QString">VS90COMNTOOLS=C:\Program Files\Microsoft Visual Studio 9.0\Common7\Tools\</value>
-    <value type="QString">WINDIR=C:\windows</value>
+    <value type="QString">XAUTHORITY=/var/run/gdm/auth-for-zby-J4ZkCQ/database</value>
+    <value type="QString">XDG_CONFIG_DIRS=/etc/xdg/xdg-gnome:/etc/xdg</value>
+    <value type="QString">XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share/:/usr/share/</value>
+    <value type="QString">XDG_SESSION_COOKIE=ae92a9db0ead892a86ddc3794bf59db0-1287939913.421260-2001830636</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
     <value type="QString">-w</value>
    </valuelist>
-   <value key="abstractProcess.command" type="QString">C:/Qt/2009.05/mingw/bin/mingw32-make.exe</value>
+   <value key="abstractProcess.command" type="QString">/usr/bin/make</value>
    <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">C:/Users/zby/qtWorkspace/ConflictResolver</value>
+   <value key="abstractProcess.workingDirectory" type="QString">/home/zby/qtWorkspace/ConflictResolver</value>
   </valuemap>
  </data>
  <data>
@@ -232,53 +225,47 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">ALLUSERSPROFILE=C:\ProgramData</value>
-    <value type="QString">APPDATA=C:\Users\zby\AppData\Roaming</value>
-    <value type="QString">CLASSPATH=.;C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
-    <value type="QString">COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
-    <value type="QString">COMPUTERNAME=ZBY-LAP2</value>
-    <value type="QString">COMSPEC=C:\windows\system32\cmd.exe</value>
-    <value type="QString">FP_NO_HOST_CHECK=NO</value>
-    <value type="QString">HOMEDRIVE=C:</value>
-    <value type="QString">HOMEPATH=\Users\zby</value>
-    <value type="QString">LOCALAPPDATA=C:\Users\zby\AppData\Local</value>
-    <value type="QString">LOGONSERVER=\\ZBY-LAP2</value>
-    <value type="QString">NUMBER_OF_PROCESSORS=4</value>
-    <value type="QString">OS=Windows_NT</value>
-    <value type="QString">PATH=C:\Qt\2009.05\mingw\bin;C:\Qt\2009.05\qt\bin;C:\Program Files\MiKTeX 2.8\miktex\bin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\WIDCOMM\Bluetooth Software\;C:\Program Files\Microsoft SQL Server\90\Tools\binn\;C:\MinGW\bin;C:\Program Files\Samsung\Samsung PC Studio 3\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Boost\lib;C:\Boost\include\boost-1_43;C:\Boost\include;C:\Program Files\TortoiseSVN\bin;C:\Qt\2010.03\qt\bin;C:\Program Files\QuickTime\QTSystem\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;C:\Users\zby\AppData\Roaming\MiKTeX\2.8\miktex\bin\</value>
-    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
-    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
-    <value type="QString">PROCESSOR_IDENTIFIER=x86 Family 6 Model 37 Stepping 2, GenuineIntel</value>
-    <value type="QString">PROCESSOR_LEVEL=6</value>
-    <value type="QString">PROCESSOR_REVISION=2502</value>
-    <value type="QString">PROGRAMDATA=C:\ProgramData</value>
-    <value type="QString">PROGRAMFILES=C:\Program Files</value>
-    <value type="QString">PSMODULEPATH=C:\windows\system32\WindowsPowerShell\v1.0\Modules\</value>
-    <value type="QString">PUBLIC=C:\Users\Public</value>
-    <value type="QString">QTDIR=C:/Qt/2009.05/qt</value>
-    <value type="QString">QTJAVA=C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
-    <value type="QString">SESSIONNAME=Console</value>
-    <value type="QString">SYSTEMDRIVE=C:</value>
-    <value type="QString">SYSTEMROOT=C:\windows</value>
-    <value type="QString">TEMP=C:\Users\zby\AppData\Local\Temp</value>
-    <value type="QString">TMP=C:\Users\zby\AppData\Local\Temp</value>
-    <value type="QString">USERDOMAIN=zby-lap2</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-uM5abqvYk2,guid=0e960c3c07d06238a800a2bf4cc3f466</value>
+    <value type="QString">DEFAULTS_PATH=/usr/share/gconf/gnome.default.path</value>
+    <value type="QString">DESKTOP_SESSION=gnome</value>
+    <value type="QString">DISPLAY=:0.0</value>
+    <value type="QString">GDMSESSION=gnome</value>
+    <value type="QString">GDM_KEYBOARD_LAYOUT=pl</value>
+    <value type="QString">GDM_LANG=pl_PL.utf8</value>
+    <value type="QString">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</value>
+    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-pEeJPC</value>
+    <value type="QString">GNOME_KEYRING_PID=1599</value>
+    <value type="QString">GTK_MODULES=canberra-gtk-module</value>
+    <value type="QString">HOME=/home/zby</value>
+    <value type="QString">LANG=pl_PL.utf8</value>
+    <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator</value>
+    <value type="QString">LOGNAME=zby</value>
+    <value type="QString">MANDATORY_PATH=/usr/share/gconf/gnome.mandatory.path</value>
+    <value type="QString">ORBIT_SOCKETDIR=/tmp/orbit-zby</value>
+    <value type="QString">PATH=/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games</value>
+    <value type="QString">PWD=/home/zby</value>
+    <value type="QString">QTDIR=/usr/share/qt4</value>
+    <value type="QString">SESSION_MANAGER=local/zby-laptop2:@/tmp/.ICE-unix/1617,unix/zby-laptop2:/tmp/.ICE-unix/1617</value>
+    <value type="QString">SHELL=/bin/bash</value>
+    <value type="QString">SPEECHD_PORT=7560</value>
+    <value type="QString">SSH_AGENT_PID=1651</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/keyring-pEeJPC/ssh</value>
+    <value type="QString">USER=zby</value>
     <value type="QString">USERNAME=zby</value>
-    <value type="QString">USERPROFILE=C:\Users\zby</value>
-    <value type="QString">VS100COMNTOOLS=D:\Program Files\Microsoft Visual Studio 10.0\Common7\Tools\</value>
-    <value type="QString">VS90COMNTOOLS=C:\Program Files\Microsoft Visual Studio 9.0\Common7\Tools\</value>
-    <value type="QString">WINDIR=C:\windows</value>
+    <value type="QString">XAUTHORITY=/var/run/gdm/auth-for-zby-XTIiBC/database</value>
+    <value type="QString">XDG_CONFIG_DIRS=/etc/xdg/xdg-gnome:/etc/xdg</value>
+    <value type="QString">XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share/:/usr/share/</value>
+    <value type="QString">XDG_SESSION_COOKIE=ae92a9db0ead892a86ddc3794bf59db0-1287910502.499059-1097391914</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
-    <value type="QString">C:/Users/zby/qtWorkspace/CR-svn/ConflictResolver.pro</value>
+    <value type="QString">/home/zby/qtWorkspace/ConflictResolver/ConflictResolver.pro</value>
     <value type="QString">-spec</value>
-    <value type="QString">win32-g++</value>
+    <value type="QString">linux-g++</value>
     <value type="QString">-r</value>
-    <value type="QString">CONFIG+=release</value>
    </valuelist>
-   <value key="abstractProcess.command" type="QString">c:/qt/2009.05/qt/bin/qmake.exe</value>
+   <value key="abstractProcess.command" type="QString">/usr/bin/qmake-qt4</value>
    <value key="abstractProcess.enabled" type="bool">false</value>
-   <value key="abstractProcess.workingDirectory" type="QString">C:/Users/zby/qtWorkspace/CR-svn</value>
+   <value key="abstractProcess.workingDirectory" type="QString">/home/zby/qtWorkspace/ConflictResolver</value>
   </valuemap>
  </data>
  <data>
@@ -286,50 +273,45 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Release</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">ALLUSERSPROFILE=C:\ProgramData</value>
-    <value type="QString">APPDATA=C:\Users\zby\AppData\Roaming</value>
-    <value type="QString">CLASSPATH=.;C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
-    <value type="QString">COMMONPROGRAMFILES=C:\Program Files\Common Files</value>
-    <value type="QString">COMPUTERNAME=ZBY-LAP2</value>
-    <value type="QString">COMSPEC=C:\windows\system32\cmd.exe</value>
-    <value type="QString">FP_NO_HOST_CHECK=NO</value>
-    <value type="QString">HOMEDRIVE=C:</value>
-    <value type="QString">HOMEPATH=\Users\zby</value>
-    <value type="QString">LOCALAPPDATA=C:\Users\zby\AppData\Local</value>
-    <value type="QString">LOGONSERVER=\\ZBY-LAP2</value>
-    <value type="QString">NUMBER_OF_PROCESSORS=4</value>
-    <value type="QString">OS=Windows_NT</value>
-    <value type="QString">PATH=C:\Qt\2009.05\mingw\bin;C:\Qt\2009.05\qt\bin;C:\Program Files\MiKTeX 2.8\miktex\bin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\WIDCOMM\Bluetooth Software\;C:\Program Files\Microsoft SQL Server\90\Tools\binn\;C:\MinGW\bin;C:\Program Files\Samsung\Samsung PC Studio 3\;C:\Program Files\MySQL\MySQL Server 5.1\bin;C:\Boost\lib;C:\Boost\include\boost-1_43;C:\Boost\include;C:\Program Files\TortoiseSVN\bin;C:\Qt\2010.03\qt\bin;C:\Program Files\QuickTime\QTSystem\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;C:\Users\zby\AppData\Roaming\MiKTeX\2.8\miktex\bin\</value>
-    <value type="QString">PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</value>
-    <value type="QString">PROCESSOR_ARCHITECTURE=x86</value>
-    <value type="QString">PROCESSOR_IDENTIFIER=x86 Family 6 Model 37 Stepping 2, GenuineIntel</value>
-    <value type="QString">PROCESSOR_LEVEL=6</value>
-    <value type="QString">PROCESSOR_REVISION=2502</value>
-    <value type="QString">PROGRAMDATA=C:\ProgramData</value>
-    <value type="QString">PROGRAMFILES=C:\Program Files</value>
-    <value type="QString">PSMODULEPATH=C:\windows\system32\WindowsPowerShell\v1.0\Modules\</value>
-    <value type="QString">PUBLIC=C:\Users\Public</value>
-    <value type="QString">QTDIR=C:/Qt/2009.05/qt</value>
-    <value type="QString">QTJAVA=C:\Program Files\Java\jre6\lib\ext\QTJava.zip</value>
-    <value type="QString">SESSIONNAME=Console</value>
-    <value type="QString">SYSTEMDRIVE=C:</value>
-    <value type="QString">SYSTEMROOT=C:\windows</value>
-    <value type="QString">TEMP=C:\Users\zby\AppData\Local\Temp</value>
-    <value type="QString">TMP=C:\Users\zby\AppData\Local\Temp</value>
-    <value type="QString">USERDOMAIN=zby-lap2</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-uM5abqvYk2,guid=0e960c3c07d06238a800a2bf4cc3f466</value>
+    <value type="QString">DEFAULTS_PATH=/usr/share/gconf/gnome.default.path</value>
+    <value type="QString">DESKTOP_SESSION=gnome</value>
+    <value type="QString">DISPLAY=:0.0</value>
+    <value type="QString">GDMSESSION=gnome</value>
+    <value type="QString">GDM_KEYBOARD_LAYOUT=pl</value>
+    <value type="QString">GDM_LANG=pl_PL.utf8</value>
+    <value type="QString">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</value>
+    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-pEeJPC</value>
+    <value type="QString">GNOME_KEYRING_PID=1599</value>
+    <value type="QString">GTK_MODULES=canberra-gtk-module</value>
+    <value type="QString">HOME=/home/zby</value>
+    <value type="QString">LANG=pl_PL.utf8</value>
+    <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator</value>
+    <value type="QString">LOGNAME=zby</value>
+    <value type="QString">MANDATORY_PATH=/usr/share/gconf/gnome.mandatory.path</value>
+    <value type="QString">ORBIT_SOCKETDIR=/tmp/orbit-zby</value>
+    <value type="QString">PATH=/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games</value>
+    <value type="QString">PWD=/home/zby</value>
+    <value type="QString">QTDIR=/usr/share/qt4</value>
+    <value type="QString">SESSION_MANAGER=local/zby-laptop2:@/tmp/.ICE-unix/1617,unix/zby-laptop2:/tmp/.ICE-unix/1617</value>
+    <value type="QString">SHELL=/bin/bash</value>
+    <value type="QString">SPEECHD_PORT=7560</value>
+    <value type="QString">SSH_AGENT_PID=1651</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/keyring-pEeJPC/ssh</value>
+    <value type="QString">USER=zby</value>
     <value type="QString">USERNAME=zby</value>
-    <value type="QString">USERPROFILE=C:\Users\zby</value>
-    <value type="QString">VS100COMNTOOLS=D:\Program Files\Microsoft Visual Studio 10.0\Common7\Tools\</value>
-    <value type="QString">VS90COMNTOOLS=C:\Program Files\Microsoft Visual Studio 9.0\Common7\Tools\</value>
-    <value type="QString">WINDIR=C:\windows</value>
+    <value type="QString">XAUTHORITY=/var/run/gdm/auth-for-zby-XTIiBC/database</value>
+    <value type="QString">XDG_CONFIG_DIRS=/etc/xdg/xdg-gnome:/etc/xdg</value>
+    <value type="QString">XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share/:/usr/share/</value>
+    <value type="QString">XDG_SESSION_COOKIE=ae92a9db0ead892a86ddc3794bf59db0-1287910502.499059-1097391914</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
     <value type="QString">-w</value>
    </valuelist>
-   <value key="abstractProcess.command" type="QString">C:/Qt/2009.05/mingw/bin/mingw32-make.exe</value>
+   <value key="abstractProcess.command" type="QString">/usr/bin/make</value>
    <value key="abstractProcess.enabled" type="bool">true</value>
-   <value key="abstractProcess.workingDirectory" type="QString">C:/Users/zby/qtWorkspace/CR-svn</value>
+   <value key="abstractProcess.workingDirectory" type="QString">/home/zby/qtWorkspace/ConflictResolver</value>
   </valuemap>
  </data>
  <data>

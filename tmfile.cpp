@@ -9,6 +9,10 @@ TMFile::TMFile(QObject *parent) :
 {
 }
 
+TMHeader TMFile::header() const
+{
+    return this->_rheader;
+}
 
 /**
   *

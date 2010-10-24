@@ -7,6 +7,18 @@ TMHeader::TMHeader(QObject *parent) :
     _recordsCount = 0;
 }
 
+TMHeader::TMHeader(const TMHeader& another) :
+    QObject(another.parent())
+{
+    _dt = another._dt;
+    _tdt = another._tdt;
+    _authors = another._authors;
+    _recordsCount = another._recordsCount;
+    _sourceCode = another._sourceCode;
+    _comment = another._comment;
+    _targetCode = another._targetCode;
+    _rest = another._rest;
+}
 
 // Example headers
 // %20100422~120101	%+A!	%TU=00000308	%EN	%Wordfast translation memory version v.5	%PL

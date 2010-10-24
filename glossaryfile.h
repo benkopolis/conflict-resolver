@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QDate>
 #include "conflictrecord.h"
+#include "tmheader.h"
 
 class FileMerger;
 
@@ -21,6 +22,7 @@ public:
     explicit GlossaryFile(QObject *parent = 0);
 
     virtual bool processWithTabs(QFile & file) ;
+    virtual TMHeader header() const;
 
     bool isDateTime(const QString& str, QDate* date, QTime* time) const;
     inline QMultiHash<FuzzyStrings, ContentRecord* > * content() { return _content; }

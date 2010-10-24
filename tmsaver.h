@@ -21,8 +21,10 @@ public:
     explicit TMSaver(QObject *parent = 0);
 
 
-    virtual bool saveContent(QString& file, TMHeader& rheader, QMultiHash<FuzzyStrings, ContentRecord* >& conflicts, unsigned all);
+    virtual bool saveContent(const QString& file, TMHeader& rheader, QMultiHash<FuzzyStrings, ContentRecord* >& conflicts, unsigned all);
     virtual bool saveReversedContent(const QString& file, TMHeader& rheader, QMultiHash<FuzzyStrings, ContentRecord* >& conflicts, unsigned all);
+    virtual bool saveContent(QTextStream& bufor, TMHeader& rheader, QMultiHash<FuzzyStrings, ContentRecord* >& conflicts, unsigned all);
+    virtual bool saveReversedContent(QTextStream& bufor, TMHeader& rheader, QMultiHash<FuzzyStrings, ContentRecord* >& conflicts, unsigned all);
 
 signals:
 
