@@ -5,6 +5,7 @@
 #include <QRect>
 #include <QFontMetrics>
 #include <QStringList>
+#include "fuzzystrings.h"
 
 class ContentRecord : public QObject
 {
@@ -19,10 +20,17 @@ public:
 
     inline unsigned lineNumber() const { return _lineNumber; };
     inline void setLineNumber(unsigned lineNumber) { _lineNumber = lineNumber; }
-    inline QString source() const { return _source; };
-    inline void setSource(const QString & source ) { _source = source; };
-    inline QString target() const { return _target; };
-    inline void setTarget( const QString & target ) { _target = target; };
+
+    inline QString source() const { return _source.base(); };
+    inline void setSource(const QString & source ) { _source = FuzzyStrings(source); };
+    inline QString target() const { return _target.base(); };
+    inline void setTarget( const QString & target ) { _target = FuzzyStrings(target); };
+
+    inline FuzzyStrings sourceF() const { return _source; };
+    inline void setSourceF(const QString & source ) { _source = (source); };
+    inline FuzzyStrings targetF() const { return _target; };
+    inline void setTargetF( const QString & target ) { _target = (target); };
+
     inline QString comment() const { return _comment; }
     inline void setComment( const QString & comment) { _comment = comment; }
 
@@ -62,8 +70,8 @@ protected:
     unsigned _lineNumber;
     QFontMetrics _metrics;
 
-    QString _source;
-    QString _target;
+    FuzzyStrings _source;
+    FuzzyStrings _target;
     QString _comment;
     ConflictStatus _status;
 
