@@ -11,8 +11,8 @@ public:
 
     inline static IniFile* instance() { if(!_iniFile) _iniFile=new IniFile(); return _iniFile; }
 
-    void saveIniFile();
-    void readIniFile();
+    bool saveIniFile();
+    bool readIniFile();
 
 
     QString m_iniFileDir;
@@ -26,6 +26,7 @@ public:
     QString m_translatorsFile;
     QString m_disciplinesFile;
     QString m_regex;
+    unsigned m_fval;
 
 signals:
 
