@@ -28,9 +28,10 @@ signals:
 
 public slots:
 
-    void onConflictCount(unsigned count);
+    void onConflictCount(unsigned count, unsigned dup);
     void onTotalRecords(unsigned count);
     void onCorrupted(unsigned count);
+    void onFuzzyCount(unsigned count);
 
 protected:
     void changeEvent(QEvent *e);
@@ -39,6 +40,8 @@ private:
     Ui::ContentManagerWindow *ui;
     ConflictResolverWindow* _crw;
     ContentModel* _content;
+    unsigned _conflicts;
+    unsigned _fuzzy;
 
 private slots:
     void on__checkDict_clicked();

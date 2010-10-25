@@ -31,16 +31,10 @@ bool GlossaryFile::processWithTabs(QFile & file) {
     QTextStream dstream(&dump);
     QString temp, text;
     ContentRecord* tmr=0;
-    QRegExp rexp(IniFile::instance()->m_regex, Qt::CaseInsensitive);
     bool con = false;
     QChar tab('\t'), nl('\n'), tempChar;
     while(!f.atEnd()) { // czytaj linie w pliku
 	QString line(f.readLine());
-	if(line.contains(rexp) == false) {
-	    dstream << line << endl;
-	    ++_corrupted;
-	    continue;
-	}
 	QTextStream iline(&line);
 	tmr = new ContentRecord(this);
 	do {
@@ -57,7 +51,6 @@ bool GlossaryFile::processWithTabs(QFile & file) {
 	    }
 	} while(tempChar != tab);
 	if(con) continue;
-	text = correctText(text);
 	if(validateText(text) == false) {
 	    ++_corrupted;
 	    dstream << line << endl;
@@ -73,13 +66,7 @@ bool GlossaryFile::processWithTabs(QFile & file) {
 	    iline >> temp;
 	    text = text.append(temp);
 	    iline >> tempChar;
-	    if(tempChar == tab){
-		++_corrupted;
-		dstream << line << endl;
-		con = true;
-		break;
-	    }
-	} while(iline.atEnd() == false || tempChar != tab);
+	} while(iline.atEnd() == false && tempChar != tab);
 	if(con) continue;
 	if(validateText(text) == false) {
 	    ++_corrupted;

@@ -125,6 +125,7 @@ bool ContentModel::addFile(QString fileName) {
         gf = new GlossaryFile(this);
     res = gf->processWithTabs(file);
     file.close();
+    _corrupted += gf->corrupted();
     this->_openedFiles.insert(fileName, gf);
     if(_mainFile == 0)
 	_mainFile = gf;
@@ -135,10 +136,15 @@ bool ContentModel::addFile(QString fileName) {
 	    return false;
 	_mainFile = tmp_gf;
     }
+    if(_mainFile != 0)
+	_merger.findInnerConflicts(_mainFile);
+    else
+	return false;
     _currentList = _conflicts.begin();
     emit totalRecords(_mainFile->allCount());
     emit corruptedCount(_mainFile->corrupted());
     emit fuzzyCount(_merger.fuzzyCount());
+    emit conflictsCount(_merger.conflictsCount(), _merger.duplicatedCount());
     return res;
 }
 
@@ -436,7 +442,7 @@ void ContentModel::countConflicts() {
 	    ++_conflictsCount;
 	}
     }
-    emit conflictsCount(_conflictsCount);
+    emit conflictsCount(_merger.conflictsCount(), _merger.duplicatedCount());
 }
 
 /**

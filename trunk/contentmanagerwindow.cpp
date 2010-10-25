@@ -24,13 +24,14 @@ ContentManagerWindow::ContentManagerWindow(const QStringList& files, ContentMode
     ui->setupUi(this);
     ui->_filterContent->setEnabled(false);
     _content = new ContentModel(type);
-    QObject::connect(_content, SIGNAL(conflictsCount(uint)), this, SLOT(onConflictCount(uint)));
+    QObject::connect(_content, SIGNAL(conflictsCount(uint,uint)), this, SLOT(onConflictCount(uint,uint)));
     QObject::connect(_content, SIGNAL(totalRecords(uint)), this, SLOT(onTotalRecords(uint)));
     _crw = 0;
     setWindowTitle(QString("TMs & Glossaries Manager::Content Manager Window"));
     QObject::connect(this, SIGNAL(requestFiltration()), _content, SLOT(filterContent()));
     QObject::connect(this, SIGNAL(requestSaveDump(QString)), _content, SLOT(onRequestSaveDump(QString)));
     QObject::connect(this->_content, SIGNAL(corruptedCount(uint)), this, SLOT(onCorrupted(uint)));
+    QObject::connect(_content, SIGNAL(fuzzyCount(uint)), this, SLOT(onFuzzyCount(uint)));
 }
 
 void ContentManagerWindow::setRH(int row, int height) {
@@ -54,21 +55,35 @@ void ContentManagerWindow::changeEvent(QEvent *e)
     }
 }
 
-void ContentManagerWindow::onConflictCount(unsigned count) {
-    this->ui->_conflictsCount->setText(QString::number(count, 10));
+void ContentManagerWindow::onConflictCount(unsigned count, unsigned dup)
+{
+    QString text = QString::number(count, 10);
+    text.append("(");
+    text.append(QString::number(dup, 10));
+    text.append(")");
+    this->ui->_conflictsCount->setText(text);
+    _conflicts = count;
 }
 
-void ContentManagerWindow::onTotalRecords(unsigned count) {
+void ContentManagerWindow::onTotalRecords(unsigned count)
+{
     this->ui->_totalCount->setText(QString::number(count, 10));
 }
 
-void ContentManagerWindow::onCorrupted(unsigned count) {
+void ContentManagerWindow::onCorrupted(unsigned count)
+{
     this->ui->_corrupted->setText(QString::number(count, 10));
+}
+
+void ContentManagerWindow::onFuzzyCount(unsigned count)
+{
+    this->ui->_fuzzyConflictsCount->setText(QString::number(count, 10));
+    _fuzzy = count;
 }
 
 void ContentManagerWindow::on__resolveConflicts_clicked()
 {
-    if(_content->contentSize() != 0 ) {
+    if(_conflicts != 0 || _fuzzy != 0) {
 	_content->sort();
 	_crw = new ConflictResolverWindow(_content, this);
 	int w, h, x, y;
@@ -76,8 +91,8 @@ void ContentManagerWindow::on__resolveConflicts_clicked()
 	_crw->setGeometry(x+10, y+20, w, h+50);
 	_crw->show();
     } else if(_content->dumpSize() == 0) {
-	QMessageBox::critical(this, QString("Uwaga!"), QString("Nie ma zadnej tresci!"));
-	this->close();
+	QMessageBox::critical(this, QString("Uwaga!"), QString("Nie ma zadnej tresci lub brak konfliktow!"));
+//	this->close();
     } else {
 	QMessageBox::critical(this, QString("Uwaga!"), QString("Rekordy odlozone na pozniej zostana zapisane.\n"
 							       "Innej tresci nie ma - okno zostanie zamkniete"));

@@ -79,7 +79,7 @@ public:
 
 signals:
 
-    void conflictsCount(unsigned count);
+    void conflictsCount(unsigned count, unsigned dup);
     void fuzzyCount(unsigned count);
     void totalRecords(unsigned count);
     void corruptedCount(unsigned count);

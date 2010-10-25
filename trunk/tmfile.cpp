@@ -32,10 +32,12 @@ bool  TMFile::processWithTabs(QFile & file) {
     QDate d;
     QTime t;
     QRegExp rexp(IniFile::instance()->m_regex, Qt::CaseInsensitive);
+    if(IniFile::instance()->m_regex.startsWith("(?:") == false)
+	rexp.setPattern("(?:[0-9]{8,8}~[0-9]{6,6}\t*[0-9]{1,}\t*\t*\t*\t*)");
     QChar tab('\t'), nl('\n'), tempChar;
     while(!f.atEnd()) { // czytaj linie w pliku
 	QString line(f.readLine());
-	if(line.contains(rexp) == false) {
+	if(line.contains(rexp) == false  && IniFile::instance()->m_regex.isEmpty() == false) {
 	    dstream << line << endl;
 	    ++_corrupted;
 	    continue;
