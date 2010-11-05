@@ -139,14 +139,16 @@ bool GlossaryFile::validateText(const QString& text)
 {
     if(text.isEmpty())
 	return false;
+    QRegExp ampCount("(&)");
     QRegExp numCount("([0-9])");
     QRegExp wsCount("(\\s)");
     QRegExp nonCount("(\\W|\\.|,|\\:|;)");
-    int cc=0, wc=0, nc=0;
+    int cc=0, wc=0, nc=0, ac=0;
     cc =  getCapCount(numCount, text);
     wc = getCapCount(wsCount, text);
     nc = getCapCount(nonCount, text);
-    int badness = cc + wc + nc;
+    ac = getCapCount(ampCount, text);
+    int badness = cc + wc + nc -ac;
     if(badness > text.length()/2)
 	return false;
     return true;
