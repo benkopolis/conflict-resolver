@@ -3,6 +3,8 @@
 # -------------------------------------------------
 QT += gui
 QT += testlib
+QT += xml
+QT += xmlpatterns
 TARGET = ConflictResolver
 TEMPLATE = app
 SOURCES += main.cpp \
@@ -30,7 +32,10 @@ SOURCES += main.cpp \
     conflictscontainer.cpp \
     conflictrecord.cpp \
     tests/filemergertests.cpp \
-    tests/glossaryfiletests.cpp
+    tests/glossaryfiletests.cpp \
+    tmxfile.cpp \
+    tmxrecord.cpp \
+    tests/tmfiletests.cpp
 HEADERS += mainwindow.h \
     contentmanagerwindow.h \
     conflictresolverwindow.h \
@@ -56,7 +61,10 @@ HEADERS += mainwindow.h \
     conflictrecord.h \
     tests/filemergertests.h \
     tests/glossaryfiletests.h \
-    tests/Tests.h
+    tests/Tests.h \
+    tmxfile.h \
+    tmxrecord.h \
+    tests/tmfiletests.h
 FORMS += mainwindow.ui \
     contentmanagerwindow.ui \
     conflictresolverwindow.ui \

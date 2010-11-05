@@ -25,6 +25,7 @@ private slots:
 
     void validateTest();
     void correctTest();
+    void parseTest();
 
 private:
 
