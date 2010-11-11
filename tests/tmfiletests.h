@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QtTest/QtTest>
 #include "tmfile.h"
+#include "Tests.h"
 
 class TMFileTests : public QObject
 {
@@ -27,5 +28,7 @@ private:
     TMFile *_gloss;
 
 };
+
+DECLARE_TEST(TMFileTests)
 
 #endif // TMFILETESTS_H

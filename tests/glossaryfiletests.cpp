@@ -7,7 +7,7 @@ GlossaryFileTests::GlossaryFileTests(QObject *parent) :
 
 void GlossaryFileTests::initTestCase()
 {
-    qDebug() << "BEGIN TM FILE TESTS";
+    qDebug() << "BEGIN GLOSSARY FILE TESTS";
 }
 
 void GlossaryFileTests::init()
@@ -29,7 +29,7 @@ void GlossaryFileTests::cleanup()
 
 void GlossaryFileTests::cleanupTestCase()
 {
-    qDebug() << "END TM FILE TESTS";
+    qDebug() << "END GLOSSARY FILE TESTS";
 }
 
 void GlossaryFileTests::validateTest()

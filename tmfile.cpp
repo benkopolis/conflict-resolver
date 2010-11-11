@@ -88,6 +88,7 @@ bool  TMFile::processWithTabs(QFile & file) {
 	    }
 	} while(tempChar != tab);
 	if(con) continue;
+	text = correctText(text);
 	if(validateText(text) == false) {
 	    ++_corrupted;
 	    dstream << line << endl;
@@ -111,13 +112,14 @@ bool  TMFile::processWithTabs(QFile & file) {
 	    text = text.append(temp);
 	    iline >> tempChar;
 	    if(tempChar == tab){
-		++_corrupted;
-		dstream << line << endl;
-		con = true;
+//		++_corrupted;
+//		dstream << line << endl;
+//		con = true;
 		break;
 	    }
 	} while(iline.atEnd() == false);
 	if(con) continue;
+	text = correctText(text);
 	if(validateText(text) == false) {
 	    ++_corrupted;
 	    dstream << line << endl;
@@ -137,6 +139,6 @@ bool  TMFile::processWithTabs(QFile & file) {
 /**
   *
   */
-void TMFile::processHeader() {
-    _rheader.readHeader(_header);
+bool TMFile::processHeader() {
+    return _rheader.readHeader(_header);
 }

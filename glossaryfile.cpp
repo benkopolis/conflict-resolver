@@ -57,6 +57,7 @@ bool GlossaryFile::processWithTabs(QFile & file) {
 	    text.clear();
 	    continue;
 	}
+	text = this->correctText(text);
 	tmr->setSource(text);
 	text.clear();
 	tempChar = QChar();
@@ -68,6 +69,7 @@ bool GlossaryFile::processWithTabs(QFile & file) {
 	    iline >> tempChar;
 	} while(iline.atEnd() == false && tempChar != tab);
 	if(con) continue;
+	text = this->correctText(text);
 	if(validateText(text) == false) {
 	    ++_corrupted;
 	    dstream << line << endl;
@@ -115,21 +117,17 @@ bool GlossaryFile::saveReversedContent(QString file) {
 
 QString GlossaryFile::correctText(const QString& text)
 {
-    qDebug() << "in: " << text;
     QRegExp space(QString("(?:\\s)"));
     QString cleared = removeMultiple(text);
-    qDebug() << "cleared: " << cleared;
     QStringList words = cleared.split(space);
     QString res;
     foreach(QString s, words)
     {
-        qDebug() << "before replace: " << s;
         QString tmp = replaceSplitters(s);
-        qDebug() << "after replace: " << tmp;
         res.append(tmp);
         res.append(QChar(' '));
     }
-    res.trimmed();
+    res = res.trimmed();
     res.replace(QRegExp("(?:\\s{2,})"), QString(" "));
     qDebug() << "out: " << res;
     return res;
@@ -148,7 +146,7 @@ bool GlossaryFile::validateText(const QString& text)
     wc = getCapCount(wsCount, text);
     nc = getCapCount(nonCount, text);
     ac = getCapCount(ampCount, text);
-    int badness = cc + wc + nc -ac;
+    int badness = cc - wc + nc -ac;
     if(badness > text.length()/2)
 	return false;
     return true;
@@ -241,4 +239,9 @@ bool GlossaryFile::isDateTime(const QString& str, QDate* date, QTime* time) cons
     if(time != 0)
 	time->setHMS(h, min, s);
     return true;
+}
+
+bool GlossaryFile::processHeader()
+{
+    return false;
 }

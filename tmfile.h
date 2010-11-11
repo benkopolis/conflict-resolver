@@ -13,13 +13,15 @@ public:
     virtual bool processWithTabs(QFile & file) ;
     virtual TMHeader header() const;
 
-    void processHeader();
-
 signals:
 
 public slots:
 
 protected:
+
+    virtual bool processHeader();
+
+
     TMHeader _rheader;
 };
 
