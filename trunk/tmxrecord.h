@@ -3,9 +3,9 @@
 
 #include <QtXmlPatterns>
 #include <QtXml>
-#include "contentrecord.h"
+#include "tmrecord.h"
 
-class TMXRecord : public ContentRecord
+class TMXRecord : public TMRecord
 {
 Q_OBJECT
 public:

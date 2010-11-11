@@ -2,6 +2,7 @@
 #include "inifile.h"
 #include <QStack>
 #include <QTextStream>
+#include <QDebug>
 #include <QDateTime>
 #include "tmsaver.h"
 
@@ -64,6 +65,8 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
     foreach(FuzzyStrings fs, keys)
     {
         findDuplicated(fs, it);
+	qDebug() << fs.base();
+	qDebug() << (fs.base() == "&tA;Udzia³ operatorów alternatywnych pod wzglêdem przychodów z po³¹czeñ miêdzystrefowych by³ wy¿szy ni¿ w przypadku po³¹czeñ lokalnych.");
     }
     for(outer = it->_content->begin();outer != it->_content->end();++outer)
     {
@@ -71,8 +74,16 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
             if(inner == outer)
                 ++inner;
             if(inner == it->_content->end())
-                break;
-            foreach(ConflictRecord* confr, it->_conflicts->values(outer.key()))
+		break;
+	    ContentRecord* rinner = inner.value();
+	    ContentRecord* router = outer.value();
+	    if(rinner->sourceF().similarity(router->sourceF()) > 75)
+	    {
+		ConflictRecord* conr = new ConflictRecord();
+		conr->addRecord(rinner);
+		conr->addRecord(router);
+	    }
+	    foreach(ConflictRecord* confr, it->_conflicts->values(outer.key()))
             {
                 if(confr->recordMatch(inner.value()))
                 {

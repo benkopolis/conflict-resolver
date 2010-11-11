@@ -13,7 +13,7 @@ FuzzyStrings::FuzzyStrings(QObject *parent) :
 
 FuzzyStrings::FuzzyStrings(const QString& aBase, QObject *parent) :
     QObject(parent),
-    _base(aBase)
+    _base(aBase.trimmed())
 {
 }
 

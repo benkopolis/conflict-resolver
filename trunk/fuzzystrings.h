@@ -37,7 +37,7 @@ public:
     /**
       * Pozwala ustawic bazowy string.
       */
-    inline void setBase(const QString& aBase) { _base = aBase; };
+    inline void setBase(const QString& aBase) { _base = aBase.trimmed(); };
 
     bool operator == (const FuzzyStrings& another) const;
     FuzzyStrings& operator = (const FuzzyStrings& another);

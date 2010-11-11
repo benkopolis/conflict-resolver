@@ -49,6 +49,8 @@ public slots:
 
 protected:
 
+    virtual bool processHeader();
+
     enum Splitters {
         Dot=0,
         Coma=1,

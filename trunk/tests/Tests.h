@@ -1,7 +1,7 @@
 #ifndef TESTS_H
 #define TESTS_H
 
-#define ZBY_DEBUG 1
+#define ZBY_DEBUG 0
 
 #include <QTest>
 #include <QList>
