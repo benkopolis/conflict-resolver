@@ -103,6 +103,7 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
 void FileMerger::findDuplicated(const FuzzyStrings& key, GlossaryFile * it)
 {
     const QList<ContentRecord* > vals = it->_content->values(key);
+    qDebug() << "ilosc tych samych wartosci: " << vals.size();
     QMultiHash<FuzzyStrings, ContentRecord* > toRemove;
     for(QList<ContentRecord* >::const_iterator ii = vals.begin(); ii != vals.end(); ++ii)
     {
@@ -119,14 +120,22 @@ void FileMerger::findDuplicated(const FuzzyStrings& key, GlossaryFile * it)
                 }
                 else
                 {
+		    bool none = true;
                     foreach(ConflictRecord* confr, it->_conflicts->values(key))
                     {
                         if(confr->recordMatch(*jj))
                         {
+			    none = false;
                             confr->addRecord(*jj);
                             ++_conflictsCount;
-                        }
+			}
                     }
+		    if(none)
+		    {
+			ConflictRecord* confr = new ConflictRecord();
+			confr->addRecord(*jj);
+			confr->addRecord(*ii);
+		    }
                 }
             }
         }
