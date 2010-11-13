@@ -99,12 +99,6 @@ bool ContentModel::setData ( const QModelIndex & index, const QVariant & value, 
     return false;
 }
 
-/**
-  *
-  */
-ContentRecord* ContentModel::realData(const QModelIndex& index) {
-    return (*_sortedList).at(index.row()/2);
-}
 
 /**
   *
@@ -140,33 +134,11 @@ bool ContentModel::addFile(QString fileName) {
 	_merger.findInnerConflicts(_mainFile);
     else
 	return false;
-    _currentList = _conflicts.begin();
     emit totalRecords(_mainFile->allCount());
     emit corruptedCount(_mainFile->corrupted());
     emit fuzzyCount(_merger.fuzzyCount());
     emit conflictsCount(_merger.conflictsCount(), _merger.duplicatedCount());
     return res;
-}
-
-
-QList<QRect> ContentModel::itemsSourceRects(const QModelIndex& index) {
-    return (*_sortedList).at(index.row())->sourceRects();
-}
-
-QStringList ContentModel::itemsSourceStrings(const QModelIndex& index) {
-    return (*_sortedList).at(index.row())->sourceStrings();
-}
-
-QList<QRect> ContentModel::itemsTargetRects(const QModelIndex& index) {
-    return (*_sortedList).at(index.row())->targetRects();
-}
-
-QStringList ContentModel::itemsTargetStrings(const QModelIndex& index) {
-    return (*_sortedList).at(index.row())->targetStrings();
-}
-
-QRect ContentModel::itemsRect(const QModelIndex& index) {
-    return (*_sortedList).at(index.row())->boundingRect();
 }
 
 
@@ -224,27 +196,13 @@ bool ContentModel::checkWithAntiDict(QString dict, bool s, bool t, QString dutie
   *
   */
 void ContentModel::unsort() {
-    QMultiMap<int, QList<ContentRecord* > >::iterator iter = _sortedConflicts.begin();
-    _conflicts.clear();
-    while(iter != _sortedConflicts.end()) {
-	FuzzyStrings fs(iter->at(0)->source());
-	_conflicts.insert(fs, *iter);
-	++iter;
-    }
-    _currentList = _conflicts.begin();
 }
 
 /**
   *
   */
 void ContentModel::sort() {
-    QHash<FuzzyStrings, QList<ContentRecord* > >::iterator hashIter = _conflicts.begin();
-    _sortedConflicts.clear();
-    while(hashIter != _conflicts.end()) {
-	_sortedConflicts.insertMulti(0 - hashIter->size(), *hashIter);
-	++hashIter;
-    }
-    _sortedList = _sortedConflicts.begin();
+
 }
 
 bool ContentModel::saveContent(QString file) {
@@ -260,20 +218,6 @@ bool ContentModel::saveReversedContent(QString file) {
     if(_mainFile == 0)
         return false;
     return _mainFile->saveReversedContent(file);
-}
-
-/**
-  *
-  */
-void ContentModel::onRequestItemToCountRects(const QRect& rect) {
-    QList<ContentRecord* >::iterator ii = _sortedList->begin();
-    int i = 0;
-    while(ii != _sortedList->end()) {
-	ContentRecord* r = *ii;
-	r->countDrawDate(QFontMetrics(QString("Courier New")), rect, i);
-	++ii;
-	i += r->boundingRect().height();
-    }
 }
 
 /**
@@ -307,102 +251,6 @@ void ContentModel::filterContent() {
 
 /**
   *
-  */
-void ContentModel::onNext() {
-    emit dataChanged(this->index(0, 0), this->index((*_sortedList).size()*2-1, 0));
-    if(_sortedList != _sortedConflicts.end())
-	++_sortedList;
-    if(_sortedList == _sortedConflicts.end()) {
-	--_sortedList;
-	return;
-    }
-    emit dataChanged(this->index(0, 0), this->index((*_sortedList).size()*2-1, 0));
-}
-
-/**
-  *
-  */
-void ContentModel::onPrev() {
-    emit dataChanged(this->index(0, 0), this->index((*_sortedList).size()*2-1, 0));
-    if(_sortedList != _sortedConflicts.begin()) {
-	--_sortedList;
-	emit dataChanged(this->index(0, 0), this->index((*_sortedList).size()*2-1, 0));
-    }
-}
-
-/**
-  *
-  */
-void ContentModel::selectOnClick(const QModelIndex& index) {
-    QModelIndex tmp = _selected;
-    _selected = index;
-    emit dataChanged(tmp, tmp);
-    emit dataChanged(_selected, _selected);
-}
-
-/**
-  *
-  */
-void ContentModel::forceBegin() {
-    _sortedList = _sortedConflicts.begin();
-    emit dataChanged(this->index(0, 0), this->index((*_sortedList).size()*2-1, 0));
-}
-
-/**
-  *
-  */
-void ContentModel::onRequestRowDeletion(const QModelIndex& index) {
-    (*_currentList).removeAt(index.row()/2);
-    emit dataChanged(index, index);
-}
-
-/**
-  *
-  */
-void ContentModel::onRequestAllDeletion() {
-    QList<ContentRecord* >::iterator fd = (*_sortedList).begin();
-    while(!(*_sortedList).isEmpty())
-	fd = (*_sortedList).erase(fd);
-    _sortedList = _sortedConflicts.erase(_sortedList);
-    emit dataChanged(this->index(0, 0), this->index((*_sortedList).size()*2-1, 0));
-}
-
-/**
-  * Slot wolany, gdy cos ma byc odlozone na poxniej
-  */
-void ContentModel::onRequestDump() {
-   QList<ContentRecord* > list = *_sortedList;
-   QMultiMap<int, QList<ContentRecord* > >::iterator tmp = _sortedList;
-   _dump.append(list);
-   ++tmp;
-   if(tmp == _sortedConflicts.end()) {
-       this->onPrev();
-   } else
-       this->onNext();
-   --tmp;
-   _sortedConflicts.erase(tmp);
-}
-
-/**
-  *
-  */
-void ContentModel::onRequestDuplicatedDeletion() {
-    QList<ContentRecord* >::iterator fd = (*_sortedList).begin();
-    QList<ContentRecord* >::iterator look;
-    while(fd != (*_sortedList).end()) {
-	look = fd;
-	++look;
-	for(; look != (*_sortedList).end(); ) {
-	    if(QString::compare((*fd)->target(), (*look)->target()) == 0) {
-		look = (*_sortedList).erase(look);
-	    } else ++look;
-	}
-	++fd;
-    }
-}
-
-/**
-  *
   *	PRIVATE METHODS
   *
   */
@@ -423,26 +271,7 @@ bool ContentModel::isGoodDateTime(TMRecord* tmp) {
   *
   */
 void ContentModel::countConflicts() {
-    _conflictsCount = 0;
-    QHash<FuzzyStrings, QList<ContentRecord* > >::iterator ii, jj;
-    for( ii = _conflicts.begin(); ii != _conflicts.end(); ++ii) {
-//	for (jj = _conflicts.begin();jj != _conflicts.end(); ++jj){
-//	    if(jj.key().similarity(ii.key()) >= this->_fuzzyValue) {
-//		foreach(ContentRecord* cr, jj.value()) {
-//		    ii.value().push_back(cr);
-//		}//// dodac fuzzyValue do gui
-//		++_fuzzyCount;
-//	    }
-//	    //// dodaje jj do listy ii
-//	    //// po zamknieciu okna rozwiazywania konflitkow, porzadkuje FStr, zeby sie nie powtarzaly
-//	    //// to znaczy, przy zapisywanie TM lub GLOSS do pliku, zapisane rekordy daje do hashmapy
-//	}
-	const QList<ContentRecord* >& tmp = ii.value();
-	if(tmp.size() > 1) { // conflicts means every list with size bigger then 1
-	    ++_conflictsCount;
-	}
-    }
-    emit conflictsCount(_merger.conflictsCount(), _merger.duplicatedCount());
+
 }
 
 /**
