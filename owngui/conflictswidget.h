@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QTextEdit>
+#include <QCheckBox>
 #include <QMultiHash>
 #include <QStandardItemModel>
 #include <QDataWidgetMapper>
@@ -35,6 +36,7 @@ protected:
 
     QVector<QLabel* > _labels;
     QVector<QTextEdit* > _edits;
+    QVector<QCheckBox* > _checks;
     QPushButton _nextButton;
     QPushButton _prevBottun;
     QPushButton _delButton;
