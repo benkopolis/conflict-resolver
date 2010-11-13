@@ -60,20 +60,12 @@ public:
     inline void setDateTime(const QDateTime& dt) { _filter = dt; };
     inline void setAscending(const bool asc) { _ascending = asc; };
     inline void setDontFilterConflicts(const bool dfc) {_dontFilterConflicts = dfc; };
-    inline QModelIndex selected() const { return _selected; };
     inline ContentType type() const { return _type; };
-    ContentRecord* realData(const QModelIndex& index);
     inline unsigned contentSize() const { return _conflicts.size(); }
     inline unsigned sortedContentSize() const { return _sortedConflicts.size(); };
     inline unsigned dumpSize() const { return _dump.size(); }
 
-    QList<QRect> itemsSourceRects(const QModelIndex& index); // rects, sometimes multi for one line
-    QStringList itemsSourceStrings(const QModelIndex& index); // simple lines o strings
-    QList<QRect> itemsTargetRects(const QModelIndex& index); // rects, sometimes multi for one line
-    QStringList itemsTargetStrings(const QModelIndex& index); // simple lines o strings
-    QRect itemsRect(const QModelIndex& index);
-
-    inline QHash<FuzzyStrings, QList<ContentRecord* > >* conflicts() { return &_conflicts; }
+    inline QMultiHash<FuzzyStrings, ConflictRecord* >* conflicts() { return &_conflicts; }
 
     bool checkWithAntiDict(QString dict, bool s, bool t, QString duties);
 
@@ -89,11 +81,6 @@ public slots:
     void unsort();
     void sort();
 
-    /**
-      * Iteruje po aktualnej liscie konfliktow, powodujac, ze wszystkie
-      * rekordy przeliczaja na nowo swoj wyglad.
-      */
-    void onRequestItemToCountRects(const QRect& rect);
 
     /**
       *
@@ -103,38 +90,7 @@ public slots:
       * Wykonywane jest filtrowanie zawawrtosci.
       */
     void filterContent();
-    /**
-      * Slot wolany na akcje next - zmienia atualna liste
-      */
-    void onNext();
-    /**
-      * Slot wolany na akcje prev - zmienia aktualna liste
-      */
-    void onPrev();
-    /**
-      * Slot wolany na wybranie elementu z listy
-      */
-    void selectOnClick(const QModelIndex& index);
-    /**
-      * Wymusza poczatkowe odswierzenie
-      */
-    void forceBegin();
-    /**
-      * Wolany na usuniecie pojedynczego elementu
-      */
-    void onRequestRowDeletion(const QModelIndex& index);
-    /**
-      * Wolany na usuniecie listy wyswietlanych elementow
-      */
-    void onRequestAllDeletion();
-    /**
-      * Wolany na przeniesienie elementow na pozniej
-      */
-    void onRequestDump();
-    /**
-      * Wolany na usuniecie powtarzajacych sie, z pozostawieniem jednego reprezentanta
-      */
-    void onRequestDuplicatedDeletion();
+
 
 private:
 
@@ -159,8 +115,8 @@ private:
     bool _ascending;
     ContentType _type;
 //    QMap <unsigned, ContentRecord* > * _records;
-    QHash<FuzzyStrings, QList<ContentRecord* > > _conflicts;
-    QMultiMap<int, QList<ContentRecord* > > _sortedConflicts; // TODO
+    QMultiHash<FuzzyStrings, ConflictRecord* > _conflicts;
+    QMultiMap<int, ConflictRecord* > _sortedConflicts; // TODO
     bool _dontFilterConflicts;
 
     GlossaryFile* _mainFile;
