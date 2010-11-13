@@ -28,9 +28,13 @@ public:
     QString m_regex;
     unsigned m_fval;
 
+    QMap<unsigned, unsigned> _report;
+
 signals:
 
 public slots:
+
+    void onConflict(unsigned sim);
 
 private:
 

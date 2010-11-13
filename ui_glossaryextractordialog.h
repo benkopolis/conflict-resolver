@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'glossaryextractordialog.ui'
 **
-** Created: Thu 4. Nov 05:30:25 2010
+** Created: Fri 12. Nov 12:46:00 2010
 **      by: Qt User Interface Compiler version 4.6.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -135,10 +135,10 @@ public:
     void retranslateUi(QDialog *GlossaryExtractorDialog)
     {
         GlossaryExtractorDialog->setWindowTitle(QApplication::translate("GlossaryExtractorDialog", "Dialog", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("GlossaryExtractorDialog", "Minimalna ilo\305\233\304\207 s\305\202\303\263w we frazie:", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("GlossaryExtractorDialog", "Maksymalna ilo\305\233\304\207 s\305\202\303\263w we frazie:", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("GlossaryExtractorDialog", "Minimalna ilo\305\233\304\207 powt\303\263rze\305\204 frazy:", 0, QApplication::UnicodeUTF8));
-        label_4->setText(QApplication::translate("GlossaryExtractorDialog", "Maksymalna ilo\305\233\304\207 powt\303\263rze\305\204 frazy:", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("GlossaryExtractorDialog", "Minimalna liczba s\305\202\303\263w we frazie:", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("GlossaryExtractorDialog", "Maksymalna liczba s\305\202\303\263w we frazie:", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("GlossaryExtractorDialog", "Minimalna liczba powt\303\263rze\305\204 frazy:", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QApplication::translate("GlossaryExtractorDialog", "Maksymalna liczba powt\303\263rze\305\204 frazy:", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("GlossaryExtractorDialog", "Znaleziono fraz:", 0, QApplication::UnicodeUTF8));
         _close->setText(QApplication::translate("GlossaryExtractorDialog", "Zako\305\204cz", 0, QApplication::UnicodeUTF8));
         _find->setText(QApplication::translate("GlossaryExtractorDialog", "Wyszukaj", 0, QApplication::UnicodeUTF8));

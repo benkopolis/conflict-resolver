@@ -35,7 +35,8 @@ SOURCES += main.cpp \
     tests/glossaryfiletests.cpp \
     tmxfile.cpp \
     tmxrecord.cpp \
-    tests/tmfiletests.cpp
+    tests/tmfiletests.cpp \
+    owngui/conflictwidget.cpp
 HEADERS += mainwindow.h \
     contentmanagerwindow.h \
     conflictresolverwindow.h \
@@ -64,7 +65,8 @@ HEADERS += mainwindow.h \
     tests/Tests.h \
     tmxfile.h \
     tmxrecord.h \
-    tests/tmfiletests.h
+    tests/tmfiletests.h \
+    owngui/conflictwidget.h
 FORMS += mainwindow.ui \
     contentmanagerwindow.ui \
     conflictresolverwindow.ui \

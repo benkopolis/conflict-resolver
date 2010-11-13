@@ -1,6 +1,8 @@
 #include "fuzzystrings.h"
 #include <QHash>
 #include <QTextStream>
+#include <QDebug>
+#include "inifile.h"
 
 uint qHash(const FuzzyStrings & key) {
     return qHash(key.base());
@@ -9,18 +11,21 @@ uint qHash(const FuzzyStrings & key) {
 FuzzyStrings::FuzzyStrings(QObject *parent) :
     QObject(parent)
 {
+    connect(this, SIGNAL(conflict(uint)), IniFile::instance(), SLOT(onConflict(uint)));
 }
 
 FuzzyStrings::FuzzyStrings(const QString& aBase, QObject *parent) :
     QObject(parent),
     _base(aBase.trimmed())
 {
+    connect(this, SIGNAL(conflict(uint)), IniFile::instance(), SLOT(onConflict(uint)));
 }
 
 FuzzyStrings::FuzzyStrings(const FuzzyStrings& another):
     QObject(another.parent()),
     _base(another._base)
 {
+    connect(this, SIGNAL(conflict(uint)), IniFile::instance(), SLOT(onConflict(uint)));
 }
 
 FuzzyStrings& FuzzyStrings::operator = (const FuzzyStrings& another) {
@@ -39,9 +44,10 @@ unsigned FuzzyStrings::similarity(const QString& str) const {
     QTextStream inner(&two);
     unsigned gwCount, iwCount;
     QRegExp rexp(QString("\\s"));
-    gwCount = str.count(rexp) + 2;
-    iwCount = this->base().count(rexp) + 2;
+    gwCount = str.count(rexp) + 1;
+    iwCount = this->base().count(rexp) + 1;
     QStringList t=str.split(rexp), s=this->base().split(rexp);
+    qDebug() << t << s;
     unsigned **arr;
     unsigned res = 0, cost = 0;
     arr = new unsigned* [iwCount];
@@ -58,7 +64,7 @@ unsigned FuzzyStrings::similarity(const QString& str) const {
 	if(i < gwCount) {
 	    arr[0][i] = i;
 	}
-	if(i > gwCount && i > iwCount)
+	if(i >= gwCount && i >= iwCount)
 	    break;
     }
     /// koniec inicjalizacji
@@ -69,18 +75,23 @@ unsigned FuzzyStrings::similarity(const QString& str) const {
 //	    d[i, j] := minimum(d[i-1, j] + 1,       // usuwanie
 //			       d[i, j-1] + 1,       // wstawianie
 //			       d[i-1, j-1] + cost)  // zamiana
-    for(unsigned i=1; i < iwCount; ++i) {
-	for(unsigned g=1; g<gwCount; ++g) {
-	    if(s.at(i) == t.at(g))
+    for(unsigned i=1; i < iwCount; ++i)
+    {
+	for(unsigned g=1; g<gwCount; ++g)
+	{
+	    qDebug() << s.at(i-1) << " : " << t.at(g-1);
+	    if(s.at(i-1) == t.at(g-1))
 		cost = 0;
 	    else
 		cost = 1;
+	    qDebug() << cost;
 	    if(arr[i-1][g] < arr[i][g-1] && arr[i-1][g]+1 < arr[i-1][g-1]+cost)
 		arr[i][g] = arr[i-1][g] + 1;
 	    else if(arr[i][g-1] < arr[i-1][g] && arr[i][g-1]+1 < arr[i-1][g-1]+cost)
 		arr[i][g] = arr[i][g-1]+1;
 	    else
 		arr[i][g] = arr[i-1][g-1]+cost;
+	    qDebug() << "finito";
 	}
     }
     res =  arr[iwCount-1][gwCount-1];
