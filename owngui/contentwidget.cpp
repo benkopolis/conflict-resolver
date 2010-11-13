@@ -1,4 +1,4 @@
-#include "owngui/conflictwidget.h"
+#include "owngui/contentwidget.h"
 #include <QGridLayout>
 #include "contentrecord.h"
 

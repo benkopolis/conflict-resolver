@@ -1,5 +1,5 @@
-#ifndef CONFLICTWIDGET_H
-#define CONFLICTWIDGET_H
+#ifndef CONTENTWIDGET_H
+#define CONTENTWIDGET_H
 
 #include <QWidget>
 #include <QLabel>
@@ -45,4 +45,4 @@ protected:
 
 };
 
-#endif // CONFLICTWIDGET_H
+#endif // CONTENTWIDGET_H
