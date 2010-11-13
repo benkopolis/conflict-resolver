@@ -44,6 +44,8 @@ public:
 
 signals:
 
+    void conflict(unsigned sim);
+
 public slots:
 
 private:

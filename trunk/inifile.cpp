@@ -8,6 +8,8 @@ IniFile::IniFile(QObject *parent) :
     QObject(parent),
     m_iniFileDir("base.ini")
 {
+    for(unsigned i =0; i < 101; ++i)
+	_report.insert(i, 0);
 }
 
 bool IniFile::readIniFile() {
@@ -45,4 +47,9 @@ bool IniFile::saveIniFile() {
     fstream << "LASTPATH " << m_lastPath << " ENDLASTPATH" << endl;
     fstream << "FVAL " << m_fval << endl;
     /// TODO
+}
+
+void IniFile::onConflict(unsigned sim)
+{
+    _report[sim]++;
 }
