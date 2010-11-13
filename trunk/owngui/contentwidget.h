@@ -22,6 +22,8 @@ public slots:
 
     void setupModel(ConflictRecord* data);
     void updateButtons(int row);
+    void moveFwd();
+    void moveRev();
 
 private slots:
 

@@ -50,8 +50,8 @@ void ContentWidget::setupModel(ConflictRecord* data)
     layout->addWidget(_nextButton, 0, 2, 1, 1);
     layout->addWidget(_nextButton, 1, 2, 1, 1);
     this->setLayout(layout);
-    _mapper->toFirst();
     initData(data);
+    _mapper->toFirst();
 }
 
 void ContentWidget::updateButtons(int row)
