@@ -79,7 +79,7 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
 	    ContentRecord* router = outer.value();
 	    if(rinner->sourceF().similarity(router->sourceF()) > 75)
 	    {
-		ConflictRecord* conr = new ConflictRecord();
+		ConflictRecord* conr = new ConflictRecord(it);
 		conr->addRecord(rinner);
 		conr->addRecord(router);
 	    }
@@ -126,21 +126,23 @@ void FileMerger::findDuplicated(const FuzzyStrings& key, GlossaryFile * it)
                         if(confr->recordMatch(*jj))
                         {
 			    none = false;
-                            confr->addRecord(*jj);
+			    confr->addRecord(*jj);
                             ++_conflictsCount;
 			}
                     }
 		    if(none)
 		    {
-			ConflictRecord* confr = new ConflictRecord();
+			ConflictRecord* confr = new ConflictRecord(it);
 			confr->addRecord(*jj);
 			confr->addRecord(*ii);
+			it->_conflicts->insert((*ii)->sourceF(), confr);
 		    }
                 }
             }
         }
     }
     _duplicatedCount += toRemove.size();
+    it->_all -= toRemove.size();
     foreach(ContentRecord* contr, toRemove.values())
         it->_content->remove(contr->sourceF(), contr);
 }

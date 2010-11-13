@@ -105,6 +105,7 @@ unsigned FuzzyStrings::similarity(const QString& str) const {
 	delete [] arr[i];
     }
     delete [] arr;
+    qDebug() << "wartosc podobienstwa: " << res;
     return res;
 }
 
