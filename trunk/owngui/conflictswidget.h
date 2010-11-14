@@ -8,9 +8,9 @@
 #include <QMultiHash>
 #include <QStandardItemModel>
 #include <QDataWidgetMapper>
+#include <QGridLayout>
 
-#include "owngui/contentwidget.h"
-#include "conflictrecord.h"
+#include "owngui/multiplecontentwidget.h"
 
 
 
@@ -22,6 +22,8 @@ public:
 
 signals:
 
+    void currentIndexChanged(int index);
+
 public slots:
 
     void setupModel(QMultiHash<FuzzyStrings, ConflictRecord* >* data);
@@ -30,18 +32,31 @@ public slots:
 private slots:
 
     void onCurrentIndexChanged(int index);
+    void onNext();
+    void onPrev();
+    void onDel();
+    void onDump();
+    void onResolve();
 
 protected:
 
-    QVector<ContentWidget* > _widgets;
-    QVector<QCheckBox* > _checks;
-    QPushButton _nextButton;
-    QPushButton _prevBottun;
-    QPushButton _delButton;
-    QPushButton _dumpButton;
-    QPushButton _resolveButton;
+    void initLayout(QGridLayout* gd);
+
+    int _index;
+
+    QVector<MultipleContentWidget* > _widgets;
+
+    QPushButton* _nextButton;
+    QPushButton* _prevButton;
+
+    QPushButton* _delButton;
+    QPushButton* _dumpButton;
+    QPushButton* _resolveButton;
+    QPushButton* _selectAll;
+    QPushButton* _deselectAll;
 
     QMultiHash<FuzzyStrings, ConflictRecord* >* _data;
+    QHash<MultipleContentWidget* , ConflictRecord* >* _conflictsWidget;
 };
 
 #endif // CONFLICTSWIDGET_H
