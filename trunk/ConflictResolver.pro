@@ -39,7 +39,8 @@ SOURCES += main.cpp \
     owngui/contentwidget.cpp \
     owngui/conflictswidget.cpp \
     commons/error.cpp \
-    commons/errormanager.cpp
+    commons/errormanager.cpp \
+    owngui/multiplecontentwidget.cpp
 HEADERS += mainwindow.h \
     contentmanagerwindow.h \
     conflictresolverwindow.h \
@@ -72,7 +73,8 @@ HEADERS += mainwindow.h \
     owngui/contentwidget.h \
     owngui/conflictswidget.h \
     commons/error.h \
-    commons/errormanager.h
+    commons/errormanager.h \
+    owngui/multiplecontentwidget.h
 FORMS += mainwindow.ui \
     contentmanagerwindow.ui \
     conflictresolverwindow.ui \

@@ -29,7 +29,7 @@ public slots:
 
 private slots:
 
-    void onItemDataChanged(QStandardItem* item);
+    void onCurrentIndexChanged(int index);
 
 protected:
 

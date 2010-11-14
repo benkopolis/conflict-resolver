@@ -28,6 +28,7 @@ void ContentWidget::setupModel(ConflictRecord* data)
 {
     _model = new QStandardItemModel(this);
     _mapper = new QDataWidgetMapper(this);
+    _mapper->setOrientation(Qt::Horizontal);
     _model->setColumnCount(3);
     _model->setHeaderData(0, Qt::Horizontal, "Zrodlo", Qt::ToolTip);
     _model->setHeaderData(1, Qt::Horizontal, "Docelowy", Qt::ToolTip);
@@ -40,6 +41,7 @@ void ContentWidget::setupModel(ConflictRecord* data)
     connect(_previousButton, SIGNAL(clicked()), _mapper, SLOT(toPrevious()));
     connect(_nextButton, SIGNAL(clicked()), _mapper, SLOT(toNext()));
     connect(_mapper, SIGNAL(currentIndexChanged(int)), this, SLOT(updateButtons(int)));
+    connect(_mapper, SIGNAL(currentIndexChanged(int)), this, SIGNAL(currentIndexChanged(int)));
     connect(_model, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(onItemDataChanged(QStandardItem*)));
 
     QGridLayout * layout = new QGridLayout(this);
@@ -61,6 +63,16 @@ void ContentWidget::updateButtons(int row)
     _previousButton->setEnabled(row > 0);
     _nextButton->setEnabled(row < _model->rowCount() - 1);
 
+}
+
+void ContentWidget::moveFwd()
+{
+    _mapper->toNext();
+}
+
+void ContentWidget::moveRev()
+{
+    _mapper->toPrevious();
 }
 
 void ContentWidget::initData(ConflictRecord* data)
