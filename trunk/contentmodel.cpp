@@ -131,7 +131,10 @@ bool ContentModel::addFile(QString fileName) {
 	_mainFile = tmp_gf;
     }
     if(_mainFile != 0)
+    {
 	_merger.findInnerConflicts(_mainFile);
+	_conflicts = _mainFile->conflicts();
+    }
     else
 	return false;
     emit totalRecords(_mainFile->allCount());

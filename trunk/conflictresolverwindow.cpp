@@ -1,7 +1,7 @@
 #include <QDebug>
 #include "conflictresolverwindow.h"
 #include "ui_conflictresolverwindow.h"
-#include "owngui/conflictwidget.h"
+#include "owngui/contentwidget.h"
 
 ConflictResolverWindow::ConflictResolverWindow(QWidget *parent) :
     QMainWindow(parent),

@@ -3,14 +3,13 @@
 
 #include <QWidget>
 #include <QVector>
-#include <QLabel>
 #include <QPushButton>
-#include <QTextEdit>
 #include <QCheckBox>
 #include <QMultiHash>
 #include <QStandardItemModel>
 #include <QDataWidgetMapper>
 
+#include "owngui/contentwidget.h"
 #include "conflictrecord.h"
 
 
@@ -25,7 +24,7 @@ signals:
 
 public slots:
 
-    void setupModel(ConflictRecord* data);
+    void setupModel(QMultiHash<FuzzyStrings, ConflictRecord* >* data);
     void updateButtons(int row);
 
 private slots:
@@ -34,14 +33,15 @@ private slots:
 
 protected:
 
-    QVector<QLabel* > _labels;
-    QVector<QTextEdit* > _edits;
+    QVector<ContentWidget* > _widgets;
     QVector<QCheckBox* > _checks;
     QPushButton _nextButton;
     QPushButton _prevBottun;
     QPushButton _delButton;
     QPushButton _dumpButton;
     QPushButton _resolveButton;
+
+    QMultiHash<FuzzyStrings, ConflictRecord* >* _data;
 };
 
 #endif // CONFLICTSWIDGET_H
