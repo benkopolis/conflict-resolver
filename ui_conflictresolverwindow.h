@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'conflictresolverwindow.ui'
 **
-** Created: Sat 13. Nov 13:08:25 2010
+** Created: Sun 14. Nov 20:09:22 2010
 **      by: Qt User Interface Compiler version 4.6.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

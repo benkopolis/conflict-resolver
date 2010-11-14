@@ -7,14 +7,34 @@
 #include <QTextEdit>
 #include <QStandardItemModel>
 #include <QDataWidgetMapper>
-#include "conflictrecord.h"
+#include <QPushButton>
 #include <QVector>
+
+#include "conflictrecord.h"
+
+
+class Proxy : public QObject
+{
+    Q_OBJECT
+public:
+    explicit Proxy(QObject *parent);
+
+public slots:
+
+    void onItemChanged(QStandardItem* item);
+
+signals:
+
+    void itemChanged(Proxy* p);
+};
 
 class MultipleContentWidget : public QWidget
 {
 Q_OBJECT
 public:
     explicit MultipleContentWidget(QWidget *parent = 0);
+
+    inline QVector<QCheckBox* >& checks() { return _checks; }
 
 public slots:
 
@@ -23,11 +43,11 @@ public slots:
 
 private slots:
 
-    void onItemDataChanged(QStandardItem* item);
+    void onItemDataChanged(Proxy* p);
 
 protected:
 
-    virtual void initData(ConflictRecord* data);
+    virtual void initData(int row, ContentRecord* cr);
 
 
     QVector<QLabel* > _sourceLabels;
@@ -37,7 +57,8 @@ protected:
     QVector<QCheckBox* > _checks;
 
     QVector<QStandardItemModel* > _models;
-    QVector<QDataWidgetMapper* > _mapper;
+    QVector<QDataWidgetMapper* > _mappers;
+    QHash<Proxy*, int> _proxy;
     ConflictRecord* _data;
 
 };
