@@ -37,6 +37,8 @@ private slots:
     void onDel();
     void onDump();
     void onResolve();
+    void onSelectAll();
+    void onDeselectAll();
 
 protected:
 
