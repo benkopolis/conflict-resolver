@@ -8,7 +8,6 @@
 #include <QStandardItemModel>
 #include <QDataWidgetMapper>
 #include "conflictrecord.h"
-#include <QVector>
 
 class ContentWidget : public QWidget
 {
@@ -17,6 +16,8 @@ public:
     explicit ContentWidget(QWidget *parent = 0);
 
 signals:
+
+    void currentIndexChanged(int index);
 
 public slots:
 
