@@ -61,11 +61,11 @@ public:
     inline void setAscending(const bool asc) { _ascending = asc; };
     inline void setDontFilterConflicts(const bool dfc) {_dontFilterConflicts = dfc; };
     inline ContentType type() const { return _type; };
-    inline unsigned contentSize() const { return _conflicts.size(); }
-    inline unsigned sortedContentSize() const { return _sortedConflicts.size(); };
+    inline unsigned contentSize() const { return _conflicts->size(); }
+    inline unsigned sortedContentSize() const { return _sortedConflicts->size(); };
     inline unsigned dumpSize() const { return _dump.size(); }
 
-    inline QMultiHash<FuzzyStrings, ConflictRecord* >* conflicts() { return &_conflicts; }
+    inline QMultiHash<FuzzyStrings, ConflictRecord* >* conflicts() { return _conflicts; }
 
     bool checkWithAntiDict(QString dict, bool s, bool t, QString duties);
 
@@ -115,8 +115,8 @@ private:
     bool _ascending;
     ContentType _type;
 //    QMap <unsigned, ContentRecord* > * _records;
-    QMultiHash<FuzzyStrings, ConflictRecord* > _conflicts;
-    QMultiMap<int, ConflictRecord* > _sortedConflicts; // TODO
+    QMultiHash<FuzzyStrings, ConflictRecord* >* _conflicts;
+    QMultiMap<int, ConflictRecord* >* _sortedConflicts; // TODO
     bool _dontFilterConflicts;
 
     GlossaryFile* _mainFile;
