@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "contentmodel.h"
-
+#include "owngui/conflictswidget.h"
 
 
 namespace Ui {
@@ -14,7 +14,7 @@ class ConflictResolverWindow : public QMainWindow {
     Q_OBJECT
 public:
     ConflictResolverWindow(QWidget *parent = 0);
-    ConflictResolverWindow(ContentModel* model, QWidget *parent = 0);
+    ConflictResolverWindow(ConflictsWidget* cw, ContentModel* model, QWidget *parent = 0);
     ~ConflictResolverWindow();
 
 
