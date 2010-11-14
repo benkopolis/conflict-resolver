@@ -15,4 +15,5 @@ public slots:
 
 };
 
+
 #endif // ERROR_H
