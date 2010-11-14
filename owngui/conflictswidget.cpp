@@ -1,5 +1,5 @@
 #include "conflictswidget.h"
-#include <QScrollArea>
+
 
 ConflictsWidget::ConflictsWidget(QWidget *parent) :
     QWidget(parent)
@@ -19,7 +19,7 @@ ConflictsWidget::ConflictsWidget(QWidget *parent) :
     _selectAll->setText("Zaznacz wszystko");
     _deselectAll = new QPushButton(this);
     _deselectAll->setText("Odznacz wszystko");
-    QScrollArea* sa = new QScrollArea(this);
+    sa = new QScrollArea(this);
     QGridLayout* gd = new QGridLayout(this);
     gd->addWidget(sa, 0, 0, 7, 4);
     initLayout(gd);
@@ -41,8 +41,11 @@ void ConflictsWidget::setupModel(QMultiHash<FuzzyStrings, ConflictRecord* >* dat
     foreach(ConflictRecord* cr, _data->values())
     {
 	MultipleContentWidget* mcw = new MultipleContentWidget(this);
+	mcw->setupModel(cr);
 	_conflictsWidget->insert(mcw, cr);
     }
+    sa->setLayout(new QGridLayout(sa));
+    sa->layout()->addWidget(_conflictsWidget->keys().at(_index));
 }
 
 void ConflictsWidget::updateButtons(int row)
@@ -55,18 +58,19 @@ void ConflictsWidget::updateButtons(int row)
 
 void ConflictsWidget::onCurrentIndexChanged(int index)
 {
-
+    sa->layout()->addWidget(_conflictsWidget->keys().at(index));
 }
 
 void ConflictsWidget::onNext()
 {
+    sa->layout()->removeWidget(_conflictsWidget->keys().at(_index));
     ++_index;
     emit currentIndexChanged(_index);
-
 }
 
 void ConflictsWidget::onPrev()
 {
+    sa->layout()->removeWidget(_conflictsWidget->keys().at(_index));
     --_index;
     emit currentIndexChanged(_index);
 }

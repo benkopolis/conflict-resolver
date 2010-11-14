@@ -7,6 +7,7 @@
 #include "filtersdialog.h"
 #include "inifile.h"
 #include "glossaryextractordialog.h"
+#include "owngui/conflictswidget.h"
 
 ContentManagerWindow::ContentManagerWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -32,6 +33,7 @@ ContentManagerWindow::ContentManagerWindow(const QStringList& files, ContentMode
     QObject::connect(this, SIGNAL(requestSaveDump(QString)), _content, SLOT(onRequestSaveDump(QString)));
     QObject::connect(this->_content, SIGNAL(corruptedCount(uint)), this, SLOT(onCorrupted(uint)));
     QObject::connect(_content, SIGNAL(fuzzyCount(uint)), this, SLOT(onFuzzyCount(uint)));
+//    QObject::connect(this->ui->_resolveConflicts, SIGNAL(clicked()), this, SLOT(on__resolveConflicts_clicked()));
 }
 
 void ContentManagerWindow::setRH(int row, int height) {
@@ -83,9 +85,12 @@ void ContentManagerWindow::onFuzzyCount(unsigned count)
 
 void ContentManagerWindow::on__resolveConflicts_clicked()
 {
-    if(_conflicts != 0 || _fuzzy != 0) {
+    if(_conflicts != 0 || _fuzzy != 0)
+    {
+	ConflictsWidget* cw = new ConflictsWidget(this);
+	cw->setupModel(this->_content->conflicts());
 	_content->sort();
-	_crw = new ConflictResolverWindow(_content, this);
+	_crw = new ConflictResolverWindow(cw, _content, this);
 	int w, h, x, y;
 	this->geometry().getRect(&x, &y, &w, &h);
 	_crw->setGeometry(x+10, y+20, w, h+50);

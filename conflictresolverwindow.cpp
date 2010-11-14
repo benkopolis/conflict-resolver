@@ -1,7 +1,7 @@
 #include <QDebug>
 #include "conflictresolverwindow.h"
 #include "ui_conflictresolverwindow.h"
-#include "owngui/contentwidget.h"
+
 
 ConflictResolverWindow::ConflictResolverWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -11,13 +11,13 @@ ConflictResolverWindow::ConflictResolverWindow(QWidget *parent) :
     setWindowTitle(QString("TMs & Glossaries Manager::Conflict Resolver Window"));
 }
 
-ConflictResolverWindow::ConflictResolverWindow(ContentModel* model, QWidget *parent):
+ConflictResolverWindow::ConflictResolverWindow(ConflictsWidget* cw, ContentModel* model, QWidget *parent):
     QMainWindow(parent),
     ui(new Ui::ConflictResolverWindow)
 {
     ui->setupUi(this);
+    ui->centralwidget->layout()->addWidget(cw);
     setWindowTitle(QString("TMs & Glossaries Manager::Conflict Resolver Window"));
-    ContentWidget* wdg = new ContentWidget(this);
 //    wdg->setupModel(model->conflicts()->value());
 }
 

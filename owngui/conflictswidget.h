@@ -9,6 +9,7 @@
 #include <QStandardItemModel>
 #include <QDataWidgetMapper>
 #include <QGridLayout>
+#include <QScrollArea>
 
 #include "owngui/multiplecontentwidget.h"
 
@@ -56,6 +57,7 @@ protected:
     QPushButton* _resolveButton;
     QPushButton* _selectAll;
     QPushButton* _deselectAll;
+    QScrollArea* sa;
 
     QMultiHash<FuzzyStrings, ConflictRecord* >* _data;
     QHash<MultipleContentWidget* , ConflictRecord* >* _conflictsWidget;

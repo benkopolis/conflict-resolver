@@ -23,6 +23,7 @@ void MultipleContentWidget::setupModel(ConflictRecord* data)
     Q_ASSERT(data != 0);
     _data = data;
     QGridLayout* lay = new QGridLayout(this);
+    this->setLayout(lay);
     int rows = 0;
     foreach(ContentRecord* cr, data->conflictedRecords())
     {

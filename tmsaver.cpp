@@ -46,12 +46,28 @@ bool TMSaver::saveContent(const QString& file, TMHeader& rheader, QMultiHash<Fuz
 	    fs << all_file;
 	}
     }
+    QFile dump("duties.txt"); // TODO - wybor pliku, tak zeby dawalo rade zapisywac na win7
+    dump.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
+    QTextStream dstream(&dump);
     QHash<FuzzyStrings, ContentRecord* >::iterator currentList = conflicts.begin();
     while(currentList != conflicts.end())
     {
-        fs << (*currentList)->toRecordString() << endl;
+	if((*currentList)->status() == ContentRecord::Confirmed || (*currentList)->status() == ContentRecord::NotResolved
+	   || (*currentList)->status() == ContentRecord::None)
+	{
+	    fs << (*currentList)->toRecordString() << endl;
+	}
+	else if((*currentList)->status() == ContentRecord::Delayed)
+	{
+	    dstream << (*currentList)->toRecordString() << endl;
+	}
+	else if((*currentList)->status() == ContentRecord::Denied)
+	{
+	    ; // do nothing? ok
+	}
         ++currentList;
     }
+    dump.close();
     f.close();
     return true;
 }
@@ -65,7 +81,7 @@ bool TMSaver::saveReversedContent(const QString& file, TMHeader& rheader, QMulti
     }
     QTextStream fs(&f);
     rheader.setRecordCount(all);
-    QString header = rheader.writeHeader();
+    QString header = rheader.writeReversedHeader();
     if(rheader != TMHeader())
     {
         if(f.size() == 0)
@@ -94,10 +110,26 @@ bool TMSaver::saveReversedContent(const QString& file, TMHeader& rheader, QMulti
             fs << all_file;
         }
     }
+    QFile dump("duties.txt"); // TODO - wybor pliku, tak zeby dawalo rade zapisywac na win7
+    dump.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
+    QTextStream dstream(&dump);
     QHash<FuzzyStrings,ContentRecord* >::iterator currentList = conflicts.begin();
     QList<ContentRecord* >::iterator ii;
-    while(currentList != conflicts.end()) {
-        fs << (*currentList)->toReversedRecordString() << endl;
+    while(currentList != conflicts.end())
+    {
+	if((*currentList)->status() == ContentRecord::Confirmed || (*currentList)->status() == ContentRecord::NotResolved
+	   || (*currentList)->status() == ContentRecord::None)
+	{
+	    fs << (*currentList)->toReversedRecordString() << endl;
+	}
+	else if((*currentList)->status() == ContentRecord::Delayed)
+	{
+	    dstream << (*currentList)->toReversedRecordString() << endl;
+	}
+	else if((*currentList)->status() == ContentRecord::Denied)
+	{
+	    ; // do nothing? ok
+	}
 	++currentList;
     }
     f.close();
