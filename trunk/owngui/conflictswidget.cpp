@@ -73,17 +73,61 @@ void ConflictsWidget::onPrev()
 
 void ConflictsWidget::onDel()
 {
-
+    QVector<QCheckBox*>& cblist = _conflictsWidget->keys().at(_index)->checks();
+    int i =0;
+    for(i=0; i<cblist.size(); ++i)
+    {
+	if(cblist.at(i)->isChecked())
+	{
+	    this->_conflictsWidget->value( _conflictsWidget->keys().at(_index))->conflictedRecords().at(i)->denyInConflict();
+	}
+    }
 }
 
 void ConflictsWidget::onDump()
 {
-
+    QVector<QCheckBox*>& cblist = _conflictsWidget->keys().at(_index)->checks();
+    int i =0;
+    for(i=0; i<cblist.size(); ++i)
+    {
+	if(cblist.at(i)->isChecked())
+	{
+	    this->_conflictsWidget->value( _conflictsWidget->keys().at(_index))->conflictedRecords().at(i)->delayInConflict();;
+	}
+    }
 }
 
 void ConflictsWidget::onResolve()
 {
+    QVector<QCheckBox*>& cblist = _conflictsWidget->keys().at(_index)->checks();
+    int i =0;
+    for(i=0; i<cblist.size(); ++i)
+    {
+	if(cblist.at(i)->isChecked())
+	{
+	    this->_conflictsWidget->value( _conflictsWidget->keys().at(_index))->conflictedRecords().at(i)->confirmInConflict();
+	}
+    }
+}
 
+void ConflictsWidget::onSelectAll()
+{
+    QVector<QCheckBox*>& cblist = _conflictsWidget->keys().at(_index)->checks();
+    int i =0;
+    for(i=0; i<cblist.size(); ++i)
+    {
+	cblist.at(i)->setChecked(true);
+    }
+}
+
+void ConflictsWidget::onDeselectAll()
+{
+    QVector<QCheckBox*>& cblist = _conflictsWidget->keys().at(_index)->checks();
+    int i =0;
+    for(i=0; i<cblist.size(); ++i)
+    {
+	cblist.at(i)->setChecked(false);
+    }
 }
 
 void ConflictsWidget::initLayout(QGridLayout* gd)
