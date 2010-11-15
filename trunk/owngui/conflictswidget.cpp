@@ -29,14 +29,16 @@ ConflictsWidget::ConflictsWidget(QWidget *parent) :
     connect(_prevButton, SIGNAL(clicked()), this, SLOT(onPrev()));
     connect(_nextButton, SIGNAL(clicked()), this, SLOT(onNext()));
     connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentIndexChanged(int)));
+    connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(updateButtons(int)));
     connect(_delButton, SIGNAL(clicked()), this, SLOT(onDel()));
     connect(_dumpButton, SIGNAL(clicked()), this, SLOT(onDump()));
     connect(_resolveButton, SIGNAL(clicked()), this, SLOT(onResolve()));
+    connect(_selectAll, SIGNAL(clicked()), this, SLOT(onSelectAll()));
+    connect(_deselectAll, SIGNAL(clicked()), this, SLOT(onDeselectAll()));
 }
 
 void ConflictsWidget::setupModel(QMultiHash<FuzzyStrings, ConflictRecord* >* data)
 {
-
     _data = data;
     foreach(ConflictRecord* cr, _data->values())
     {
@@ -46,6 +48,7 @@ void ConflictsWidget::setupModel(QMultiHash<FuzzyStrings, ConflictRecord* >* dat
     }
     sa->setLayout(new QGridLayout(sa));
     sa->layout()->addWidget(_conflictsWidget->keys().at(_index));
+    this->updateButtons(0);
 }
 
 void ConflictsWidget::updateButtons(int row)
