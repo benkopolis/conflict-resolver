@@ -53,6 +53,22 @@ bool ConflictRecord::recordMatch(ContentRecord* record)
     return true;
 }
 
+bool ConflictRecord::contains(ConflictRecord* r) const
+{
+    bool ok = true;
+    if(r->size() > this->size())
+	return false;
+    foreach(ContentRecord* c, r->conflictedRecords())
+    {
+	if(this->contains(c) == false)
+	{
+	    ok = false;
+	    break;
+	}
+    }
+    return ok;
+}
+
 void ConflictRecord::removeRecordAtRow(unsigned row) 
 {
     QHash<ContentRecord* , short>::iterator ii = this->_conflictedRecords->begin();

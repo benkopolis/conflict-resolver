@@ -23,7 +23,10 @@ public:
     inline QList<ContentRecord* > conflictedRecords() { return _keys; }
     inline unsigned conflictedRecordsCount() { return _keys.size(); }
     inline unsigned size() const { return _conflictedRecords->keys().size(); }
+
     inline bool contains(ContentRecord* r) const { return _conflictedRecords->contains(r); }
+    bool contains(ConflictRecord* r) const;
+
     void removeRecordAtRow(unsigned row);
     inline QList<ContentRecord* >::iterator begin() { return _keys.begin(); }
     inline QList<ContentRecord* >::iterator end() { return _keys.end(); }

@@ -106,6 +106,19 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
 	    }
         }
     }
+    QStack<ConflictRecord*> toRm;
+    foreach(ConflictRecord* r, it->conflicts()->values())
+    {
+	foreach(ConflictRecord* in, it->conflicts()->values())
+	{
+	    if(r->contains(in) && *in != *r)
+		toRm.push(in);
+	}
+    }
+    foreach(ConflictRecord* rm, toRm)
+    {
+	it->conflicts()->remove(it->conflicts()->key(rm), rm);
+    }
 }
 
 
