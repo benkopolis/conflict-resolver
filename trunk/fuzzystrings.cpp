@@ -35,6 +35,21 @@ FuzzyStrings& FuzzyStrings::operator = (const FuzzyStrings& another) {
     return *this;
 }
 
+void FuzzyStrings::print2DArrToDebug(unsigned** arr, int xlen, int ylen)
+{
+    QString output;
+    QTextStream o(&output);
+    for(int i =0; i<ylen; ++i)
+    {
+	for(int j=0; j<xlen; ++j)
+	{
+	    o << arr[j][i] << " ";
+	}
+	o << endl;
+    }
+    qDebug() << output;
+}
+
 /**
   * Zwraca procentowo wyra¿on¹ wartoœæ podobieñstwa zadanego stringa, do stringa wewnêtrznego.
   */
@@ -94,11 +109,15 @@ unsigned FuzzyStrings::similarity(const QString& str) const {
 	}
     }
     res =  arr[iwCount-1][gwCount-1];
+    qDebug() << "REZULTAT TO: " << res;
     float avg = iwCount + gwCount;
+    qDebug() << "AVG TO: " << avg;
+    float tmp;
     avg = avg / 2;
-    res = (avg - res)/avg;
-    res = res*100;
-
+    tmp = (avg - res)/avg;
+    res = tmp*100;
+    if(res == 0)
+	print2DArrToDebug(arr, iwCount, gwCount);
     /// czyszczenie
     for(unsigned i = 0; i < iwCount; ++i) {
 	delete [] arr[i];

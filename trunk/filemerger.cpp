@@ -60,6 +60,7 @@ GlossaryFile* FileMerger::mergeFiles(GlossaryFile* one, GlossaryFile* two) const
 
 void FileMerger::findInnerConflicts(GlossaryFile* it)
 {
+    initCounters();
     QMultiHash<FuzzyStrings, ContentRecord* >::iterator outer, inner;
     QList<FuzzyStrings> keys = it->_content->keys();
     foreach(FuzzyStrings fs, keys)
@@ -77,12 +78,7 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
 		break;
 	    ContentRecord* rinner = inner.value();
 	    ContentRecord* router = outer.value();
-	    if(rinner->sourceF().similarity(router->sourceF()) > 75)
-	    {
-		ConflictRecord* conr = new ConflictRecord(it);
-		conr->addRecord(rinner);
-		conr->addRecord(router);
-	    }
+	    bool fuzzyok = false;
 	    foreach(ConflictRecord* confr, it->_conflicts->values(outer.key()))
             {
                 if(confr->recordMatch(inner.value()))
@@ -90,11 +86,24 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
                     if(confr->contains(inner.value()) == false)
                     {
                             confr->addRecord(inner.value());
+			    if(confr->contains(router))
+				fuzzyok = true;
                             ++_conflictsCount;
                             ++_fuzzyCount;
                     }
                 }
             }
+	    if(fuzzyok == false)
+	    {
+		if(rinner->sourceF().similarity(router->sourceF()) > SIMVAL)
+		{
+		    ConflictRecord* conr = new ConflictRecord(it);
+		    conr->addRecord(rinner);
+		    conr->addRecord(router);it->_conflicts->insert(router->sourceF(), conr);
+		    ++_conflictsCount;
+		    ++_fuzzyCount;
+		}
+	    }
         }
     }
 }

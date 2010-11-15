@@ -44,6 +44,8 @@ private:
     unsigned _fuzzy;
 
 private slots:
+    void on__options_clicked();
+    void on__find_clicked();
     void on__checkDict_clicked();
     void on__chooseAntiDict_clicked();
     void on__saveGloss_clicked();

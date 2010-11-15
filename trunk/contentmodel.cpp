@@ -144,6 +144,19 @@ bool ContentModel::addFile(QString fileName) {
     return res;
 }
 
+bool ContentModel::findAgain()
+{
+    foreach(ConflictRecord* cr, _mainFile->conflicts()->values())
+    {
+	cr->setParent(0);
+	delete cr;
+    }
+    _mainFile->conflicts()->clear();
+    _merger.findInnerConflicts(_mainFile);
+    _conflicts = _mainFile->conflicts();
+    emit conflictsCount(_mainFile->conflicts()->size(), _merger.duplicatedCount());
+    return true;
+}
 
 bool ContentModel::checkWithAntiDict(QString dict, bool s, bool t, QString duties) {
     QFile f(dict);

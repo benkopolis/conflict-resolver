@@ -42,6 +42,8 @@ public:
     bool operator == (const FuzzyStrings& another) const;
     FuzzyStrings& operator = (const FuzzyStrings& another);
 
+    static void print2DArrToDebug(unsigned** arr, int xlen, int ylen);
+
 signals:
 
     void conflict(unsigned sim);

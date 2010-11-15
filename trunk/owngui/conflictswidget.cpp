@@ -61,12 +61,18 @@ void ConflictsWidget::updateButtons(int row)
 
 void ConflictsWidget::onCurrentIndexChanged(int index)
 {
+    sa = new QScrollArea(this);
+    QGridLayout* gd = qobject_cast<QGridLayout*>(this->layout());
+    gd->addWidget(sa, 0, 0, 7, 4);
+    sa->setLayout(new QGridLayout(sa));
+    Q_ASSERT(_conflictsWidget->keys().at(index) != 0);
     sa->layout()->addWidget(_conflictsWidget->keys().at(index));
 }
 
 void ConflictsWidget::onNext()
 {
-    sa->layout()->removeWidget(_conflictsWidget->keys().at(_index));
+    sa->layout()->removeWidget(_conflictsWidget->keys().at(_index));;
+    this->layout()->removeWidget(sa);
     ++_index;
     emit currentIndexChanged(_index);
 }
@@ -74,6 +80,7 @@ void ConflictsWidget::onNext()
 void ConflictsWidget::onPrev()
 {
     sa->layout()->removeWidget(_conflictsWidget->keys().at(_index));
+    this->layout()->removeWidget(sa);
     --_index;
     emit currentIndexChanged(_index);
 }
