@@ -1,5 +1,6 @@
 #include "multiplecontentwidget.h"
 #include <QGridLayout>
+#include <QDebug>
 
 Proxy::Proxy(QObject *parent = 0):
 	QObject(parent)
@@ -60,8 +61,12 @@ void MultipleContentWidget::updateButtons(int row)
 void MultipleContentWidget::onItemDataChanged(Proxy* item)
 {
     int row = _proxy.value(item);
-    _data->conflictedRecords().at(row)->setTarget(qvariant_cast<QString>(_models.at(row)->data(_models.at(row)->index(row, 1))));
-    _data->conflictedRecords().at(row)->setSource(qvariant_cast<QString>(_models.at(row)->data(_models.at(row)->index(row, 0))));
+    QString tmp = (qvariant_cast<QString>(_models.at(row)->data(_models.at(row)->index(row, 1))));
+    if(tmp.length() > 0)
+	_data->conflictedRecords().at(row)->setTarget(qvariant_cast<QString>(_models.at(row)->data(_models.at(row)->index(row, 1))));
+    tmp = (qvariant_cast<QString>(_models.at(row)->data(_models.at(row)->index(row, 0))));
+    if(tmp.length() > 0)
+	_data->conflictedRecords().at(row)->setSource(qvariant_cast<QString>(_models.at(row)->data(_models.at(row)->index(row, 0))));
 }
 
 void MultipleContentWidget::initData(int row, ContentRecord* cr)
@@ -89,8 +94,10 @@ void MultipleContentWidget::initData(int row, ContentRecord* cr)
     _models.at(row)->setRowCount(1);
     index = _models.at(row)->index(0, 0);
     _models.at(row)->setData(index, cr->source(), Qt::EditRole);
+    qDebug() << "zrodlo: " << cr->source();
     index = _models.at(row)->index(0, 1);
     _models.at(row)->setData(index, cr->target(), Qt::EditRole);
+    qDebug() << "cel: " << cr->target();
     index = _models.at(row)->index(0, 2);
     _models.at(row)->setData(index, (int)cr, Qt::DisplayRole);
     _mappers.at(row)->toFirst();

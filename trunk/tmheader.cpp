@@ -37,6 +37,7 @@ bool TMHeader::operator != (const TMHeader& another) const {
         return true;
     if(this->_rest != another._rest)
         return true;
+    return false;
 }
 
 
@@ -78,12 +79,15 @@ bool TMHeader::readHeader(const QString &h) {
     }
     return true;
 }
-
+/*
+  %20101019~120420	%User ID,JD,JD jdebowska	%TU=00000000	%PL	%Wordfast TM v.546/00	%EN	%-----------
+  %20100422~120101	%+A!	%TU=00000000	%PL	%Wordfast translation memory version v.5	%EN	%This is a header - do not delete, move or sort.
+  */
 QString TMHeader::writeHeader() {
     QString ret;
-    ret = _tdt;
+    ret = ret.append("%20101019~120420");
     ret = ret.append(QChar('\t'));
-    ret = ret.append(_authors);
+    ret = ret.append("%User ID,JD,JD jdebowska");
     ret = ret.append(QChar('\t'));
     ret = ret.append(QString("%TU="));
     QString n = QString::number(_recordsCount, 10);
@@ -95,19 +99,19 @@ QString TMHeader::writeHeader() {
     ret = ret.append(QChar('\t'));
     ret = ret.append(_sourceCode);
     ret = ret.append(QChar('\t'));
-    ret = ret.append(_comment);
+    ret = ret.append("%Wordfast TM v.546/00");
     ret = ret.append(QChar('\t'));
     ret = ret.append(_targetCode);
     ret = ret.append(QChar('\t'));
-    ret = ret.append(_rest);
+    ret = ret.append("%-----------");
     return ret;
 }
 
 QString TMHeader::writeReversedHeader() {
     QString ret;
-    ret = _tdt;
+    ret = ret.append("%20101019~120420");
     ret = ret.append(QChar('\t'));
-    ret = ret.append(_authors);
+    ret = ret.append("%User ID,JD,JD jdebowska");
     ret = ret.append(QChar('\t'));
     ret = ret.append(QString("%TU="));
     QString n = QString::number(_recordsCount, 10);
@@ -119,11 +123,11 @@ QString TMHeader::writeReversedHeader() {
     ret = ret.append(QChar('\t'));
     ret = ret.append(_targetCode); // switched
     ret = ret.append(QChar('\t'));
-    ret = ret.append(_comment);
+    ret = ret.append("%Wordfast TM v.546/00");
     ret = ret.append(QChar('\t'));
     ret = ret.append(_sourceCode); // with this
     ret = ret.append(QChar('\t'));
-    ret = ret.append(_rest);
+    ret = ret.append("%-----------");
     return ret;
 }
 

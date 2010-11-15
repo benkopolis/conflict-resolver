@@ -65,8 +65,8 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
     foreach(FuzzyStrings fs, keys)
     {
         findDuplicated(fs, it);
-	qDebug() << fs.base();
-	qDebug() << (fs.base() == "&tA;Udzia³ operatorów alternatywnych pod wzglêdem przychodów z po³¹czeñ miêdzystrefowych by³ wy¿szy ni¿ w przypadku po³¹czeñ lokalnych.");
+//	qDebug() << fs.base();
+//	qDebug() << (fs.base() == "&tA;Udzia³ operatorów alternatywnych pod wzglêdem przychodów z po³¹czeñ miêdzystrefowych by³ wy¿szy ni¿ w przypadku po³¹czeñ lokalnych.");
     }
     for(outer = it->_content->begin();outer != it->_content->end();++outer)
     {

@@ -47,7 +47,7 @@ unsigned FuzzyStrings::similarity(const QString& str) const {
     gwCount = str.count(rexp) + 1;
     iwCount = this->base().count(rexp) + 1;
     QStringList t=str.split(rexp), s=this->base().split(rexp);
-    qDebug() << t << s;
+//    qDebug() << t << s;
     unsigned **arr;
     unsigned res = 0, cost = 0;
     arr = new unsigned* [iwCount];
@@ -79,19 +79,18 @@ unsigned FuzzyStrings::similarity(const QString& str) const {
     {
 	for(unsigned g=1; g<gwCount; ++g)
 	{
-	    qDebug() << s.at(i-1) << " : " << t.at(g-1);
+//	    qDebug() << s.at(i-1) << " : " << t.at(g-1);
 	    if(s.at(i-1) == t.at(g-1))
 		cost = 0;
 	    else
 		cost = 1;
-	    qDebug() << cost;
+//	    qDebug() << cost;
 	    if(arr[i-1][g] < arr[i][g-1] && arr[i-1][g]+1 < arr[i-1][g-1]+cost)
 		arr[i][g] = arr[i-1][g] + 1;
 	    else if(arr[i][g-1] < arr[i-1][g] && arr[i][g-1]+1 < arr[i-1][g-1]+cost)
 		arr[i][g] = arr[i][g-1]+1;
 	    else
 		arr[i][g] = arr[i-1][g-1]+cost;
-	    qDebug() << "finito";
 	}
     }
     res =  arr[iwCount-1][gwCount-1];
