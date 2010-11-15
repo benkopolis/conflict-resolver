@@ -80,7 +80,7 @@ public slots:
 
     void unsort();
     void sort();
-
+    bool findAgain();
 
     /**
       *

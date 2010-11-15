@@ -7,6 +7,7 @@
 #include "filtersdialog.h"
 #include "inifile.h"
 #include "glossaryextractordialog.h"
+#include "fuzzyoptionsdialog.h"
 #include "owngui/conflictswidget.h"
 
 ContentManagerWindow::ContentManagerWindow(QWidget *parent) :
@@ -175,4 +176,16 @@ void ContentManagerWindow::on__checkDict_clicked()
     QString dut = QFileDialog::getSaveFileName(this, QString("Wybierz lokalizacje pliku duties.txt"), QString("duties.txt"));
     this->_content->checkWithAntiDict(dict, this->ui->_cSource->isChecked(), this->ui->_cTarget->isChecked(), dut);
 
+}
+
+void ContentManagerWindow::on__find_clicked()
+{
+    _content->findAgain();
+}
+
+void ContentManagerWindow::on__options_clicked()
+{
+    FuzzyOptionsDialog* fod = new FuzzyOptionsDialog(this);
+    fod->setModal(true);
+    fod->show();
 }

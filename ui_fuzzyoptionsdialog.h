@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'fuzzyoptionsdialog.ui'
 **
-** Created: Sun 14. Nov 20:56:58 2010
+** Created: Mon 15. Nov 05:38:57 2010
 **      by: Qt User Interface Compiler version 4.6.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -47,6 +47,7 @@ public:
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         _generate = new QCheckBox(FuzzyOptionsDialog);
         _generate->setObjectName(QString::fromUtf8("_generate"));
+        _generate->setEnabled(false);
 
         gridLayout->addWidget(_generate, 0, 0, 1, 1);
 

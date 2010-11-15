@@ -16,6 +16,9 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QCheckBox" name="_generate">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="text">
       <string>Generuj raporty.</string>
      </property>

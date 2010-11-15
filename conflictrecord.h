@@ -4,8 +4,9 @@
 #include <QObject>
 #include "contentrecord.h"
 #include <QHash>
+#include "inifile.h"
 
-#define SIMVAL 75
+#define SIMVAL (IniFile::instance()->m_fval == 0 ? 75 : IniFile::instance()->m_fval)
 
 class ConflictRecord : public QObject
 {
