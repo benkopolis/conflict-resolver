@@ -142,10 +142,10 @@ bool GlossaryFile::validateText(const QString& text)
     QRegExp wsCount("(\\s)");
     QRegExp nonCount("(\\W|\\.|,|\\:|;)");
     int cc=0, wc=0, nc=0, ac=0;
-    cc =  getCapCount(numCount, text);
-    wc = getCapCount(wsCount, text);
-    nc = getCapCount(nonCount, text);
-    ac = getCapCount(ampCount, text);
+    cc =  GlossaryFile::getCapCount(numCount, text);
+    wc = GlossaryFile::getCapCount(wsCount, text);
+    nc = GlossaryFile::getCapCount(nonCount, text);
+    ac = GlossaryFile::getCapCount(ampCount, text);
     int badness = cc - wc + nc -ac;
     if(badness > text.length()/2)
 	return false;
@@ -171,7 +171,7 @@ QString GlossaryFile::replaceSplitters(const QString& word)
     static QRegExp splitters[4] = {QRegExp("(?:\\.)"), QRegExp("(?:,)"), QRegExp("(?:\\:)"), QRegExp("(?:;)")};
     w.replace(QRegExp("(?:\\.{3,3}(\\s|\\.)"), "__THREEZMDOTS__ ");
     QRegExp end("(\\.|,|;|\\:)");
-    int e = getCapCount(end, w), iter = 0;
+    int e = GlossaryFile::getCapCount(end, w), iter = 0;
     while(iter < e)
     {
         iter++;

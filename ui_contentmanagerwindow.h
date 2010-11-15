@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'contentmanagerwindow.ui'
 **
-** Created: Sun 14. Nov 20:56:58 2010
+** Created: Mon 15. Nov 16:29:09 2010
 **      by: Qt User Interface Compiler version 4.6.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -227,7 +227,7 @@ public:
         ContentManagerWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(ContentManagerWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 624, 25));
+        menubar->setGeometry(QRect(0, 0, 624, 21));
         ContentManagerWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(ContentManagerWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -286,7 +286,7 @@ public:
 #endif // QT_NO_TOOLTIP
         _browse->setText(QApplication::translate("ContentManagerWindow", "Przegl\304\205daj ...", 0, QApplication::UnicodeUTF8));
         _saveDump->setText(QApplication::translate("ContentManagerWindow", "Zapisz", 0, QApplication::UnicodeUTF8));
-        label_5->setText(QApplication::translate("ContentManagerWindow", "Rekordy bezkonfliktowe:", 0, QApplication::UnicodeUTF8));
+        label_5->setText(QApplication::translate("ContentManagerWindow", "Wszystkie rekordy:", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         _filterContent->setToolTip(QApplication::translate("ContentManagerWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

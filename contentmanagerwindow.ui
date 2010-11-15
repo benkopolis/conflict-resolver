@@ -112,7 +112,7 @@
     <item row="3" column="0">
      <widget class="QLabel" name="label_5">
       <property name="text">
-       <string>Rekordy bezkonfliktowe:</string>
+       <string>Wszystkie rekordy:</string>
       </property>
       <property name="buddy">
        <cstring>_totalCount</cstring>
@@ -272,7 +272,7 @@ a następnie można zapisać wyniki pracy do tego dodatkowego pliku.</string>
      <x>0</x>
      <y>0</y>
      <width>624</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
