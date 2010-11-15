@@ -140,7 +140,7 @@ bool ContentModel::addFile(QString fileName) {
     emit totalRecords(_mainFile->allCount());
     emit corruptedCount(_mainFile->corrupted());
     emit fuzzyCount(_merger.fuzzyCount());
-    emit conflictsCount(_merger.conflictsCount(), _merger.duplicatedCount());
+    emit conflictsCount(_mainFile->conflicts()->size(), _merger.duplicatedCount());
     return res;
 }
 
