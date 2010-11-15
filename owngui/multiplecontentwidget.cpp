@@ -87,11 +87,11 @@ void MultipleContentWidget::initData(int row, ContentRecord* cr)
 
     QModelIndex index;
     _models.at(row)->setRowCount(1);
-    int i =0;
-    index = _models.at(row)->index(i, 0);
+    index = _models.at(row)->index(0, 0);
     _models.at(row)->setData(index, cr->source(), Qt::EditRole);
-    index = _models.at(row)->index(i, 1);
+    index = _models.at(row)->index(0, 1);
     _models.at(row)->setData(index, cr->target(), Qt::EditRole);
-    index = _models.at(row)->index(i, 2);
+    index = _models.at(row)->index(0, 2);
     _models.at(row)->setData(index, (int)cr, Qt::DisplayRole);
+    _mappers.at(row)->toFirst();
 }
