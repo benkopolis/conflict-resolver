@@ -70,10 +70,10 @@ void MainWindow::on_startAnalyseing_clicked()
 	_cmw = 0;
     }
     if(ui->_tm->isChecked()) {
-	_cmw = new ContentManagerWindow(_filesChoosen->filesList(), ContentModel::TM, this);
+	_cmw = new ContentManagerWindow(this->ui->_fuzzySearch, _filesChoosen->filesList(), ContentModel::TM, this);
     }
     else if(ui->_gloss->isChecked()) {
-	_cmw = new ContentManagerWindow(_filesChoosen->filesList(), ContentModel::GLOSSARY, this);
+	_cmw = new ContentManagerWindow(this->ui->_fuzzySearch, _filesChoosen->filesList(), ContentModel::GLOSSARY, this);
     }
     for(QStringList::const_iterator ii = _filesChoosen->filesList().begin(); ii != _filesChoosen->filesList().end(); ++ii) {
 	//QMessageBox::about(this, QString("Test"), QString("Dodano plik"));

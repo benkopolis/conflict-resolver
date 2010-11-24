@@ -14,7 +14,7 @@ class ContentManagerWindow : public QMainWindow {
 public:
 
     ContentManagerWindow(QWidget *parent = 0);
-    ContentManagerWindow(const QStringList& files, ContentModel::ContentType type, QWidget *parent = 0);
+    ContentManagerWindow(bool fuzzySerach, const QStringList& files, ContentModel::ContentType type, QWidget *parent = 0);
     ~ContentManagerWindow();
 
     void setRH(int row, int height);

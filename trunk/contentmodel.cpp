@@ -44,9 +44,10 @@ ContentModel::ContentModel(QObject *parent) :
 /**
   *
   */
-ContentModel::ContentModel(ContentType type, QObject *parent):
+ContentModel::ContentModel(bool fuzzySerach, ContentType type, QObject *parent):
     QAbstractListModel(parent)
 {
+    _merger.setFuzzySearch(fuzzySerach);
     _type = type;
     _conflictsCount = 0;
     _dontFilterConflicts = true;
