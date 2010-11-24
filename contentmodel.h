@@ -34,7 +34,7 @@ public:
     enum ContentType { GLOSSARY, TM, UNKNOWN };
 
     explicit ContentModel(QObject *parent = 0);
-    explicit ContentModel(ContentType type, QObject *parent = 0);
+    explicit ContentModel(bool fuzzySerach, ContentType type, QObject *parent = 0);
     virtual int rowCount ( const QModelIndex & parent = QModelIndex() ) const;
     virtual QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     virtual bool setData ( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );

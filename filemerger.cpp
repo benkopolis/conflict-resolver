@@ -69,6 +69,23 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
 //	qDebug() << fs.base();
 //	qDebug() << (fs.base() == "&tA;Udzia³ operatorów alternatywnych pod wzglêdem przychodów z po³¹czeñ miêdzystrefowych by³ wy¿szy ni¿ w przypadku po³¹czeñ lokalnych.");
     }
+    if(!_fuzzySearch)
+    {
+	QStack<ConflictRecord*> toRm;
+	foreach(ConflictRecord* r, it->conflicts()->values())
+	{
+	    foreach(ConflictRecord* in, it->conflicts()->values())
+	    {
+		if(r->contains(in) && *in != *r)
+		    toRm.push(in);
+	    }
+	}
+	foreach(ConflictRecord* rm, toRm)
+	{
+	    it->conflicts()->remove(it->conflicts()->key(rm), rm);
+	}
+    }
+	return;
     for(outer = it->_content->begin();outer != it->_content->end();++outer)
     {
         for(inner = outer; inner != it->_content->end(); ++inner) {

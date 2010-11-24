@@ -19,13 +19,13 @@ ContentManagerWindow::ContentManagerWindow(QWidget *parent) :
     setWindowTitle(QString("TMs & Glossaries Manager::Content Manager Window"));
 }
 
-ContentManagerWindow::ContentManagerWindow(const QStringList& files, ContentModel::ContentType type, QWidget *parent):
+ContentManagerWindow::ContentManagerWindow(bool fuzzySerach, const QStringList& files, ContentModel::ContentType type, QWidget *parent):
     QMainWindow(parent),
     ui(new Ui::ContentManagerWindow)
 {
     ui->setupUi(this);
     ui->_filterContent->setEnabled(false);
-    _content = new ContentModel(type);
+    _content = new ContentModel(fuzzySerach, type);
     QObject::connect(_content, SIGNAL(conflictsCount(uint,uint)), this, SLOT(onConflictCount(uint,uint)));
     QObject::connect(_content, SIGNAL(totalRecords(uint)), this, SLOT(onTotalRecords(uint)));
     _crw = 0;

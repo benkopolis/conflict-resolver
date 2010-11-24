@@ -109,21 +109,21 @@ unsigned FuzzyStrings::similarity(const QString& str) const {
 	}
     }
     res =  arr[iwCount-1][gwCount-1];
-    qDebug() << "REZULTAT TO: " << res;
+//    qDebug() << "REZULTAT TO: " << res;
     float avg = iwCount + gwCount;
-    qDebug() << "AVG TO: " << avg;
+//    qDebug() << "AVG TO: " << avg;
     float tmp;
     avg = avg / 2;
     tmp = (avg - res)/avg;
     res = tmp*100;
     if(res == 0)
-	print2DArrToDebug(arr, iwCount, gwCount);
+//	print2DArrToDebug(arr, iwCount, gwCount);
     /// czyszczenie
     for(unsigned i = 0; i < iwCount; ++i) {
 	delete [] arr[i];
     }
     delete [] arr;
-    qDebug() << "wartosc podobienstwa: " << res;
+//    qDebug() << "wartosc podobienstwa: " << res;
     return res;
 }
 

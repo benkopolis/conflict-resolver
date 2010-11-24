@@ -14,7 +14,9 @@ public:
     void findInnerConflicts(GlossaryFile* it);
     inline unsigned duplicatedCount() const { return _duplicatedCount; }
     inline unsigned conflictsCount() const { return _conflictsCount; }
-    inline unsigned fuzzyCount() const { return _fuzzyCount; }\
+    inline unsigned fuzzyCount() const { return _fuzzyCount; }
+    inline void setFuzzySearch(bool f) { _fuzzySearch = f; }
+    inline bool fuzzySearch() const { return _fuzzySearch; }
 
 signals:
 
@@ -37,6 +39,8 @@ private:
     unsigned _duplicatedCount;
     unsigned _conflictsCount;
     unsigned _fuzzyCount;
+
+    bool _fuzzySearch;
 
 };
 

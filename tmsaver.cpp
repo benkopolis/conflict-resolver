@@ -52,12 +52,13 @@ bool TMSaver::saveContent(const QString& file, TMHeader& rheader, QMultiHash<Fuz
     QHash<FuzzyStrings, ContentRecord* >::iterator currentList = conflicts.begin();
     while(currentList != conflicts.end())
     {
-	if((*currentList)->status() == ContentRecord::Confirmed || (*currentList)->status() == ContentRecord::NotResolved
+	if((*currentList)->status() == ContentRecord::Confirmed
 	   || (*currentList)->status() == ContentRecord::None)
 	{
 	    fs << (*currentList)->toRecordString() << endl;
 	}
-	else if((*currentList)->status() == ContentRecord::Delayed)
+	else if((*currentList)->status() == ContentRecord::Delayed
+		|| (*currentList)->status() == ContentRecord::NotResolved)
 	{
 	    dstream << (*currentList)->toRecordString() << endl;
 	}
@@ -117,12 +118,13 @@ bool TMSaver::saveReversedContent(const QString& file, TMHeader& rheader, QMulti
     QList<ContentRecord* >::iterator ii;
     while(currentList != conflicts.end())
     {
-	if((*currentList)->status() == ContentRecord::Confirmed || (*currentList)->status() == ContentRecord::NotResolved
+	if((*currentList)->status() == ContentRecord::Confirmed
 	   || (*currentList)->status() == ContentRecord::None)
 	{
 	    fs << (*currentList)->toReversedRecordString() << endl;
 	}
-	else if((*currentList)->status() == ContentRecord::Delayed)
+	else if((*currentList)->status() == ContentRecord::Delayed
+		|| (*currentList)->status() == ContentRecord::NotResolved)
 	{
 	    dstream << (*currentList)->toReversedRecordString() << endl;
 	}
