@@ -38,7 +38,6 @@ private slots:
 private:
 
     FilesSet* _filesOpened;
-    FilesSet* _filesChoosen;
     QModelIndex _indexOfSelectedItem;
 };
 

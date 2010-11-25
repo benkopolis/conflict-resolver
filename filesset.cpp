@@ -10,7 +10,10 @@ int FilesSet::rowCount(const QModelIndex &parent) const {
 }
 
 QVariant FilesSet::data(const QModelIndex & index, int role) const {
-    return QVariant(_filesList.at(index.row()));
+    if(_filesList.size() > index.row())
+        return QVariant(_filesList.at(index.row()));
+    else
+        return QVariant("NULL");
 }
 
 bool FilesSet::setData(const QModelIndex & index, const QVariant & value, int role) {
