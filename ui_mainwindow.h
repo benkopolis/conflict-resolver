@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Nov 24 15:07:41 2010
+** Created: Fri Nov 26 15:44:37 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -36,19 +36,13 @@ class Ui_MainWindow
 public:
     QAction *actionWczytaj_konfiguracj;
     QAction *actionZapisz_konfiguracj;
-    QAction *actionExport;
     QAction *actionOpenFile;
     QAction *actionAnalizuj_plik;
     QAction *actionCloseFile;
     QAction *actionWyj_cie_z_programu;
-    QAction *actionAdd_file;
-    QAction *actionRemove_file;
     QAction *actionStart;
     QWidget *centralWidget;
     QGridLayout *gridLayout_3;
-    QGridLayout *gridLayout;
-    QLabel *label_2;
-    QListView *_files;
     QGridLayout *gridLayout_2;
     QGroupBox *groupBox;
     QRadioButton *_tm;
@@ -57,6 +51,9 @@ public:
     QPushButton *startAnalyseing;
     QPushButton *_closeFile;
     QCheckBox *_fuzzySearch;
+    QGridLayout *gridLayout;
+    QLabel *label_2;
+    QListView *_files;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -71,8 +68,6 @@ public:
         actionWczytaj_konfiguracj->setObjectName(QString::fromUtf8("actionWczytaj_konfiguracj"));
         actionZapisz_konfiguracj = new QAction(MainWindow);
         actionZapisz_konfiguracj->setObjectName(QString::fromUtf8("actionZapisz_konfiguracj"));
-        actionExport = new QAction(MainWindow);
-        actionExport->setObjectName(QString::fromUtf8("actionExport"));
         actionOpenFile = new QAction(MainWindow);
         actionOpenFile->setObjectName(QString::fromUtf8("actionOpenFile"));
         actionAnalizuj_plik = new QAction(MainWindow);
@@ -81,10 +76,6 @@ public:
         actionCloseFile->setObjectName(QString::fromUtf8("actionCloseFile"));
         actionWyj_cie_z_programu = new QAction(MainWindow);
         actionWyj_cie_z_programu->setObjectName(QString::fromUtf8("actionWyj_cie_z_programu"));
-        actionAdd_file = new QAction(MainWindow);
-        actionAdd_file->setObjectName(QString::fromUtf8("actionAdd_file"));
-        actionRemove_file = new QAction(MainWindow);
-        actionRemove_file->setObjectName(QString::fromUtf8("actionRemove_file"));
         actionStart = new QAction(MainWindow);
         actionStart->setObjectName(QString::fromUtf8("actionStart"));
         centralWidget = new QWidget(MainWindow);
@@ -93,41 +84,14 @@ public:
         gridLayout_3->setSpacing(6);
         gridLayout_3->setContentsMargins(11, 11, 11, 11);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
-        gridLayout = new QGridLayout();
-        gridLayout->setSpacing(6);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        label_2 = new QLabel(centralWidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
-        label_2->setSizePolicy(sizePolicy);
-
-        gridLayout->addWidget(label_2, 0, 0, 1, 1);
-
-        _files = new QListView(centralWidget);
-        _files->setObjectName(QString::fromUtf8("_files"));
-        _files->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        _files->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        _files->setTabKeyNavigation(true);
-        _files->setAlternatingRowColors(false);
-        _files->setSelectionMode(QAbstractItemView::NoSelection);
-        _files->setSelectionBehavior(QAbstractItemView::SelectItems);
-        _files->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-        _files->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
-        _files->setSelectionRectVisible(false);
-
-        gridLayout->addWidget(_files, 1, 0, 2, 1);
-
-
-        gridLayout_3->addLayout(gridLayout, 0, 0, 1, 1);
-
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setSpacing(6);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
         groupBox->setSizePolicy(sizePolicy);
         groupBox->setMinimumSize(QSize(100, 80));
@@ -163,6 +127,33 @@ public:
 
         gridLayout_3->addLayout(gridLayout_2, 1, 0, 1, 1);
 
+        gridLayout = new QGridLayout();
+        gridLayout->setSpacing(6);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        sizePolicy.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
+        label_2->setSizePolicy(sizePolicy);
+
+        gridLayout->addWidget(label_2, 0, 0, 1, 1);
+
+        _files = new QListView(centralWidget);
+        _files->setObjectName(QString::fromUtf8("_files"));
+        _files->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        _files->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        _files->setTabKeyNavigation(true);
+        _files->setAlternatingRowColors(false);
+        _files->setSelectionMode(QAbstractItemView::NoSelection);
+        _files->setSelectionBehavior(QAbstractItemView::SelectItems);
+        _files->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+        _files->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
+        _files->setSelectionRectVisible(false);
+
+        gridLayout->addWidget(_files, 1, 0, 2, 1);
+
+
+        gridLayout_3->addLayout(gridLayout, 0, 0, 1, 1);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -183,13 +174,14 @@ public:
         menuFile->addAction(actionOpenFile);
         menuFile->addAction(actionCloseFile);
         menuFile->addAction(actionWyj_cie_z_programu);
-        mainToolBar->addAction(actionWczytaj_konfiguracj);
-        mainToolBar->addAction(actionZapisz_konfiguracj);
         mainToolBar->addAction(actionOpenFile);
         mainToolBar->addAction(actionCloseFile);
         mainToolBar->addAction(actionStart);
 
         retranslateUi(MainWindow);
+        QObject::connect(actionOpenFile, SIGNAL(triggered()), _openFile, SLOT(click()));
+        QObject::connect(actionCloseFile, SIGNAL(triggered()), _closeFile, SLOT(click()));
+        QObject::connect(actionStart, SIGNAL(triggered()), startAnalyseing, SLOT(click()));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -201,7 +193,6 @@ public:
         actionWczytaj_konfiguracj->setShortcut(QApplication::translate("MainWindow", "Ctrl+L", 0, QApplication::UnicodeUTF8));
         actionZapisz_konfiguracj->setText(QApplication::translate("MainWindow", "Zapisz konfiguracj\304\231", 0, QApplication::UnicodeUTF8));
         actionZapisz_konfiguracj->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0, QApplication::UnicodeUTF8));
-        actionExport->setText(QApplication::translate("MainWindow", "Export", 0, QApplication::UnicodeUTF8));
         actionOpenFile->setText(QApplication::translate("MainWindow", "Otw\303\263rz plik", 0, QApplication::UnicodeUTF8));
         actionOpenFile->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", 0, QApplication::UnicodeUTF8));
         actionAnalizuj_plik->setText(QApplication::translate("MainWindow", "Analizuj plik", 0, QApplication::UnicodeUTF8));
@@ -210,20 +201,8 @@ public:
         actionCloseFile->setShortcut(QApplication::translate("MainWindow", "Ctrl+W", 0, QApplication::UnicodeUTF8));
         actionWyj_cie_z_programu->setText(QApplication::translate("MainWindow", "Wyj\305\233cie z programu", 0, QApplication::UnicodeUTF8));
         actionWyj_cie_z_programu->setShortcut(QApplication::translate("MainWindow", "Ctrl+Q", 0, QApplication::UnicodeUTF8));
-        actionAdd_file->setText(QApplication::translate("MainWindow", "Add file", 0, QApplication::UnicodeUTF8));
-        actionAdd_file->setShortcut(QApplication::translate("MainWindow", "Ctrl+Right", 0, QApplication::UnicodeUTF8));
-        actionRemove_file->setText(QApplication::translate("MainWindow", "Remove file", 0, QApplication::UnicodeUTF8));
-        actionRemove_file->setShortcut(QApplication::translate("MainWindow", "Ctrl+Left", 0, QApplication::UnicodeUTF8));
         actionStart->setText(QApplication::translate("MainWindow", "Start", 0, QApplication::UnicodeUTF8));
         actionStart->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+S", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("MainWindow", "Otwarte pliki:", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        _files->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Lista otwartych plik\303\263w. Dwuklik na pliku spowoduje jego przeniesienie z tej listy na list\304\231 plik\303\263w wybranych do analizy.</p></body></html>", 0, QApplication::UnicodeUTF8));
-#endif // QT_NO_TOOLTIP
         groupBox->setTitle(QApplication::translate("MainWindow", "Typy plik\303\263w", 0, QApplication::UnicodeUTF8));
         _tm->setText(QApplication::translate("MainWindow", "TM", 0, QApplication::UnicodeUTF8));
         _gloss->setText(QApplication::translate("MainWindow", "Glossary", 0, QApplication::UnicodeUTF8));
@@ -244,6 +223,14 @@ public:
 #endif // QT_NO_TOOLTIP
         _closeFile->setText(QApplication::translate("MainWindow", "Zamknij zaznaczony plik", 0, QApplication::UnicodeUTF8));
         _fuzzySearch->setText(QApplication::translate("MainWindow", "Sprawdzaj rozmyte konflitkty", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("MainWindow", "Otwarte pliki:", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        _files->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Lista otwartych plik\303\263w. Dwuklik na pliku spowoduje jego przeniesienie z tej listy na list\304\231 plik\303\263w wybranych do analizy.</p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         menuFile->setTitle(QApplication::translate("MainWindow", "Menu", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

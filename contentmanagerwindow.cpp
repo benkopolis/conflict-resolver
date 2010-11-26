@@ -3,6 +3,7 @@
 #include "ui_contentmanagerwindow.h"
 #include <QTextStream>
 #include <QMessageBox>
+#include <QFileInfo>
 #include <QFileDialog>
 #include "filtersdialog.h"
 #include "inifile.h"
@@ -123,16 +124,24 @@ void ContentManagerWindow::on__filterContent_clicked()
 
 void ContentManagerWindow::on__saveContent_clicked()
 {
-    QString save = QFileDialog::getSaveFileName(this, QString("Zapisz jako"), IniFile::instance()->m_dir);
-    IniFile::instance()->m_dir = save.mid(0, save.lastIndexOf(QString("\\"), 0, Qt::CaseInsensitive));
+    QString save = QFileDialog::getSaveFileName(this, QString("Zapisz jako"), IniFile::instance()->lastPath(),
+                                                "Text files (*.txt)");
+    if(save.isEmpty())
+        return;
+    QFileInfo info(save);
+    IniFile::instance()->setLastPath(info.path());
     if(this->_content->saveContent(save) == false)
-	QMessageBox::critical(this, QString("Uwaga"), QString("Zapis siê nie powiód³."));
+        QMessageBox::critical(this, QString("Uwaga"), QString("Zapis siê nie powiód³."));
 }
 
 void ContentManagerWindow::on__browse_clicked()
 {
-    QString file = QFileDialog::getSaveFileName(this, QString("Plik do zapisu zawartosci na pozniej"), IniFile::instance()->m_dir);
-    IniFile::instance()->m_dir = file.mid(0, file.lastIndexOf(QString("\\"), 0, Qt::CaseInsensitive));
+    QString file = QFileDialog::getSaveFileName(this, QString("Plik do zapisu zawartosci na pozniej"), IniFile::instance()->lastPath(),
+                                                "Text files (*.txt)");
+    if(file.isEmpty())
+        return;
+    QFileInfo info(file);
+    IniFile::instance()->setLastPath(info.path());
     this->ui->_dumpFile->setText(file);
 }
 
@@ -143,15 +152,23 @@ void ContentManagerWindow::on__saveDump_clicked()
 
 void ContentManagerWindow::on__confront_clicked()
 {
-    QString file = QFileDialog::getOpenFileName(this, QString("Plik do konfrontacji."), IniFile::instance()->m_dir);
-    IniFile::instance()->m_dir = file.mid(0, file.lastIndexOf(QString("\\"), 0, Qt::CaseInsensitive));
+    QString file = QFileDialog::getOpenFileName(this, QString("Plik do konfrontacji."), IniFile::instance()->lastPath(),
+                                                "Text files (*.txt)");
+    if(file.isEmpty())
+        return;
+    QFileInfo info(file);
+    IniFile::instance()->setLastPath(info.path());
     this->_content->addFile(file);
 }
 
 void ContentManagerWindow::on__saveReversed_clicked()
 {
-    QString file = QFileDialog::getSaveFileName(this, QString("Plik do zapisu odwroconej bazy."), IniFile::instance()->m_dir);
-    IniFile::instance()->m_dir = file.mid(0, file.lastIndexOf(QString("\\"), 0, Qt::CaseInsensitive));
+    QString file = QFileDialog::getSaveFileName(this, QString("Plik do zapisu odwroconej bazy."), IniFile::instance()->lastPath(),
+                                                "Text files (*.txt)");
+    if(file.isEmpty())
+        return;
+    QFileInfo info(file);
+    IniFile::instance()->setLastPath(info.path());
     if(this->_content->saveReversedContent(file) == false)
 	QMessageBox::critical(this, QString("Uwaga"), QString("Zapis siê nie powiód³."));
 }
@@ -165,8 +182,12 @@ void ContentManagerWindow::on__saveGloss_clicked()
 
 void ContentManagerWindow::on__chooseAntiDict_clicked()
 {
-    QString file = QFileDialog::getOpenFileName(this, QString("Wybierz antys?ownik."), IniFile::instance()->m_dir);
-    IniFile::instance()->m_dir = file.mid(0, file.lastIndexOf(QString("\\"), 0, Qt::CaseInsensitive));
+    QString file = QFileDialog::getOpenFileName(this, QString("Wybierz antys?ownik."), IniFile::instance()->lastPath(),
+                                                "Text files (*.txt)");
+    if(file.isEmpty())
+        return;
+    QFileInfo info(file);
+    IniFile::instance()->setLastPath(info.path());
     this->ui->_antiDict->setText(file);
 }
 

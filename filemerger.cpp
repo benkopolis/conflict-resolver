@@ -6,6 +6,14 @@
 #include <QDateTime>
 #include "tmsaver.h"
 
+
+/***
+  czytanie ze strumieni / bezposrednio czy z pliku tymczasowego
+  walidacja tekstu - wyslac
+  konflikty rozmyte - dubluja sie, poprawic efektywnosc
+  */
+
+
 FileMerger::FileMerger(QObject *parent) :
     QObject(parent)
 {
@@ -32,9 +40,20 @@ GlossaryFile* FileMerger::mergeFiles(GlossaryFile* one, GlossaryFile* two) const
     TMHeader tmp_h;
     tms.saveContent(ostr, tmp_h, *one->content(), one->allCount());
     tms.saveContent(tstr, tmp_h, *two->content(), two->allCount());
-    r << one->header().writeHeader();
+    r << one->header().writeHeader() << endl;
     r << ones;
     r << twos;
+    QFile onef("one.txt");
+    onef.open(QIODevice::Append | QIODevice::WriteOnly);
+    QTextStream sonef(&onef);
+    sonef << one->header().writeHeader() << endl;
+    //sonef << ones;
+    QFile twof("two.txt");
+    twof.open(QIODevice::Append | QIODevice::WriteOnly);
+    QTextStream stwof(&twof);
+    stwof << twos;
+    onef.close();
+    twof.close();
     QString temp_file_name("Zby_TMP_F");
     temp_file_name.append(QDateTime::currentDateTime().toString("d.M.yy.Hmsz"));
     QFile temp_file(temp_file_name);
@@ -48,13 +67,17 @@ GlossaryFile* FileMerger::mergeFiles(GlossaryFile* one, GlossaryFile* two) const
     temp_file.close();
     if(temp_file.open(QIODevice::ReadOnly | QIODevice::Text) == false)
         return 0;
-    GlossaryFile* gf = new GlossaryFile();
+    GlossaryFile* gf = 0;
+    if(qobject_cast<TMFile* >(one) != 0)
+        gf = new TMFile();
+    else
+        gf = new GlossaryFile();
     if(gf->processWithTabs(temp_file) == false)
     {
         delete gf;
         gf = 0;
     }
-    temp_file.remove();
+    //temp_file.remove();
     return gf;
 }
 
@@ -69,67 +92,70 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
 //	qDebug() << fs.base();
 //	qDebug() << (fs.base() == "&tA;Udzia³ operatorów alternatywnych pod wzglêdem przychodów z po³¹czeñ miêdzystrefowych by³ wy¿szy ni¿ w przypadku po³¹czeñ lokalnych.");
     }
-    if(!_fuzzySearch)
+    QStack<ConflictRecord*> toRm;
+    foreach(ConflictRecord* r, it->conflicts()->values())
     {
-	QStack<ConflictRecord*> toRm;
-	foreach(ConflictRecord* r, it->conflicts()->values())
-	{
-	    foreach(ConflictRecord* in, it->conflicts()->values())
-	    {
-		if(r->contains(in) && *in != *r)
-		    toRm.push(in);
-	    }
-	}
-	foreach(ConflictRecord* rm, toRm)
-	{
-	    it->conflicts()->remove(it->conflicts()->key(rm), rm);
-	}
+        foreach(ConflictRecord* in, it->conflicts()->values())
+        {
+            if(r->contains(in) && *in != *r)
+                toRm.push(in);
+        }
     }
-	return;
-    for(outer = it->_content->begin();outer != it->_content->end();++outer)
+    foreach(ConflictRecord* rm, toRm)
     {
-        for(inner = outer; inner != it->_content->end(); ++inner) {
-            if(inner == outer)
-                ++inner;
-            if(inner == it->_content->end())
-		break;
-	    ContentRecord* rinner = inner.value();
-	    ContentRecord* router = outer.value();
-	    bool fuzzyok = false;
-	    foreach(ConflictRecord* confr, it->_conflicts->values(outer.key()))
-            {
-                if(confr->recordMatch(inner.value()))
+        it->conflicts()->remove(it->conflicts()->key(rm), rm);
+    }
+    if(_fuzzySearch == true)
+    {
+        for(outer = it->_content->begin();outer != it->_content->end();++outer)
+        {
+            for(inner = outer; inner != it->_content->end(); ++inner) {
+                if(inner == outer)
+                    ++inner;
+                if(inner == it->_content->end())
+                    break;
+                ContentRecord* rinner = inner.value();
+                ContentRecord* router = outer.value();
+                bool fuzzyok = false;
+                foreach(ConflictRecord* confr, it->_conflicts->values(outer.key()))
                 {
-                    if(confr->contains(inner.value()) == false)
+                    if(confr->recordMatch(inner.value()))
                     {
-                            confr->addRecord(inner.value());
-			    if(confr->contains(router))
-				fuzzyok = true;
-                            ++_conflictsCount;
-                            ++_fuzzyCount;
+                        if(confr->contains(inner.value()) == false)
+                        {
+                                confr->addRecord(inner.value());
+                                if(confr->contains(router))
+                                    fuzzyok = true;
+                                ++_conflictsCount;
+                                ++_fuzzyCount;
+                        }
+                    }
+                }
+                if(fuzzyok == false)
+                {
+                    if(rinner->sourceF().similarity(router->sourceF()) > SIMVAL)
+                    {
+                        ConflictRecord* conr = new ConflictRecord(it);
+                        conr->addRecord(rinner);
+                        conr->addRecord(router);it->_conflicts->insert(router->sourceF(), conr);
+                        ++_conflictsCount;
+                        ++_fuzzyCount;
                     }
                 }
             }
-	    if(fuzzyok == false)
-	    {
-		if(rinner->sourceF().similarity(router->sourceF()) > SIMVAL)
-		{
-		    ConflictRecord* conr = new ConflictRecord(it);
-		    conr->addRecord(rinner);
-		    conr->addRecord(router);it->_conflicts->insert(router->sourceF(), conr);
-		    ++_conflictsCount;
-		    ++_fuzzyCount;
-		}
-	    }
         }
     }
-    QStack<ConflictRecord*> toRm;
     foreach(ConflictRecord* r, it->conflicts()->values())
     {
 	foreach(ConflictRecord* in, it->conflicts()->values())
 	{
-	    if(r->contains(in) && *in != *r)
-		toRm.push(in);
+            if(r->contains(in))
+            {
+                if(*in != *r)
+                    toRm.push(in);
+                else if(it->conflicts()->keys(in).size() > 1)
+                    toRm.push(in);
+            }
 	}
     }
     foreach(ConflictRecord* rm, toRm)

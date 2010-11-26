@@ -27,14 +27,14 @@ void FilesSetDelegate::paint(QPainter * painter, const QStyleOptionViewItem & op
     painter->save();
     if(_selected == index){
 	painter->setBrush(QBrush(_selectionColor));
-	painter->drawRect(0, index.row()*15, 7*d.length(), 15);
+        painter->drawRect(0, index.row()*15, 15*d.length(), 15);
     }
     MainWindow* mw = qobject_cast<MainWindow* >(this->parent());
     QListView* tmp = mw->files();
     _hOffset = tmp->horizontalScrollBar()->value();
     _vOffset = tmp->verticalScrollBar()->value();
     painter->setFont(QFont(QString("Courier New")));
-    painter->drawText(0 - _hOffset, index.row()*15 - _vOffset, 7*d.length(), 15, Qt::TextWordWrap, d);
+    painter->drawText(0 - _hOffset, index.row()*15 - _vOffset, 15*d.length(), 15, Qt::TextWordWrap, d);
 //	qDebug() << "ho: " << _hOffset << " vo: " << _vOffset << endl;
     painter->restore();
 }

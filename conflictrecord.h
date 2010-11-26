@@ -6,7 +6,7 @@
 #include <QHash>
 #include "inifile.h"
 
-#define SIMVAL (IniFile::instance()->m_fval == 0 ? 75 : IniFile::instance()->m_fval)
+#define SIMVAL (IniFile::instance()->fval() == 0 ? 75 : IniFile::instance()->fval())
 
 class ConflictRecord : public QObject
 {

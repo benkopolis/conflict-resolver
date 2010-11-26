@@ -2,10 +2,13 @@
 #include <QItemSelection>
 #include <QMessageBox>
 #include <QScrollBar>
+#include <QFileInfo>
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "filessetdelegate.h"
 #include "inifile.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,9 +19,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->_files->setModel((QAbstractItemModel*)(new FilesSet(this)));
     _filesOpened = (FilesSet*)ui->_files->model();
     ui->_files->setItemDelegate(new FilesSetDelegate(this));
-
-    QObject::connect(ui->actionOpenFile, SIGNAL(triggered()), this, SLOT(on__openFile_clicked()));
-    QObject::connect(ui->actionCloseFile, SIGNAL(triggered()), this, SLOT(on__closeFile_clicked()));
+//
+//    QObject::connect(ui->actionOpenFile, SIGNAL(triggered()), this, SLOT(on__openFile_clicked()));
+//    QObject::connect(ui->actionCloseFile, SIGNAL(triggered()), this, SLOT(on__closeFile_clicked()));
     this->ui->_files->horizontalScrollBar()->setTracking(true);
     this->ui->_files->verticalScrollBar()->setTracking(true);
     QObject::connect(this->ui->_files->horizontalScrollBar(), SIGNAL(valueChanged(int)), (FilesSetDelegate*)ui->_files->itemDelegate(), SLOT(onHorizontalOffset(int)));
@@ -60,10 +63,10 @@ void MainWindow::on_startAnalyseing_clicked()
 	_cmw = 0;
     }
     if(ui->_tm->isChecked()) {
-        _cmw = new ContentManagerWindow(this->ui->_fuzzySearch, _filesOpened->filesList(), ContentModel::TM, this);
+        _cmw = new ContentManagerWindow(this->ui->_fuzzySearch->isChecked(), _filesOpened->filesList(), ContentModel::TM, this);
     }
     else if(ui->_gloss->isChecked()) {
-        _cmw = new ContentManagerWindow(this->ui->_fuzzySearch, _filesOpened->filesList(), ContentModel::GLOSSARY, this);
+        _cmw = new ContentManagerWindow(this->ui->_fuzzySearch->isChecked(), _filesOpened->filesList(), ContentModel::GLOSSARY, this);
     }
     for(QStringList::const_iterator ii = _filesOpened->filesList().begin(); ii != _filesOpened->filesList().end(); ++ii) {
 	//QMessageBox::about(this, QString("Test"), QString("Dodano plik"));
@@ -78,11 +81,12 @@ void MainWindow::on_startAnalyseing_clicked()
 
 void MainWindow::on__openFile_clicked()
 {
-    QStringList files(QFileDialog::getOpenFileNames(this, QString(tr("Choose files.")), IniFile::instance()->m_lastPath));
+    QStringList files(QFileDialog::getOpenFileNames(this, QString(tr("Choose files.")), IniFile::instance()->lastPath(),
+                                                    "Text files (*.txt);;XML files (*.tmx)"));
     if(files.isEmpty() == false) {
 	QString example = files.at(0);
-	int pos = example.lastIndexOf(QChar('\\'),0);
-	IniFile::instance()->m_lastPath = example.mid(0, pos+1);
+        QFileInfo info(example);
+        IniFile::instance()->setLastPath(info.path());
     }
     for(QStringList::iterator ii = files.begin(); ii != files.end(); ++ii)
 	_filesOpened->setData(QModelIndex(), QVariant(*ii));
