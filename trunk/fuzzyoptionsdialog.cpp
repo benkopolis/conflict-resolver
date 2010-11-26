@@ -8,14 +8,14 @@ FuzzyOptionsDialog::FuzzyOptionsDialog(QWidget *parent) :
     ui(new Ui::FuzzyOptionsDialog)
 {
     ui->setupUi(this);
-    if(IniFile::instance()->m_fval == 0)
-	IniFile::instance()->m_fval = 75;
+    if(IniFile::instance()->fval() == 0)
+        IniFile::instance()->setFval(75);
     dmw = new QDataWidgetMapper(this);
     sim = new QStandardItemModel(this);
     sim->setColumnCount(1);
     sim->setRowCount(1);
     QModelIndex ind = sim->index(0,0);
-    sim->setData(ind, IniFile::instance()->m_fval, Qt::EditRole);
+    sim->setData(ind, IniFile::instance()->fval(), Qt::EditRole);
     dmw->setModel(sim);
     dmw->addMapping(this->ui->_fuzzyValue, 0);
     connect(sim, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(onValueChanged(QStandardItem*)));
@@ -32,7 +32,7 @@ FuzzyOptionsDialog::~FuzzyOptionsDialog()
 
 void FuzzyOptionsDialog::onValueChanged(QStandardItem* item)
 {
-    IniFile::instance()->m_fval = qvariant_cast<unsigned>(item->data());
+    IniFile::instance()->setFval(qvariant_cast<unsigned>(item->data()));
 }
 
 void FuzzyOptionsDialog::changeEvent(QEvent *e)

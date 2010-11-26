@@ -17,25 +17,14 @@ bool IniFile::readIniFile() {
     if(file.open(QIODevice::ReadOnly | QIODevice::Text) == false)
 	return false;
     QTextStream fstream(&file);
-    QString temp;
-    while(fstream.atEnd() == false) {
-	fstream >> temp;
-	if(temp.compare(QString("REGEXP"), Qt::CaseInsensitive) == 0)
-		fstream >> m_regex;
-	else if(temp.compare(QString("LASTPATH"), Qt::CaseInsensitive))
-	{
-	    fstream >> temp;
-	    m_lastPath.clear();
-	    while(temp.compare(QString("ENDLASTPATH"), Qt::CaseInsensitive) != 0 && fstream.atEnd() == false)
-	    {
-		m_lastPath = m_lastPath.append(temp);
-		fstream >> temp;
-	    }
-	}
-	else if(temp.compare("FVAL", Qt::CaseInsensitive))
-	    fstream >> m_fval;
-	/// TODO
-    }
+    QString temp = fstream.readLine();
+    QJson::Parser parser;
+    bool ok = false;
+    QVariantMap mm = parser.parse(temp.toLocal8Bit(), &ok).toMap();
+    if(!ok)
+        return false;
+    QJson::QObjectHelper::qvariant2qobject(mm, this);
+    file.close();
     return true;
 }
 
@@ -43,10 +32,11 @@ bool IniFile::saveIniFile() {
     QFile file(m_iniFileDir);
     file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
     QTextStream fstream(&file);
-    fstream << "REGEXP " << m_regex << endl;
-    fstream << "LASTPATH " << m_lastPath << " ENDLASTPATH" << endl;
-    fstream << "FVAL " << m_fval << endl;
-    /// TODO
+    QVariantMap mm = QJson::QObjectHelper::qobject2qvariant(this);
+    QJson::Serializer srl;
+    fstream << srl.serialize(mm) << endl;
+    file.close();
+    return true;
 }
 
 void IniFile::onConflict(unsigned sim)

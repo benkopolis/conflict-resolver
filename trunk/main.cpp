@@ -15,6 +15,7 @@ TEST_MAIN
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    IniFile::instance()->setIniFileDir("./base.ini");
     IniFile::instance()->readIniFile();
     MainWindow w;
     w.show();

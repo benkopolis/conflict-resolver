@@ -36,7 +36,12 @@ void GlossaryExtractorDialog::changeEvent(QEvent *e)
 
 void GlossaryExtractorDialog::on__save_clicked()
 {
-    QString f = QFileDialog::getSaveFileName(this, QString("Plik do zapisu:"), IniFile::instance()->m_dir);
+    QString f = QFileDialog::getSaveFileName(this, QString("Plik do zapisu:"), IniFile::instance()->lastPath(),
+                                             "Text files (*.txt);;XML files (*.tmx)");
+    if(f.isEmpty())
+        return;
+    QFileInfo info(f);
+    IniFile::instance()->setLastPath(info.path());
     TMSaver tms;
     TMHeader tmh;
     tms.saveContent(f, tmh, _found, (unsigned)_found.size());

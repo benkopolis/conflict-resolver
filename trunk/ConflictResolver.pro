@@ -5,6 +5,16 @@ QT += gui
 QT += testlib
 QT += xml
 QT += xmlpatterns
+
+ message($$QMAKESPEC)
+QMAKESPEC=/usr/share/qt4/mkspecs/linux-g++
+ linux-g++ {
+     message(Linux)
+ }
+
+INCLUDEPATH += "./qjson/src"
+LIBS += -lqjson
+
 TARGET = ConflictResolver
 TEMPLATE = app
 SOURCES += main.cpp \
