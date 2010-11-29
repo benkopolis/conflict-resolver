@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'contentmanagerwindow.ui'
 **
-** Created: Fri Nov 26 15:44:37 2010
-**      by: Qt User Interface Compiler version 4.6.2
+** Created: Mon 29. Nov 07:18:30 2010
+**      by: Qt User Interface Compiler version 4.6.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/

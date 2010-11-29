@@ -20,6 +20,8 @@ public:
 
     bool addRecord(ContentRecord* record);
     bool recordMatch(ContentRecord* record);
+    void merge(ConflictRecord* record);
+    bool recordMatch(ConflictRecord* record);
     inline QList<ContentRecord* > conflictedRecords() { return _keys; }
     inline unsigned conflictedRecordsCount() { return _keys.size(); }
     inline unsigned size() const { return _conflictedRecords->keys().size(); }
