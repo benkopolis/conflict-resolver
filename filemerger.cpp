@@ -120,6 +120,14 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
                     break;
                 ContentRecord* rinner = inner.value();
                 ContentRecord* router = outer.value();
+		if(rinner->sourceF().similarity(router->sourceF()) > SIMVAL)
+		{
+		    ConflictRecord* conr = new ConflictRecord(it);
+		    conr->addRecord(rinner);
+		    conr->addRecord(router);it->_conflicts->insert(router->sourceF(), conr);
+		    ++_conflictsCount;
+		    ++_fuzzyCount;
+		}
                 bool fuzzyok = false;
                 foreach(ConflictRecord* confr, it->_conflicts->values(outer.key()))
                 {
@@ -135,17 +143,17 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
                         }
                     }
                 }
-                if(fuzzyok == false)
-                {
-                    if(rinner->sourceF().similarity(router->sourceF()) > SIMVAL)
-                    {
-                        ConflictRecord* conr = new ConflictRecord(it);
-                        conr->addRecord(rinner);
-                        conr->addRecord(router);it->_conflicts->insert(router->sourceF(), conr);
-                        ++_conflictsCount;
-                        ++_fuzzyCount;
-                    }
-                }
+//                if(fuzzyok == false)
+//                {
+//                    if(rinner->sourceF().similarity(router->sourceF()) > SIMVAL)
+//                    {
+//                        ConflictRecord* conr = new ConflictRecord(it);
+//                        conr->addRecord(rinner);
+//                        conr->addRecord(router);it->_conflicts->insert(router->sourceF(), conr);
+//                        ++_conflictsCount;
+//                        ++_fuzzyCount;
+//                    }
+//                }
             }
         }
     }
@@ -159,7 +167,11 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
                     toRm.push(in);
                 else if(it->conflicts()->keys(in).size() > 1)
                     toRm.push(in);
-            }
+	    } else if(r->recordMatch(in) && in != r)
+	    {
+//		r->merge(in);
+//		toRm.push(in);
+	    }
 	}
     }
     foreach(ConflictRecord* rm, toRm)

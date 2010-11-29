@@ -53,6 +53,35 @@ bool ConflictRecord::recordMatch(ContentRecord* record)
     return true;
 }
 
+void ConflictRecord::merge(ConflictRecord* record)
+{
+    foreach(ContentRecord* r, record->conflictedRecords())
+    {
+	if(this->_conflictedRecords->contains(r) == false)
+	{
+	    this->_conflictedRecords->insert(r, 0);//[record] = 0;
+	    _keys = this->_conflictedRecords->keys();    
+	}
+
+    }
+}
+
+bool ConflictRecord::recordMatch(ConflictRecord* record)
+{
+    foreach(ContentRecord* r, this->_conflictedRecords->keys())
+    {
+	foreach(ContentRecord* cr, record->conflictedRecords())
+	{
+	    if(r->sourceF() == cr->sourceF() || r->targetF() == cr->targetF())
+		continue;
+	    if(r->sourceF().similarity(cr->sourceF()) <= SIMVAL && r->targetF().similarity(cr->targetF()) <= SIMVAL)
+		return false;
+	}
+    }
+    return true;
+}
+
+
 bool ConflictRecord::contains(ConflictRecord* r) const
 {
     bool ok = true;
