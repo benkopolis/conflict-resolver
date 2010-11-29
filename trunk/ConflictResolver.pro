@@ -12,8 +12,13 @@ QMAKESPEC=/usr/share/qt4/mkspecs/linux-g++
      message(Linux)
  }
 
+unix:LIBS += -lqjson
+win32:LIBS += -L./qjson/lib/ \
+    -lqjson0
+
 INCLUDEPATH += "./qjson/src"
-LIBS += -lqjson
+
+
 
 TARGET = ConflictResolver
 TEMPLATE = app

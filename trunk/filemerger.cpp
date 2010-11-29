@@ -86,6 +86,7 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
     initCounters();
     QMultiHash<FuzzyStrings, ContentRecord* >::iterator outer, inner;
     QList<FuzzyStrings> keys = it->_content->keys();
+    // duplicate and witch identical source search
     foreach(FuzzyStrings fs, keys)
     {
         findDuplicated(fs, it);
@@ -93,6 +94,7 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
 //	qDebug() << (fs.base() == "&tA;Udzia³ operatorów alternatywnych pod wzglêdem przychodów z po³¹czeñ miêdzystrefowych by³ wy¿szy ni¿ w przypadku po³¹czeñ lokalnych.");
     }
     QStack<ConflictRecord*> toRm;
+    // find duplicated conflict records
     foreach(ConflictRecord* r, it->conflicts()->values())
     {
         foreach(ConflictRecord* in, it->conflicts()->values())
@@ -101,12 +103,14 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
                 toRm.push(in);
         }
     }
+    // delete duplicated conflict records
     foreach(ConflictRecord* rm, toRm)
     {
         it->conflicts()->remove(it->conflicts()->key(rm), rm);
     }
     if(_fuzzySearch == true)
     {
+	// find fuzzy conflicts
         for(outer = it->_content->begin();outer != it->_content->end();++outer)
         {
             for(inner = outer; inner != it->_content->end(); ++inner) {

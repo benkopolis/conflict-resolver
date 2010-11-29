@@ -17,6 +17,7 @@ Q_PROPERTY(QString _iniFileDir READ iniFileDir WRITE setIniFileDir)
 Q_PROPERTY(QString _lastPath READ lastPath WRITE setLastPath)
 Q_PROPERTY(QString _regex READ regex WRITE setRegex)
 Q_PROPERTY(unsigned _fval READ fval WRITE setFval)
+Q_PROPERTY(unsigned _fbufferLen READ fbufferLen WRITE setFBufferLen)
 
 public:
 
@@ -29,10 +30,12 @@ public:
     inline void setLastPath(const QString& lastPath) { if(lastPath.isEmpty()) return; m_lastPath = lastPath; };
     inline void setIniFileDir(const QString& iniFileDir) { if(iniFileDir.isEmpty()) return; m_iniFileDir = iniFileDir; };
     inline void setFval(const unsigned fval) { m_fval = fval > 100 ? 75 : (fval < 75 ? 75 : fval); };
-    inline QString iniFileDir() { return m_iniFileDir; };
-    inline QString lastPath() { return m_lastPath; };
-    inline QString regex() { return m_regex; };
-    inline unsigned fval() { return m_fval; };
+    inline QString iniFileDir() const { return m_iniFileDir; };
+    inline QString lastPath()  const { return m_lastPath; };
+    inline QString regex() const { return m_regex; };
+    inline unsigned fval() const { return m_fval; };
+    inline void setFBufferLen(const unsigned bufflen) { m_fbufferLen = bufflen; }
+    inline unsigned fbufferLen() const { return m_fbufferLen; }
 
 private:
 
