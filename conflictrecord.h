@@ -8,10 +8,18 @@
 
 #define SIMVAL (IniFile::instance()->fval() == 0 ? 75 : IniFile::instance()->fval())
 
+/**
+  * Class representing single conflict, containing records of tm (or gloss etc.)
+  * all conflicted witch each other.
+  */
 class ConflictRecord : public QObject
 {
 Q_OBJECT
 public:
+
+    /**
+      * Basic constructor. Parent for memory
+      */
     explicit ConflictRecord(QObject *parent = 0);
     virtual ~ConflictRecord();
 

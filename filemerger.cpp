@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QDateTime>
 #include "tmsaver.h"
+#include "tmxfile.h"
 
 
 /***
@@ -43,17 +44,17 @@ GlossaryFile* FileMerger::mergeFiles(GlossaryFile* one, GlossaryFile* two) const
     r << one->header().writeHeader() << endl;
     r << ones;
     r << twos;
-    QFile onef("one.txt");
-    onef.open(QIODevice::Append | QIODevice::WriteOnly);
-    QTextStream sonef(&onef);
-    sonef << one->header().writeHeader() << endl;
+//    QFile onef("one.txt");
+//    onef.open(QIODevice::Append | QIODevice::WriteOnly);
+//    QTextStream sonef(&onef);
+//    sonef << one->header().writeHeader() << endl;
     //sonef << ones;
-    QFile twof("two.txt");
-    twof.open(QIODevice::Append | QIODevice::WriteOnly);
-    QTextStream stwof(&twof);
-    stwof << twos;
-    onef.close();
-    twof.close();
+//    QFile twof("two.txt");
+//    twof.open(QIODevice::Append | QIODevice::WriteOnly);
+//    QTextStream stwof(&twof);
+//    stwof << twos;
+//    onef.close();
+//    twof.close();
     QString temp_file_name("Zby_TMP_F");
     temp_file_name.append(QDateTime::currentDateTime().toString("d.M.yy.Hmsz"));
     QFile temp_file(temp_file_name);
@@ -70,6 +71,8 @@ GlossaryFile* FileMerger::mergeFiles(GlossaryFile* one, GlossaryFile* two) const
     GlossaryFile* gf = 0;
     if(qobject_cast<TMFile* >(one) != 0)
         gf = new TMFile();
+    else if(qobject_cast<TMXFile* >(one) != 0)
+	gf = new TMFile();
     else
         gf = new GlossaryFile();
     if(gf->processWithTabs(temp_file) == false)
@@ -90,8 +93,6 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
     foreach(FuzzyStrings fs, keys)
     {
         findDuplicated(fs, it);
-//	qDebug() << fs.base();
-//	qDebug() << (fs.base() == "&tA;Udzia³ operatorów alternatywnych pod wzglêdem przychodów z po³¹czeñ miêdzystrefowych by³ wy¿szy ni¿ w przypadku po³¹czeñ lokalnych.");
     }
     QStack<ConflictRecord*> toRm;
     // find duplicated conflict records
@@ -226,4 +227,83 @@ void FileMerger::findDuplicated(const FuzzyStrings& key, GlossaryFile * it)
     it->_all -= toRemove.size();
     foreach(ContentRecord* contr, toRemove.values())
         it->_content->remove(contr->sourceF(), contr);
+}
+
+
+void FileMerger::findConflictsInContext(GlossaryFile* it, GlossaryFile* context)
+{
+    initCounters();
+    QMultiHash<FuzzyStrings, ContentRecord* >::iterator outer, inner;
+    QList<FuzzyStrings> keys = context->_content->keys();
+    // duplicate and witch identical source search
+    foreach(FuzzyStrings fs, keys)
+    {
+	findDuplicated(fs, it);
+    }
+    QStack<ConflictRecord*> toRm;
+    // find duplicated conflict records
+    foreach(ConflictRecord* r, it->conflicts()->values())
+    {
+	foreach(ConflictRecord* in, it->conflicts()->values())
+	{
+	    if(r->contains(in) && *in != *r)
+		toRm.push(in);
+	}
+    }
+    // delete duplicated conflict records
+    foreach(ConflictRecord* rm, toRm)
+    {
+	it->conflicts()->remove(it->conflicts()->key(rm), rm);
+    }
+    if(_fuzzySearch == true)
+    {
+	// find fuzzy conflicts
+	for(outer = context->_content->begin();outer != context->_content->end();++outer)
+	{
+	    for(inner = it->_content->begin(); inner != it->_content->end(); ++inner) {
+		ContentRecord* rinner = inner.value();
+		ContentRecord* router = outer.value();
+		if(rinner->sourceF().similarity(router->sourceF()) > SIMVAL)
+		{
+		    ConflictRecord* conr = new ConflictRecord(it);
+		    conr->addRecord(rinner);
+		    conr->addRecord(router);it->_conflicts->insert(router->sourceF(), conr);
+		    ++_conflictsCount;
+		    ++_fuzzyCount;
+		}
+		bool fuzzyok = false;
+		foreach(ConflictRecord* confr, it->_conflicts->values(outer.key()))
+		{
+		    if(confr->recordMatch(inner.value()))
+		    {
+			if(confr->contains(inner.value()) == false)
+			{
+				confr->addRecord(inner.value());
+				if(confr->contains(router))
+				    fuzzyok = true;
+				++_conflictsCount;
+				++_fuzzyCount;
+			}
+		    }
+		}
+	    }
+	}
+    }
+    foreach(ConflictRecord* r, it->conflicts()->values())
+    {
+	foreach(ConflictRecord* in, it->conflicts()->values())
+	{
+	    if(r->contains(in))
+	    {
+		if(*in != *r)
+		    toRm.push(in);
+		else if(it->conflicts()->keys(in).size() > 1)
+		    toRm.push(in);
+	    }
+	}
+    }
+    foreach(ConflictRecord* rm, toRm)
+    {
+	it->conflicts()->remove(it->conflicts()->key(rm), rm);
+    }
 }

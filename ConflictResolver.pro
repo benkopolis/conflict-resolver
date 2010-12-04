@@ -5,21 +5,13 @@ QT += gui
 QT += testlib
 QT += xml
 QT += xmlpatterns
-
- message($$QMAKESPEC)
-QMAKESPEC=/usr/share/qt4/mkspecs/linux-g++
- linux-g++ {
-     message(Linux)
- }
-
+message($$QMAKESPEC)
+QMAKESPEC = /usr/share/qt4/mkspecs/linux-g++
+linux-g++:message(Linux)
 unix:LIBS += -lqjson
 win32:LIBS += -L./qjson/lib/ \
     -lqjson0
-
 INCLUDEPATH += "./qjson/src"
-
-
-
 TARGET = ConflictResolver
 TEMPLATE = app
 SOURCES += main.cpp \
@@ -97,3 +89,4 @@ FORMS += mainwindow.ui \
     editdialog.ui \
     glossaryextractordialog.ui \
     fuzzyoptionsdialog.ui
+RESOURCES += dtds.qrc
