@@ -3,12 +3,13 @@
 
 #include <QWidget>
 #include <QLabel>
-#include <QCheckBox>
 #include <QTextEdit>
 #include <QStandardItemModel>
 #include <QDataWidgetMapper>
 #include <QPushButton>
+#include <QRadioButton>
 #include <QVector>
+#include <QGroupBox>
 
 #include "conflictrecord.h"
 
@@ -28,13 +29,17 @@ signals:
     void itemChanged(Proxy* p);
 };
 
+/**
+  * Klasa odpowiadajaca za wyswietlanie jednego konfliktu, zlozonego z wielu rekordow.
+  */
 class MultipleContentWidget : public QWidget
 {
 Q_OBJECT
 public:
     explicit MultipleContentWidget(QWidget *parent = 0);
+    virtual ~MultipleContentWidget();
 
-    inline QVector<QCheckBox* >& checks() { return _checks; }
+    inline QVector<QGroupBox* >& radios() { return _radios; }
 
 public slots:
 
@@ -50,11 +55,12 @@ protected:
     virtual void initData(int row, ContentRecord* cr);
 
 
-    QVector<QLabel* > _sourceLabels;
-    QVector<QLabel* > _targetLabels;
     QVector<QTextEdit* > _sourceEdits;
     QVector<QTextEdit* > _targetEdits;
-    QVector<QCheckBox* > _checks;
+    QVector<QGroupBox* > _radios;
+    QVector<QRadioButton* > _del;
+    QVector<QRadioButton* > _ok;
+    QVector<QRadioButton* > _def;
 
     QVector<QStandardItemModel* > _models;
     QVector<QDataWidgetMapper* > _mappers;

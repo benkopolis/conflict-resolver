@@ -34,9 +34,6 @@ protected:
 
     virtual void initData(ConflictRecord* data);
 
-
-    QLabel *_sourceLabel;
-    QLabel *_targetLabel;
     QTextEdit *_sourceEdit;
     QTextEdit *_targetEdit;
     QPushButton *_nextButton;

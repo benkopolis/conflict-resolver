@@ -6,15 +6,9 @@ ContentWidget::ContentWidget(QWidget *parent) :
     QWidget(parent)
 {
     _sourceEdit = new QTextEdit(this);
-    _sourceLabel = new QLabel(this);
-    _sourceLabel->setText("Tekst zrodlowy");
-    _targetLabel = new QLabel(this);
-    _targetLabel->setText("Tekst docelowy");
     _targetEdit = new QTextEdit(this);
     _mapper = 0;
     _model = 0;
-    _sourceLabel->setBuddy(_sourceEdit);
-    _targetLabel->setBuddy(_targetEdit);
     _nextButton = new QPushButton(this);
     _previousButton = new QPushButton(this);
     _nextButton->setText(">");
@@ -45,10 +39,8 @@ void ContentWidget::setupModel(ConflictRecord* data)
     connect(_model, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(onItemDataChanged(QStandardItem*)));
 
     QGridLayout * layout = new QGridLayout(this);
-    layout->addWidget(_sourceLabel, 0, 0, 1, 1);
-    layout->addWidget(_sourceEdit, 0, 1, 1, 1);
-    layout->addWidget(_targetLabel, 1, 0, 1, 1);
-    layout->addWidget(_targetEdit, 1, 1, 1, 1);
+    layout->addWidget(_sourceEdit, 0, 0, 1, 1);
+    layout->addWidget(_targetEdit, 0, 1, 1, 1);
     layout->addWidget(_nextButton, 0, 2, 1, 1);
     layout->addWidget(_nextButton, 1, 2, 1, 1);
     this->setLayout(layout);

@@ -1,3 +1,8 @@
 <RCC>
-    <qresource prefix="/dtd"/>
+    <qresource prefix="/dtd">
+        <file>tmx11.dtd</file>
+        <file>tmx12.dtd</file>
+        <file>tmx13.dtd</file>
+        <file>tmx14.dtd</file>
+    </qresource>
 </RCC>

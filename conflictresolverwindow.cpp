@@ -9,6 +9,7 @@ ConflictResolverWindow::ConflictResolverWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowTitle(QString("TMs & Glossaries Manager::Conflict Resolver Window"));
+    _conflictsWidget = 0;
 }
 
 ConflictResolverWindow::ConflictResolverWindow(ConflictsWidget* cw, ContentModel* model, QWidget *parent):
@@ -19,11 +20,20 @@ ConflictResolverWindow::ConflictResolverWindow(ConflictsWidget* cw, ContentModel
     ui->centralwidget->layout()->addWidget(cw);
     setWindowTitle(QString("TMs & Glossaries Manager::Conflict Resolver Window"));
 //    wdg->setupModel(model->conflicts()->value());
+    connect(ui->actionNext, SIGNAL(triggered()), cw, SLOT(onNext()));
+    connect(ui->actionPrevious, SIGNAL(triggered()), cw, SLOT(onPrev()));
+    connect(ui->actionZako_cz, SIGNAL(triggered()), this, SLOT(close()));
+    connect(cw, SIGNAL(nextStatus(bool)), this->ui->actionNext, SLOT(setEnabled(bool)));
+    connect(cw, SIGNAL(prevStatus(bool)), this->ui->actionNext, SLOT(setEnabled(bool)));
+    _conflictsWidget = cw;
+    ui->actionNext->setEnabled(cw->nextStatus());
+    ui->actionPrevious->setEnabled(cw->prevStatus());
 }
 
 ConflictResolverWindow::~ConflictResolverWindow()
 {
     delete ui;
+    delete _conflictsWidget;
 }
 
 

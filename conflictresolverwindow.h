@@ -31,6 +31,7 @@ private:
     Ui::ConflictResolverWindow *ui;
 
     ContentModel* _model;
+    ConflictsWidget* _conflictsWidget;
 
 private slots:
 };
