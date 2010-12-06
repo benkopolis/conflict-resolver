@@ -20,10 +20,16 @@ class ConflictsWidget : public QWidget
 Q_OBJECT
 public:
     explicit ConflictsWidget(QWidget *parent = 0);
+    virtual ~ConflictsWidget();
+
+    inline bool prevStatus() const { return _prevButton->isEnabled(); }
+    inline bool nextStatus() const { return _nextButton->isEnabled(); }
 
 signals:
 
     void currentIndexChanged(int index);
+    void nextStatus(bool en);
+    void prevStatus(bool en);
 
 public slots:
 
@@ -35,11 +41,6 @@ private slots:
     void onCurrentIndexChanged(int index);
     void onNext();
     void onPrev();
-    void onDel();
-    void onDump();
-    void onResolve();
-    void onSelectAll();
-    void onDeselectAll();
 
 protected:
 
@@ -52,12 +53,8 @@ protected:
     QPushButton* _nextButton;
     QPushButton* _prevButton;
 
-    QPushButton* _delButton;
-    QPushButton* _dumpButton;
-    QPushButton* _resolveButton;
-    QPushButton* _selectAll;
-    QPushButton* _deselectAll;
     QScrollArea* sa;
+    QGridLayout* _gd;
 
     QMultiHash<FuzzyStrings, ConflictRecord* >* _data;
     QHash<MultipleContentWidget* , ConflictRecord* >* _conflictsWidget;

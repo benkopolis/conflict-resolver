@@ -1,5 +1,6 @@
 #include "multiplecontentwidget.h"
 #include <QGridLayout>
+#include <QVBoxLayout>
 #include <QDebug>
 
 Proxy::Proxy(QObject *parent = 0):
@@ -19,35 +20,63 @@ MultipleContentWidget::MultipleContentWidget(QWidget *parent) :
     _data = 0;
 }
 
+MultipleContentWidget::~MultipleContentWidget()
+{
+    this->destroy(true, true);
+    for(int i =0; i < _sourceEdits.size(); ++i)
+    {
+	Proxy* p = _proxy.key(i);
+//	disconnect(_models.at(i), SIGNAL(itemChanged(QStandardItem*)), p, SLOT(onItemChanged(QStandardItem*)));
+//	disconnect()
+//	disconnect(p, SIGNAL(itemChanged(Proxy*)), this, SLOT(onItemDataChanged(Proxy*)));
+//	disconnect(_def.at(i), SIGNAL(clicked()), _data->, SLOT(delayInConflict()));
+//	disconnect(_del.at(i), SIGNAL(clicked()), cr, SLOT(denyInConflict()));
+//	disconnect(_ok.at(i), SIGNAL(clicked()), cr, SLOT(confirmInConflict()));
+	delete _sourceEdits.at(i);
+	delete _targetEdits.at(i);
+	delete _del.at(i);
+	delete _def.at(i);
+	delete _ok.at(i);
+	delete _radios.at(i);
+	delete _models.at(i);
+	delete _mappers.at(i);
+	delete p;
+    }
+}
+
 void MultipleContentWidget::setupModel(ConflictRecord* data)
 {
     Q_ASSERT(data != 0);
     _data = data;
-    QGridLayout* lay = new QGridLayout(this);
+    QGridLayout* lay = new QGridLayout;
     this->setLayout(lay);
     int rows = 0;
     foreach(ContentRecord* cr, data->conflictedRecords())
     {
 	QTextEdit* e = new QTextEdit(this);
-	QLabel* l = new QLabel(this);
-	QCheckBox* c = new QCheckBox(this);
-	l->setBuddy(e);
-	l->setText("Tekst poczatkowy:");
+	QGroupBox* c = new QGroupBox("Akcja", this);
+	QRadioButton *r1, *r2, *r3;
+	r1 = new QRadioButton("Zaakceptuj", this);
+	r2 = new QRadioButton("Skasuj", this);
+	r3 = new QRadioButton("Na potem", this);
+	_def.push_back(r3);
+	_del.push_back(r2);
+	_ok.push_back(r1);
+	r3->setChecked(true);
+	QVBoxLayout* vbox = new QVBoxLayout;
+	vbox->addWidget(r1);
+	vbox->addWidget(r2);
+	vbox->addWidget(r3);
+	vbox->addStretch(1);
+	c->setLayout(vbox);
 	c->setChecked(false);
 	lay->addWidget(c, rows, 0, 1, 1);
-	lay->addWidget(l, rows, 1, 1, 1);
-	lay->addWidget(e, rows, 2, 1, 1);
-	_sourceLabels.push_back(l);
+	lay->addWidget(e, rows, 1, 1, 1);
 	_sourceEdits.push_back(e);
-	_checks.push_back(c);
+	_radios.push_back(c);
 	e = new QTextEdit(this);
-	l = new QLabel(this);
-	l->setBuddy(e);
-	l->setText("Tekst koncowy:");
-	lay->addWidget(l, rows, 3, 1, 1);
-	lay->addWidget(e, rows, 4, 1, 1);
+	lay->addWidget(e, rows, 2, 1, 1);
 	_targetEdits.push_back(e);
-	_targetLabels.push_back(l);
 	initData(rows, cr);
 	++rows;
     }
@@ -89,6 +118,9 @@ void MultipleContentWidget::initData(int row, ContentRecord* cr)
     _proxy.insert(p, row);
     connect(_models.at(row), SIGNAL(itemChanged(QStandardItem*)), p, SLOT(onItemChanged(QStandardItem*)));
     connect(p, SIGNAL(itemChanged(Proxy*)), this, SLOT(onItemDataChanged(Proxy*)));
+    connect(_def.at(row), SIGNAL(clicked()), cr, SLOT(delayInConflict()));
+    connect(_del.at(row), SIGNAL(clicked()), cr, SLOT(denyInConflict()));
+    connect(_ok.at(row), SIGNAL(clicked()), cr, SLOT(confirmInConflict()));
 
     QModelIndex index;
     _models.at(row)->setRowCount(1);

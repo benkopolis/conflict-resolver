@@ -38,6 +38,7 @@ bool ConflictRecord::addRecord(ContentRecord* record)
         return false;
     this->_conflictedRecords->insert(record, 0);//[record] = 0;
     _keys = this->_conflictedRecords->keys();
+    record->toResolve();
     return true;
 }
 

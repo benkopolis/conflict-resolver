@@ -49,17 +49,17 @@ public:
     QStringList targetStrings() const;
     QRect boundingRect() const;
 
-
-    inline void confirmInConflict() { _status = Confirmed; };
-    inline void delayInConflict() { if(_status == NotResolved || _status==Denied) _status = Delayed; };
-    inline void toResolve() { if(_status == None) _status=NotResolved; };
-    inline void denyInConflict() { if(_status==NotResolved) _status= Denied; };
     inline ConflictStatus status() const { return _status; };
 
 
 signals:
 
 public slots:
+
+    inline void confirmInConflict() { _status = Confirmed; };
+    inline void delayInConflict() { if(_status == NotResolved || _status==Denied) _status = Delayed; };
+    inline void toResolve() { if(_status == None) _status=NotResolved; };
+    inline void denyInConflict() { if(_status==NotResolved) _status= Denied; };
 
 protected:
 
