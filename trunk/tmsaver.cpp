@@ -16,7 +16,13 @@ bool TMSaver::saveContent(const QString& file, TMHeader& rheader, QMultiHash<Fuz
 	return false;
     }
     QTextStream fs(&f);
-    rheader.setRecordCount(all);
+    int dels = 0;
+    foreach(ContentRecord* cr, conflicts)
+    { // TODO zrobic to za pomoca sygnalow
+        if(cr->status() == ContentRecord::Denied)
+            dels++;
+    }
+    rheader.setRecordCount(all-dels);
     QString header = rheader.writeHeader();
     if(rheader != TMHeader())
     {

@@ -3,6 +3,7 @@
 #include <QRegExp>
 #include "tmrecord.h"
 #include "inifile.h"
+#include "tmsaver.h"
 
 TMFile::TMFile(QObject *parent) :
     GlossaryFile(parent)
@@ -12,6 +13,26 @@ TMFile::TMFile(QObject *parent) :
 TMHeader TMFile::header() const
 {
     return this->_rheader;
+}
+
+/**
+  *
+  */
+bool TMFile::saveContent(QString file) {
+    bool r=false;
+    TMSaver tms;
+    r = tms.saveContent(file, this->_rheader, *this->_content, this->_all);
+    return r;
+}
+
+/**
+  *
+  */
+bool TMFile::saveReversedContent(QString file) {
+    bool r=false;
+    TMSaver tms;
+    r = tms.saveReversedContent(file, this->_rheader, *this->_content, this->_all);
+    return r;
 }
 
 /**
