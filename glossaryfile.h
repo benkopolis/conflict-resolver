@@ -44,8 +44,8 @@ signals:
 public slots:
 
 
-    bool saveContent(QString file);
-    bool saveReversedContent(QString file);
+    virtual bool saveContent(QString file);
+    virtual bool saveReversedContent(QString file);
 
 protected:
 

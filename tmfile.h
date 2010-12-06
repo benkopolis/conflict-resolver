@@ -17,6 +17,9 @@ signals:
 
 public slots:
 
+    virtual bool saveContent(QString file);
+    virtual bool saveReversedContent(QString file);
+
 protected:
 
     virtual bool processHeader();
