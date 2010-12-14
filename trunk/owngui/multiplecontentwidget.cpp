@@ -55,10 +55,14 @@ void MultipleContentWidget::setupModel(ConflictRecord* data)
     {
 	QTextEdit* e = new QTextEdit(this);
 	QGroupBox* c = new QGroupBox("Akcja", this);
+	c->setMinimumHeight(50);
 	QRadioButton *r1, *r2, *r3;
 	r1 = new QRadioButton("Zaakceptuj", this);
+	r1->setMinimumHeight(10);
 	r2 = new QRadioButton("Skasuj", this);
+	r2->setMinimumHeight(10);
 	r3 = new QRadioButton("Na potem", this);
+	r3->setMinimumHeight(10);
 	_def.push_back(r3);
 	_del.push_back(r2);
 	_ok.push_back(r1);
@@ -80,6 +84,7 @@ void MultipleContentWidget::setupModel(ConflictRecord* data)
 	initData(rows, cr);
 	++rows;
     }
+    this->setMinimumHeight(70*rows);
 }
 
 void MultipleContentWidget::updateButtons(int row)

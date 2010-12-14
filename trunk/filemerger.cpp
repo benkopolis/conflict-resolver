@@ -80,7 +80,7 @@ GlossaryFile* FileMerger::mergeFiles(GlossaryFile* one, GlossaryFile* two) const
         delete gf;
         gf = 0;
     }
-    //temp_file.remove();
+    temp_file.remove();
     return gf;
 }
 
