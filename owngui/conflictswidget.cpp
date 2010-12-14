@@ -41,6 +41,7 @@ void ConflictsWidget::setupModel(QMultiHash<FuzzyStrings, ConflictRecord* >* dat
 	_conflictsWidget->insert(mcw, cr);
     }
     sa->setLayout(new QGridLayout(sa));
+    sa->setMinimumHeight(_conflictsWidget->keys().at(_index)->minimumHeight()+10);
     sa->layout()->addWidget(_conflictsWidget->keys().at(_index));
     this->updateButtons(0);
 }
