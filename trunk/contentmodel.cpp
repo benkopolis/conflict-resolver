@@ -5,10 +5,10 @@
 #include <QDebug>
 #include <QList>
 #include "contentmodel.h"
-#include "tmrecord.h"
+#include "records/tmrecord.h"
 #include "inifile.h"
 #include "tmsaver.h"
-#include "tmfile.h"
+#include "files/tmfile.h"
 
 bool operator < (const QList<ContentRecord* >& one, const QList<ContentRecord* >& two) {
     return one.size() < two.size();

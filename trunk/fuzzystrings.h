@@ -22,12 +22,12 @@ public:
     /**
       * Zwraca procentowo wyra¿on¹ wartoœæ podobieñstwa zadanego stringa, do stringa wewnêtrznego.
       */
-    unsigned similarity(const QString& str) const;
+    unsigned similarity(const QString& str);
 
     /**
       * Zwraca procentowo wyra¿on¹ wartoœæ podobieñstwa zadanego fuzzystringa.
       */
-    unsigned similarity(const FuzzyStrings& str) const;
+    unsigned similarity(const FuzzyStrings& str);
 
     /**
       * Zwraca bazowy string
@@ -47,6 +47,7 @@ public:
 signals:
 
     void conflict(unsigned sim);
+    void countFuzzy(QString o, QString t);
 
 public slots:
 

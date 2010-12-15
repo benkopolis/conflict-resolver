@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QtTest/QtTest>
 #include "Tests.h"
-#include "glossaryfile.h"
+#include "files/glossaryfile.h"
 
 class GlossaryFileTests : public QObject
 {

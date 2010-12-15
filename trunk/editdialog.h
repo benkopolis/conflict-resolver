@@ -3,8 +3,8 @@
 
 #include <QDialog>
 #include "contentmodel.h"
-#include "contentrecord.h"
-#include "tmrecord.h"
+#include "records/contentrecord.h"
+#include "records/tmrecord.h"
 
 namespace Ui {
     class EditDialog;

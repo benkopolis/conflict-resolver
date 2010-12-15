@@ -3,6 +3,7 @@
 #include <QTextStream>
 #include <QDebug>
 #include "inifile.h"
+#include  "engine/fuzzyenginethread.h"
 
 uint qHash(const FuzzyStrings & key) {
     return qHash(key.base());
@@ -53,84 +54,16 @@ void FuzzyStrings::print2DArrToDebug(unsigned** arr, int xlen, int ylen)
 /**
   * Zwraca procentowo wyra¿on¹ wartoœæ podobieñstwa zadanego stringa, do stringa wewnêtrznego.
   */
-unsigned FuzzyStrings::similarity(const QString& str) const {
+unsigned FuzzyStrings::similarity(const QString& str) {
     QString one(str), two(this->_base);
-    QTextStream given(&one);
-    QTextStream inner(&two);
-    unsigned gwCount, iwCount;
-    QRegExp rexp(QString("\\s"));
-    gwCount = str.count(rexp) + 1;
-    iwCount = this->base().count(rexp) + 1;
-    QStringList t=str.split(rexp), s=this->base().split(rexp);
-//    qDebug() << t << s;
-    unsigned **arr;
-    unsigned res = 0, cost = 0;
-    arr = new unsigned* [iwCount];
-    for(unsigned i=0; i < iwCount; ++i) {
-	arr[i] = new unsigned [gwCount];
-	for(unsigned g=0; g < gwCount; ++g) {
-	    arr[i][g] = 0;
-	}
-    }
-    for(unsigned i=0; ; ++i) {
-	if(i < iwCount) {
-	    arr[i][0] = i;
-	}
-	if(i < gwCount) {
-	    arr[0][i] = i;
-	}
-	if(i >= gwCount && i >= iwCount)
-	    break;
-    }
-    /// koniec inicjalizacji
-//    for i from 1 to m
-//	for j from 1 to n
-//	    if s[i] = t[j] then cost := 0
-//			   else cost := 1
-//	    d[i, j] := minimum(d[i-1, j] + 1,       // usuwanie
-//			       d[i, j-1] + 1,       // wstawianie
-//			       d[i-1, j-1] + cost)  // zamiana
-    for(unsigned i=1; i < iwCount; ++i)
-    {
-	for(unsigned g=1; g<gwCount; ++g)
-	{
-//	    qDebug() << s.at(i-1) << " : " << t.at(g-1);
-	    if(s.at(i-1) == t.at(g-1))
-		cost = 0;
-	    else
-		cost = 1;
-//	    qDebug() << cost;
-	    if(arr[i-1][g] < arr[i][g-1] && arr[i-1][g]+1 < arr[i-1][g-1]+cost)
-		arr[i][g] = arr[i-1][g] + 1;
-	    else if(arr[i][g-1] < arr[i-1][g] && arr[i][g-1]+1 < arr[i-1][g-1]+cost)
-		arr[i][g] = arr[i][g-1]+1;
-	    else
-		arr[i][g] = arr[i-1][g-1]+cost;
-	}
-    }
-    res =  arr[iwCount-1][gwCount-1];
-//    qDebug() << "REZULTAT TO: " << res;
-    float avg = iwCount + gwCount;
-//    qDebug() << "AVG TO: " << avg;
-    float tmp;
-    avg = avg / 2;
-    tmp = (avg - res)/avg;
-    res = tmp*100;
-    if(res == 0)
-//	print2DArrToDebug(arr, iwCount, gwCount);
-    /// czyszczenie
-    for(unsigned i = 0; i < iwCount; ++i) {
-	delete [] arr[i];
-    }
-    delete [] arr;
-//    qDebug() << "wartosc podobienstwa: " << res;
-    return res;
+    emit countFuzzy(one, two);
+    return 0;
 }
 
 /**
   * Zwraca procentowo wyra¿on¹ wartoœæ podobieñstwa zadanego fuzzystringa.
   */
-unsigned FuzzyStrings::similarity(const FuzzyStrings& str) const {
+unsigned FuzzyStrings::similarity(const FuzzyStrings& str) {
     return this->similarity(str.base());
 }
 

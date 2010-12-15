@@ -9,7 +9,7 @@
 class Error : public QObject
 {
 Q_OBJECT
-Q_PROPERTY(QVariantMap error_attributes READ errorAtribs WRITE setErrorAttribs)
+Q_PROPERTY(QVariantMap error_attributes READ errorAttribs WRITE setErrorAttribs)
 Q_PROPERTY(QString error_message READ errorMessage WRITE setErrorMessage)
 public:
     explicit Error(QObject *parent = 0);

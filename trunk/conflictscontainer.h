@@ -3,9 +3,9 @@
 
 #include <QObject>
 #include <QAbstractListModel>
-#include "contentrecord.h"
+#include "records/contentrecord.h"
 #include "filemerger.h"
-#include "conflictrecord.h"
+#include "records/conflictrecord.h"
 
 
 class ConflictsContainer : public QAbstractListModel

@@ -7,7 +7,7 @@
 #include <QTextEdit>
 #include <QStandardItemModel>
 #include <QDataWidgetMapper>
-#include "conflictrecord.h"
+#include "records/conflictrecord.h"
 
 class ContentWidget : public QWidget
 {

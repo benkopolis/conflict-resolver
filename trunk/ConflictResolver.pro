@@ -21,8 +21,8 @@ SOURCES += main.cpp \
     filesset.cpp \
     filessetdelegate.cpp \
     contentmodel.cpp \
-    contentrecord.cpp \
-    tmrecord.cpp \
+    records/contentrecord.cpp \
+    records/tmrecord.cpp \
     filtersdialog.cpp \
     fuzzystrings.cpp \
     editdialog.cpp \
@@ -33,29 +33,30 @@ SOURCES += main.cpp \
     tmsaver.cpp \
     glossaryextractordialog.cpp \
     fuzzyoptionsdialog.cpp \
-    glossaryfile.cpp \
-    tmfile.cpp \
+    files/glossaryfile.cpp \
+    files/tmfile.cpp \
     filemerger.cpp \
     conflictscontainer.cpp \
-    conflictrecord.cpp \
+    records/conflictrecord.cpp \
     tests/filemergertests.cpp \
     tests/glossaryfiletests.cpp \
-    tmxfile.cpp \
-    tmxrecord.cpp \
+    files/tmxfile.cpp \
+    records/tmxrecord.cpp \
     tests/tmfiletests.cpp \
     owngui/contentwidget.cpp \
     owngui/conflictswidget.cpp \
     commons/error.cpp \
     commons/errormanager.cpp \
-    owngui/multiplecontentwidget.cpp
+    owngui/multiplecontentwidget.cpp \
+    engine/fuzzyenginethread.cpp
 HEADERS += mainwindow.h \
     contentmanagerwindow.h \
     conflictresolverwindow.h \
     filesset.h \
     filessetdelegate.h \
     contentmodel.h \
-    contentrecord.h \
-    tmrecord.h \
+    records/contentrecord.h \
+    records/tmrecord.h \
     filtersdialog.h \
     fuzzystrings.h \
     editdialog.h \
@@ -66,22 +67,23 @@ HEADERS += mainwindow.h \
     tmsaver.h \
     glossaryextractordialog.h \
     fuzzyoptionsdialog.h \
-    glossaryfile.h \
-    tmfile.h \
+    files/glossaryfile.h \
+    files/tmfile.h \
     filemerger.h \
     conflictscontainer.h \
-    conflictrecord.h \
+    records/conflictrecord.h \
     tests/filemergertests.h \
     tests/glossaryfiletests.h \
     tests/Tests.h \
-    tmxfile.h \
-    tmxrecord.h \
+    files/tmxfile.h \
+    records/tmxrecord.h \
     tests/tmfiletests.h \
     owngui/contentwidget.h \
     owngui/conflictswidget.h \
     commons/error.h \
     commons/errormanager.h \
-    owngui/multiplecontentwidget.h
+    owngui/multiplecontentwidget.h \
+    engine/fuzzyenginethread.h
 FORMS += mainwindow.ui \
     contentmanagerwindow.ui \
     conflictresolverwindow.ui \

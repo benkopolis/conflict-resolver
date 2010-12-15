@@ -8,7 +8,7 @@
 #include <QTextStream>
 #include <QFile>
 #include <QList>
-#include "contentrecord.h"
+#include "records/contentrecord.h"
 #include "tmheader.h"
 #include <QHash>
 #include "fuzzystrings.h"

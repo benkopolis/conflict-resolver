@@ -1,6 +1,6 @@
 #include "owngui/contentwidget.h"
 #include <QGridLayout>
-#include "contentrecord.h"
+#include "records/contentrecord.h"
 
 ContentWidget::ContentWidget(QWidget *parent) :
     QWidget(parent)
