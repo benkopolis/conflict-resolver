@@ -27,6 +27,7 @@ public:
     bool isDateTime(const QString& str, QDate* date, QTime* time) const;
     inline QMultiHash<FuzzyStrings, ContentRecord* > * content() { return _content; }
     inline QMultiHash<FuzzyStrings, ConflictRecord* > * conflicts() { return _conflicts; }
+    inline void setConflicts(QMultiHash<FuzzyStrings, ConflictRecord* > * c) { delete _conflicts; _conflicts = c; }
     inline unsigned corrupted() const { return _corrupted; }
     inline unsigned allCount() const { return _all; }
 

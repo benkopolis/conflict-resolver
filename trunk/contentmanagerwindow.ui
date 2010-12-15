@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>624</width>
+    <width>637</width>
     <height>394</height>
    </rect>
   </property>
@@ -37,6 +37,9 @@
     </item>
     <item row="0" column="3">
      <widget class="QPushButton" name="_find">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="toolTip">
        <string>Ponownie przeszukuje wybrane wcześnie pliki pod kątem konflitków między wpisami.</string>
       </property>
@@ -67,6 +70,9 @@
     </item>
     <item row="1" column="3">
      <widget class="QPushButton" name="_options">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="toolTip">
        <string>Pozwala ustawić opcje wyszukiwania konfliktów oraz konfliktów rozmytych [w trkacie tworzenia].</string>
       </property>
@@ -87,6 +93,9 @@
     </item>
     <item row="2" column="1" colspan="2">
      <widget class="QLineEdit" name="_dumpFile">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="toolTip">
        <string>Pozwala wybrać plik, który będzie pełnił funkcję składowiska rekordów, co do których jakości nie jestesmy pewni.</string>
       </property>
@@ -94,6 +103,9 @@
     </item>
     <item row="2" column="3">
      <widget class="QPushButton" name="_browse">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="toolTip">
        <string>Pozwala wybrać plik, który będzie pełnił funkcję składowiska rekordów, co do których jakości nie jestesmy pewni.</string>
       </property>
@@ -104,6 +116,9 @@
     </item>
     <item row="2" column="4">
      <widget class="QPushButton" name="_saveDump">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="text">
        <string>Zapisz</string>
       </property>
@@ -128,6 +143,9 @@
     </item>
     <item row="7" column="0">
      <widget class="QPushButton" name="_filterContent">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="toolTip">
        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -271,8 +289,8 @@ a następnie można zapisać wyniki pracy do tego dodatkowego pliku.</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>624</width>
-     <height>21</height>
+     <width>637</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>

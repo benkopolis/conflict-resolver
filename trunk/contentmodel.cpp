@@ -104,7 +104,7 @@ bool ContentModel::setData ( const QModelIndex & index, const QVariant & value, 
 /**
   *
   */
-bool ContentModel::addFile(QString fileName) {
+bool ContentModel::addFile(QString fileName, bool confront) {
     QFile file(fileName);
     bool res = false;
     _files.append(fileName);
@@ -126,6 +126,11 @@ bool ContentModel::addFile(QString fileName) {
 	_mainFile = gf;
     else
     {
+        if(confront == true)
+        {
+            _merger.findConflictsInContext(_mainFile, gf);
+            gf->setConflicts(_mainFile->conflicts());
+        }
 	GlossaryFile *tmp_gf = _merger.mergeFiles(_mainFile, gf);
 	if(tmp_gf == 0)
 	    return false;
@@ -133,7 +138,10 @@ bool ContentModel::addFile(QString fileName) {
     }
     if(_mainFile != 0)
     {
-	_merger.findInnerConflicts(_mainFile);
+        if(confront == false)
+            _merger.findInnerConflicts(_mainFile);
+        else
+            _mainFile->setConflicts(gf->conflicts());
 	_conflicts = _mainFile->conflicts();
     }
     else

@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'contentmanagerwindow.ui'
 **
-** Created: Mon 29. Nov 07:18:30 2010
-**      by: Qt User Interface Compiler version 4.6.0
+** Created: Wed Dec 15 09:59:35 2010
+**      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -70,7 +70,7 @@ public:
     {
         if (ContentManagerWindow->objectName().isEmpty())
             ContentManagerWindow->setObjectName(QString::fromUtf8("ContentManagerWindow"));
-        ContentManagerWindow->resize(624, 394);
+        ContentManagerWindow->resize(637, 394);
         actionUsu_wiersz = new QAction(ContentManagerWindow);
         actionUsu_wiersz->setObjectName(QString::fromUtf8("actionUsu_wiersz"));
         actionEdit_row = new QAction(ContentManagerWindow);
@@ -92,6 +92,7 @@ public:
 
         _find = new QPushButton(centralwidget);
         _find->setObjectName(QString::fromUtf8("_find"));
+        _find->setEnabled(false);
 
         gridLayout->addWidget(_find, 0, 3, 1, 1);
 
@@ -108,6 +109,7 @@ public:
 
         _options = new QPushButton(centralwidget);
         _options->setObjectName(QString::fromUtf8("_options"));
+        _options->setEnabled(false);
 
         gridLayout->addWidget(_options, 1, 3, 1, 1);
 
@@ -118,16 +120,19 @@ public:
 
         _dumpFile = new QLineEdit(centralwidget);
         _dumpFile->setObjectName(QString::fromUtf8("_dumpFile"));
+        _dumpFile->setEnabled(false);
 
         gridLayout->addWidget(_dumpFile, 2, 1, 1, 2);
 
         _browse = new QPushButton(centralwidget);
         _browse->setObjectName(QString::fromUtf8("_browse"));
+        _browse->setEnabled(false);
 
         gridLayout->addWidget(_browse, 2, 3, 1, 1);
 
         _saveDump = new QPushButton(centralwidget);
         _saveDump->setObjectName(QString::fromUtf8("_saveDump"));
+        _saveDump->setEnabled(false);
 
         gridLayout->addWidget(_saveDump, 2, 4, 1, 1);
 
@@ -144,6 +149,7 @@ public:
 
         _filterContent = new QPushButton(centralwidget);
         _filterContent->setObjectName(QString::fromUtf8("_filterContent"));
+        _filterContent->setEnabled(false);
 
         gridLayout->addWidget(_filterContent, 7, 0, 1, 1);
 
@@ -227,7 +233,7 @@ public:
         ContentManagerWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(ContentManagerWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 624, 21));
+        menubar->setGeometry(QRect(0, 0, 637, 25));
         ContentManagerWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(ContentManagerWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));

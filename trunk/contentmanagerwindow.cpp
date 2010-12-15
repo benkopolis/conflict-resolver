@@ -158,7 +158,7 @@ void ContentManagerWindow::on__confront_clicked()
         return;
     QFileInfo info(file);
     IniFile::instance()->setLastPath(info.path());
-    this->_content->addFile(file);
+    this->_content->addFile(file, true);
 }
 
 void ContentManagerWindow::on__saveReversed_clicked()
