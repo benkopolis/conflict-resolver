@@ -28,6 +28,9 @@ void FileMerger::initCounters()
     _fuzzyCount = 0;
 }
 
+/**
+  * Merges two files.
+  */
 GlossaryFile* FileMerger::mergeFiles(GlossaryFile* one, GlossaryFile* two) const {
     if(one == 0 || two == 0)
         return 0;
@@ -84,6 +87,9 @@ GlossaryFile* FileMerger::mergeFiles(GlossaryFile* one, GlossaryFile* two) const
     return gf;
 }
 
+/**
+  * Finds all conflicts in one file.
+  */
 void FileMerger::findInnerConflicts(GlossaryFile* it)
 {
     initCounters();
@@ -144,17 +150,6 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
                         }
                     }
                 }
-//                if(fuzzyok == false)
-//                {
-//                    if(rinner->sourceF().similarity(router->sourceF()) > SIMVAL)
-//                    {
-//                        ConflictRecord* conr = new ConflictRecord(it);
-//                        conr->addRecord(rinner);
-//                        conr->addRecord(router);it->_conflicts->insert(router->sourceF(), conr);
-//                        ++_conflictsCount;
-//                        ++_fuzzyCount;
-//                    }
-//                }
             }
         }
     }
@@ -181,7 +176,10 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
     }
 }
 
-
+/**
+  * Finds duplicated sources (and targets - if t-s pair is duplicated it is marked for remove)
+  * and creates simple conflicts.
+  */
 void FileMerger::findDuplicated(const FuzzyStrings& key, GlossaryFile * it)
 {
     const QList<ContentRecord* > vals = it->_content->values(key);
@@ -229,7 +227,9 @@ void FileMerger::findDuplicated(const FuzzyStrings& key, GlossaryFile * it)
         it->_content->remove(contr->sourceF(), contr);
 }
 
-
+/**
+  * Finds conflicts and treating @param context as innery-resolved.
+  */
 void FileMerger::findConflictsInContext(GlossaryFile* it, GlossaryFile* context)
 {
     initCounters();
@@ -307,3 +307,18 @@ void FileMerger::findConflictsInContext(GlossaryFile* it, GlossaryFile* context)
 	it->conflicts()->remove(it->conflicts()->key(rm), rm);
     }
 }
+
+
+
+//  wnetrze find inner conflicts w ktorejs petl - zostawiam na wszelki wypadek, ale zalatwilem to inaczej
+//                if(fuzzyok == false)
+//                {
+//                    if(rinner->sourceF().similarity(router->sourceF()) > SIMVAL)
+//                    {
+//                        ConflictRecord* conr = new ConflictRecord(it);
+//                        conr->addRecord(rinner);
+//                        conr->addRecord(router);it->_conflicts->insert(router->sourceF(), conr);
+//                        ++_conflictsCount;
+//                        ++_fuzzyCount;
+//                    }
+//                }
