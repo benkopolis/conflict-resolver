@@ -9,11 +9,11 @@
 #include <QHash>
 #include <QMultiMap>
 #include <QRect>
-#include "contentrecord.h"
-#include "tmrecord.h"
+#include "records/contentrecord.h"
+#include "records/tmrecord.h"
 #include "fuzzystrings.h"
 #include "tmheader.h"
-#include "glossaryfile.h"
+#include "files/glossaryfile.h"
 #include "filemerger.h"
 
 

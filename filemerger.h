@@ -2,8 +2,8 @@
 #define FILEMERGER_H
 
 #include <QObject>
-#include "tmfile.h"
-#include "glossaryfile.h"
+#include "files/tmfile.h"
+#include "files/glossaryfile.h"
 
 class FileMerger : public QObject
 {

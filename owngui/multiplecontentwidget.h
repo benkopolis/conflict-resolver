@@ -11,7 +11,7 @@
 #include <QVector>
 #include <QGroupBox>
 
-#include "conflictrecord.h"
+#include "records/conflictrecord.h"
 
 
 class Proxy : public QObject

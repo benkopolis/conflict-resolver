@@ -1,7 +1,7 @@
 #include "tmfile.h"
 #include <QTextStream>
 #include <QRegExp>
-#include "tmrecord.h"
+#include "records/tmrecord.h"
 #include "inifile.h"
 #include "tmsaver.h"
 

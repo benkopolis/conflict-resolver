@@ -3,8 +3,8 @@
 
 
 #include <QtXml>
-#include "glossaryfile.h"
-#include "tmxrecord.h"
+#include "files/glossaryfile.h"
+#include "records/tmxrecord.h"
 
 class TMXFile : public GlossaryFile
 {

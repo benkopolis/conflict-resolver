@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QtTest/QtTest>
-#include "tmfile.h"
+#include "files/tmfile.h"
 #include "Tests.h"
 
 class TMFileTests : public QObject

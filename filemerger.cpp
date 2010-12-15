@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QDateTime>
 #include "tmsaver.h"
-#include "tmxfile.h"
+#include "files/tmxfile.h"
 
 
 /***

@@ -4,10 +4,10 @@
 #include <QObject>
 #include <QMultiHash>
 #include "fuzzystrings.h"
-#include "contentrecord.h"
+#include "records/contentrecord.h"
 #include <QFile>
 #include <QDate>
-#include "conflictrecord.h"
+#include "records/conflictrecord.h"
 #include "tmheader.h"
 
 class FileMerger;

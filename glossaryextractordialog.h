@@ -5,7 +5,7 @@
 #include <QHash>
 #include <QList>
 #include "fuzzystrings.h"
-#include "contentrecord.h"
+#include "records/contentrecord.h"
 
 namespace Ui {
     class GlossaryExtractorDialog;
