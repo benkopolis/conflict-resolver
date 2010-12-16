@@ -16,6 +16,15 @@ FuzzyEngineThread::FuzzyEngineThread(uint x, uint y, QObject *parent) :
     this->buffSize(x, y);
 }
 
+unsigned FuzzyEngineThread::extractResult(QString one, QString two)
+{
+    QPair<QString, QString> p(one, two);
+    if(this->_results.contains(p))
+        return 0;
+    unsigned r = this->_results[p];
+    this->_results.remove(p);
+    return r;
+}
 
 void FuzzyEngineThread::countFuzzy(QString one, QString two)
 {
@@ -58,8 +67,9 @@ void FuzzyEngineThread::countFuzzy(QString one, QString two)
     avg = avg / 2;
     tmp = (avg - res)/avg;
     res = tmp*100;
-
     emit fuzzyResult(res);
+    QPair<QString, QString> p(one, two);
+    this->_results.insert(p, res);
 }
 
 void FuzzyEngineThread::buffSize(uint x, uint y)

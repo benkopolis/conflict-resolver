@@ -8,6 +8,7 @@
 #include <QVariant>
 #include <qobjecthelper.h>
 #include <QVariantMap>
+#include "engine/fuzzyenginethread.h"
 
 class IniFile : public QObject
 {
@@ -17,7 +18,9 @@ Q_PROPERTY(QString _iniFileDir READ iniFileDir WRITE setIniFileDir)
 Q_PROPERTY(QString _lastPath READ lastPath WRITE setLastPath)
 Q_PROPERTY(QString _regex READ regex WRITE setRegex)
 Q_PROPERTY(unsigned _fval READ fval WRITE setFval)
-Q_PROPERTY(unsigned _fbufferLen READ fbufferLen WRITE setFBufferLen)
+Q_PROPERTY(unsigned _fbufferX READ fbufferX WRITE setFBufferX)
+Q_PROPERTY(unsigned _fbufferY READ fbufferY WRITE setFBufferY)
+
 
 public:
 
@@ -34,17 +37,24 @@ public:
     inline QString lastPath()  const { return m_lastPath; };
     inline QString regex() const { return m_regex; };
     inline unsigned fval() const { return m_fval; };
-    inline void setFBufferLen(const unsigned bufflen) { m_fbufferLen = bufflen; }
-    inline unsigned fbufferLen() const { return m_fbufferLen; }
+    inline void setFBufferX(const unsigned buffX) { m_fbufferX = buffX; }
+    inline unsigned fbufferX() const { return m_fbufferX; }
+    inline void setFBufferY(const unsigned buffY) { m_fbufferY = buffY; }
+    inline unsigned fbufferY() const { return m_fbufferY; }
+    inline void setFuzzyEngine(FuzzyEngineThread* e) { _engine = e; }
+    inline FuzzyEngineThread* fuzzyEngine() { return _engine; }
 
 private:
+
+    FuzzyEngineThread* _engine;
 
     QString m_iniFileDir;
     /// last used path
     QString m_lastPath;
     QString m_regex;
     unsigned m_fval;
-    unsigned m_fbufferLen;
+    unsigned m_fbufferX;
+    unsigned m_fbufferY;
 
     QMap<unsigned, unsigned> _report;
 

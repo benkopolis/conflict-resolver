@@ -8,7 +8,8 @@ IniFile::IniFile(QObject *parent) :
     QObject(parent),
     m_iniFileDir("base.ini"),
     m_fval(0),
-    m_fbufferLen(0)
+    m_fbufferX(200),
+    m_fbufferY(200)
 {
     for(unsigned i =0; i < 101; ++i)
 	_report.insert(i, 0);

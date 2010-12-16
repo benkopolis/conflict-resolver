@@ -2,6 +2,8 @@
 #define FUZZYENGINETHREAD_H
 
 #include <QThread>
+#include <QPair>
+#include <QHash>
 
 class FuzzyEngineThread : public QThread
 {
@@ -12,6 +14,8 @@ public:
 
     inline uint getX() const { return _x; }
     inline uint getY() const { return _y; }
+
+    unsigned extractResult(QString one, QString two);
 
 signals:
 
@@ -32,6 +36,8 @@ protected:
    unsigned **arr;
    uint _x;
    uint _y;
+
+    QHash<QPair<QString, QString>, unsigned> _results;
 
 };
 
