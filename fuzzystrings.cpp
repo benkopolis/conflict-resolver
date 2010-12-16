@@ -56,7 +56,8 @@ void FuzzyStrings::print2DArrToDebug(unsigned** arr, int xlen, int ylen)
   */
 unsigned FuzzyStrings::similarity(const QString& str) {
     QString one(str), two(this->_base);
-    connect(this, SIGNAL(countFuzzy(QString,QString)), IniFile::instance()->fuzzyEngine(), SLOT(countFuzzy(QString,QString)));
+    connect(this, SIGNAL(countFuzzy(QString,QString)), IniFile::instance()->fuzzyEngine(),
+	    SLOT(countFuzzy(QString,QString)), Qt::BlockingQueuedConnection);
     emit countFuzzy(one, two);
     return IniFile::instance()->fuzzyEngine()->extractResult(one, two);
 }
