@@ -22,12 +22,18 @@ unsigned FuzzyEngineThread::extractResult(QString one, QString two)
     if(this->_results.contains(p))
         return 0;
     unsigned r = this->_results[p];
-    this->_results.remove(p);
+//    this->_results.remove(p);
     return r;
 }
 
 void FuzzyEngineThread::countFuzzy(QString one, QString two)
 {
+    QPair<QString, QString> pbeg(one, two);
+    if(this->_results.contains(pbeg))
+    {
+	emit fuzzyResult(this->_results[pbeg]);
+	return;
+    }
     if(arr == 0)
        this->initBuff();
     QTextStream given(&one);
