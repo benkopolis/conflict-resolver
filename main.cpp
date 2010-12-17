@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     FuzzyEngineThread fet;
     IniFile::instance()->setFuzzyEngine(&fet);
     fet.buffSize(IniFile::instance()->fbufferX(), IniFile::instance()->fbufferY());
-    fet.start(QThread::NormalPriority);
+//    fet.start(QThread::NormalPriority);
     w.show();
     int res = a.exec();
     IniFile::instance()->setFBufferX(fet.getX());
