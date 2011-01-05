@@ -132,7 +132,7 @@ QString GlossaryFile::correctText(const QString& text)
     return res;
 }
 
-bool GlossaryFile::validateText(const QString& text)
+bool GlossaryFile::validateText(const QString& text, bool* store)
 {
     if(text.isEmpty())
 	return false;
@@ -146,8 +146,18 @@ bool GlossaryFile::validateText(const QString& text)
     nc = GlossaryFile::getCapCount(nonCount, text);
     ac = GlossaryFile::getCapCount(ampCount, text);
     int badness = cc - wc + nc -ac;
+    int validness = badness - text.length()/2;
     if(badness > text.length()/2)
+    {
+	if(store)
+	{
+	    if(cc > text.length()/2 || validness <-5)
+		*store = true;
+	    else
+		*store = false;
+	}
 	return false;
+    }
     return true;
 }
 

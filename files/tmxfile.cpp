@@ -17,8 +17,8 @@ bool TMXFile::processWithTabs(QFile & file)
 	return false;
     if(root.elementsByTagName("body").size() != 1)
 	return false;
-    _version = root.attribute("version", "1.4");
-
+    QString _version = root.attribute("version", "1.4");
+    if(this->validateDocument(root.attribute("version", "1.4")))
     _header = root.firstChildElement("header");
     _body = root.firstChildElement("body");
     if(processHeader() == false)
@@ -47,6 +47,7 @@ bool TMXFile::validateDocument(QString version)
     }
     else
         return false;
+    return true;
 }
 
 TMHeader TMXFile::header() const
@@ -82,8 +83,8 @@ bool TMXFile::processBody(QDomElement body)
     QTime t;
     do {
 	TMXRecord* tmxr = new TMXRecord();
-        tmxr->setSource(tmp.firstChildElement().firstChild().text());
-        tmxr->setTarget(tmp.lastChildElement().firstChild().text());
+	tmxr->setSource(tmp.firstChildElement().firstChildElement().text());
+	tmxr->setTarget(tmp.lastChildElement().firstChildElement().text());
 	tmxr->setSourceCode(tmp.firstChildElement().attribute("xml:lang"));
 	tmxr->setTargetCode(tmp.lastChildElement().attribute("xml:lang"));
         if(this->_langs.contains(tmxr->targetCode()))
@@ -99,5 +100,6 @@ bool TMXFile::processBody(QDomElement body)
         tmxr->setAuthorId(tmp.attribute("usagecount"));
 	tmp = tmp.nextSiblingElement("tu");
     } while (tmp != body.lastChildElement("tu"));
+    return true;
 }
 

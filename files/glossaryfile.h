@@ -32,7 +32,7 @@ public:
     inline unsigned allCount() const { return _all; }
 
     static QString correctText(const QString& text);
-    static bool validateText(const QString& text);
+    static bool validateText(const QString& text, bool* store = 0);
     static QString removeMultiple(const QString& text);
     static int getCapCount(const QRegExp& r, const QString& t);
     static QString replaceSplitters(const QString& word);
