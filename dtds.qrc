@@ -4,5 +4,9 @@
         <file>tmx12.dtd</file>
         <file>tmx13.dtd</file>
         <file>tmx14.dtd</file>
+        <file>tmx11.xsd</file>
+        <file>tmx13.xsd</file>
+        <file>tmx12.xsd</file>
+        <file>tmx14.xsd</file>
     </qresource>
 </RCC>
