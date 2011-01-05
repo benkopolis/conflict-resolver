@@ -1,6 +1,7 @@
 #include "conflictswidget.h"
 #include <QLabel>
-
+#include <QApplication>
+#include <QDesktopWidget>
 
 ConflictsWidget::ConflictsWidget(QWidget *parent) :
     QWidget(parent)
@@ -11,6 +12,8 @@ ConflictsWidget::ConflictsWidget(QWidget *parent) :
     _nextButton = new QPushButton(this);
     _nextButton->setText("Nastepny");
     sa = new QScrollArea(this);
+    sa->setMaximumSize(QApplication::desktop()->screenGeometry().size().width()-200,
+                       QApplication::desktop()->screenGeometry().size().height()-200);
     _gd = new QGridLayout(this);
     _gd->addWidget(sa, 1, 0, 7, 4);
     initLayout(_gd);

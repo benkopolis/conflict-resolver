@@ -2,6 +2,7 @@
 #include <QTextStream>
 #include <QRegExp>
 #include <QStringList>
+#include <QDebug>
 
 FuzzyEngineThread::FuzzyEngineThread(QObject *parent) :
     QThread(parent)
@@ -19,8 +20,8 @@ FuzzyEngineThread::FuzzyEngineThread(uint x, uint y, QObject *parent) :
 unsigned FuzzyEngineThread::extractResult(QString one, QString two)
 {
     QPair<QString, QString> p(one, two);
-    if(this->_results.contains(p))
-        return 0;
+    if(this->_results.contains(p) == false)
+        this->countFuzzy(one, two);;
     unsigned r = this->_results[p];
 //    this->_results.remove(p);
     return r;
@@ -71,7 +72,8 @@ void FuzzyEngineThread::countFuzzy(QString one, QString two)
     float avg = iwCount + gwCount;
     float tmp;
     avg = avg / 2;
-    tmp = (avg - res)/avg;
+    tmp = (avg - (float)res)/avg;
+    qDebug() << "Tmp result: " << tmp;
     res = tmp*100;
     emit fuzzyResult(res);
     QPair<QString, QString> p(one, two);

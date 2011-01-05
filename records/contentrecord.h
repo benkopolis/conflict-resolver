@@ -25,8 +25,7 @@ public:
     inline QString source() const { return _source.base(); };
     inline void setSource(const QString & source ) { _source = FuzzyStrings(source); };
     inline QString target() const { return _target.base(); };
-    inline void setTarget( const QString & target ) { qDebug() << "BEFORE: "<< _target.base(); _target = FuzzyStrings(target);
-	qDebug() << "AFTER: " << _target.base();};
+    inline void setTarget( const QString & target ) { _target = FuzzyStrings(target); };
 
     inline FuzzyStrings sourceF() const { return _source; };
     inline void setSourceF(const QString & source ) { _source = (source); };
