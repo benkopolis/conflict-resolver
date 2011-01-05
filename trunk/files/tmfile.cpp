@@ -53,6 +53,7 @@ bool  TMFile::processWithTabs(QFile & file) {
     QDate d;
     QTime t;
     QRegExp rexp(IniFile::instance()->regex(), Qt::CaseInsensitive);
+    bool store = true;
     if(IniFile::instance()->regex().startsWith("(?:") == false)
     {
         rexp.setPattern("(?:[0-9]{8,8}(~|=)[0-9]{6,6}\t*.*\t[0-9]{1,}\t.*\t.*\t.*)");
@@ -61,6 +62,7 @@ bool  TMFile::processWithTabs(QFile & file) {
     QChar tab('\t'), nl('\n'), tempChar;
     while(!f.atEnd()) { // czytaj linie w pliku
 	QString line(f.readLine());
+	line.remove(QRegExp("\\s{12,}"));
 	if(line.contains(rexp) == false) {
 	    dstream << line << endl;
 	    ++_corrupted;
@@ -73,6 +75,7 @@ bool  TMFile::processWithTabs(QFile & file) {
 	    dstream << line << endl;
 	    continue;
 	}
+//	delete tmr;
 	tmr = new TMRecord(this);
 	tmr->setDate(d);
 	tmr->setTime(t);
@@ -113,9 +116,10 @@ bool  TMFile::processWithTabs(QFile & file) {
 	} while(tempChar != tab);
 	if(con) continue;
 	text = correctText(text);
-	if(validateText(text) == false) {
+	if(validateText(text, &store) == false) {
 	    ++_corrupted;
-	    dstream << line << endl;
+	    if(store == true)
+		dstream << line << endl;
 	    text.clear();
 	    continue;
 	}
@@ -141,9 +145,10 @@ bool  TMFile::processWithTabs(QFile & file) {
 	} while(iline.atEnd() == false);
 	if(con) continue;
 	text = correctText(text);
-	if(validateText(text) == false) {
+	if(validateText(text, &store) == false) {
 	    ++_corrupted;
-	    dstream << line << endl;
+	    if(store == true)
+		dstream << line << endl;
 	    text.clear();
 	    continue;
 	}
