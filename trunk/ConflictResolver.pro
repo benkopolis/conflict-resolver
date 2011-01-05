@@ -48,7 +48,8 @@ SOURCES += main.cpp \
     commons/error.cpp \
     commons/errormanager.cpp \
     owngui/multiplecontentwidget.cpp \
-    engine/fuzzyenginethread.cpp
+    engine/fuzzyenginethread.cpp \
+    engine/simplehandler.cpp
 HEADERS += mainwindow.h \
     contentmanagerwindow.h \
     conflictresolverwindow.h \
@@ -83,7 +84,8 @@ HEADERS += mainwindow.h \
     commons/error.h \
     commons/errormanager.h \
     owngui/multiplecontentwidget.h \
-    engine/fuzzyenginethread.h
+    engine/fuzzyenginethread.h \
+    engine/simplehandler.h
 FORMS += mainwindow.ui \
     contentmanagerwindow.ui \
     conflictresolverwindow.ui \
