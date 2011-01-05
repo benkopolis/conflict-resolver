@@ -64,7 +64,6 @@ void ContentRecord::countDrawDate(const QFontMetrics& metrics, const QRect& size
     QRect f = _metrics.boundingRect(source());
     int charWidth = f.width() / source().length();
     int charsInLine = size.width() / charWidth;
-    qDebug() << "w: " << size.width() << endl;
     QRect p;
     p.setY(offsetFromTop - f.height());
     p.setWidth(size.width());
@@ -85,13 +84,11 @@ void ContentRecord::makeLists(QString tmp, QRect p, int lineH, int charsInLine,
 	if(tmp.length() > charsInLine) {
 	    _splitted.push_back(tmp.mid(0, charsInLine));
 	    r = p;
-	    qDebug() << "ML: " << "x " << p.x() << "y " << p.y() << "w " << p.width() << "h " << p.height()<< endl;
 	    _coloringRects.push_back(r);
 	} else {
 	    _splitted.push_back(tmp);
 	    p.setWidth(_metrics.boundingRect(tmp).width());
 	    r = p;
-	    qDebug() << "ML: " << "x " << p.x() << "y " << p.y() << "w " << p.width() << "h " << p.height()<< endl;
 	    _coloringRects.push_back(r);
 	    break;
 	}

@@ -10,7 +10,7 @@
 #include <QDataWidgetMapper>
 #include <QGridLayout>
 #include <QScrollArea>
-
+#include <QApplication>
 #include "owngui/multiplecontentwidget.h"
 
 

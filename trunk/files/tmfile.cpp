@@ -55,7 +55,7 @@ bool  TMFile::processWithTabs(QFile & file) {
     QRegExp rexp(IniFile::instance()->regex(), Qt::CaseInsensitive);
     if(IniFile::instance()->regex().startsWith("(?:") == false)
     {
-	rexp.setPattern("(?:[0-9]{8,8}~[0-9]{6,6}\t*.*\t[0-9]{1,}\t.*\t.*\t.*)");
+        rexp.setPattern("(?:[0-9]{8,8}(~|=)[0-9]{6,6}\t*.*\t[0-9]{1,}\t.*\t.*\t.*)");
         IniFile::instance()->setRegex(rexp.pattern());
     }
     QChar tab('\t'), nl('\n'), tempChar;
@@ -136,9 +136,6 @@ bool  TMFile::processWithTabs(QFile & file) {
 	    text = text.append(temp);
 	    iline >> tempChar;
 	    if(tempChar == tab){
-//		++_corrupted;
-//		dstream << line << endl;
-//		con = true;
 		break;
 	    }
 	} while(iline.atEnd() == false);

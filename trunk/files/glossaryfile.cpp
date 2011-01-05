@@ -129,7 +129,6 @@ QString GlossaryFile::correctText(const QString& text)
     }
     res = res.trimmed();
     res.replace(QRegExp("(?:\\s{2,})"), QString(" "));
-    qDebug() << "out: " << res;
     return res;
 }
 

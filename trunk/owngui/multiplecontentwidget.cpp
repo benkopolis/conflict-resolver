@@ -3,6 +3,7 @@
 #include <QVBoxLayout>
 #include <QDebug>
 
+
 Proxy::Proxy(QObject *parent = 0):
 	QObject(parent)
 {

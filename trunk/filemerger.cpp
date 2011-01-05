@@ -47,17 +47,6 @@ GlossaryFile* FileMerger::mergeFiles(GlossaryFile* one, GlossaryFile* two) const
     r << one->header().writeHeader() << endl;
     r << ones;
     r << twos;
-//    QFile onef("one.txt");
-//    onef.open(QIODevice::Append | QIODevice::WriteOnly);
-//    QTextStream sonef(&onef);
-//    sonef << one->header().writeHeader() << endl;
-    //sonef << ones;
-//    QFile twof("two.txt");
-//    twof.open(QIODevice::Append | QIODevice::WriteOnly);
-//    QTextStream stwof(&twof);
-//    stwof << twos;
-//    onef.close();
-//    twof.close();
     QString temp_file_name("Zby_TMP_F");
     temp_file_name.append(QDateTime::currentDateTime().toString("d.M.yy.Hmsz"));
     QFile temp_file(temp_file_name);
@@ -127,6 +116,8 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
                     break;
                 ContentRecord* rinner = inner.value();
                 ContentRecord* router = outer.value();
+                qDebug() << "Podobienstwo: " << rinner->sourceF().similarity(router->sourceF())
+                        << " prog: " << SIMVAL;
 		if(rinner->sourceF().similarity(router->sourceF()) > SIMVAL)
 		{
 		    ConflictRecord* conr = new ConflictRecord(it);
@@ -183,7 +174,6 @@ void FileMerger::findInnerConflicts(GlossaryFile* it)
 void FileMerger::findDuplicated(const FuzzyStrings& key, GlossaryFile * it)
 {
     const QList<ContentRecord* > vals = it->_content->values(key);
-    qDebug() << "ilosc tych samych wartosci: " << vals.size();
     QMultiHash<FuzzyStrings, ContentRecord* > toRemove;
     for(QList<ContentRecord* >::const_iterator ii = vals.begin(); ii != vals.end(); ++ii)
     {
@@ -322,3 +312,16 @@ void FileMerger::findConflictsInContext(GlossaryFile* it, GlossaryFile* context)
 //                        ++_fuzzyCount;
 //                    }
 //                }
+
+//
+//    QFile onef("one.txt");
+//    onef.open(QIODevice::Append | QIODevice::WriteOnly);
+//    QTextStream sonef(&onef);
+//    sonef << one->header().writeHeader() << endl;
+    //sonef << ones;
+//    QFile twof("two.txt");
+//    twof.open(QIODevice::Append | QIODevice::WriteOnly);
+//    QTextStream stwof(&twof);
+//    stwof << twos;
+//    onef.close();
+//    twof.close();
