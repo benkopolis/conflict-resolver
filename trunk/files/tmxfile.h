@@ -23,6 +23,7 @@ protected:
 
     virtual bool processHeader();
     virtual bool processBody(QDomElement body);
+    virtual bool validateDocument(QString version);
 
 private:
 
@@ -30,6 +31,7 @@ private:
     TMHeader _tmxHeader;
     QDomElement _body;
     QDomElement _header;
+    QHash<QString, int> _langs;
 };
 
 #endif // TMXFILE_H

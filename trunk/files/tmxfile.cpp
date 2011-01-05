@@ -17,6 +17,8 @@ bool TMXFile::processWithTabs(QFile & file)
 	return false;
     if(root.elementsByTagName("body").size() != 1)
 	return false;
+    _version = root.attribute("version", "1.4");
+
     _header = root.firstChildElement("header");
     _body = root.firstChildElement("body");
     if(processHeader() == false)
@@ -24,6 +26,27 @@ bool TMXFile::processWithTabs(QFile & file)
     if(processBody(_body) == false)
 	return false;
     return true;
+}
+
+bool TMXFile::validateDocument(QString version)
+{
+    if(QString::compare(version, "1.4") == 0)
+    {
+
+    }
+    else if (QString::compare(version, "1.3") == 0)
+    {
+
+    }
+    else if (QString::compare(version, "1.2") == 0)
+    {
+
+    }
+    else if (QString::compare(version, "1.1") == 0)
+    {
+    }
+    else
+        return false;
 }
 
 TMHeader TMXFile::header() const
@@ -54,12 +77,26 @@ bool TMXFile::processHeader()
 bool TMXFile::processBody(QDomElement body)
 {
     QDomElement tmp = body.firstChildElement("tu");
+    QString date;
+    QDate d;
+    QTime t;
     do {
 	TMXRecord* tmxr = new TMXRecord();
-	tmxr->setSource(tmp.firstChildElement().text());
-	tmxr->setTarget(tmp.lastChildElement().text());
+        tmxr->setSource(tmp.firstChildElement().firstChild().text());
+        tmxr->setTarget(tmp.lastChildElement().firstChild().text());
 	tmxr->setSourceCode(tmp.firstChildElement().attribute("xml:lang"));
 	tmxr->setTargetCode(tmp.lastChildElement().attribute("xml:lang"));
+        if(this->_langs.contains(tmxr->targetCode()))
+            this->_langs[tmxr->targetCode()] += 1;
+        else
+            this->_langs.insert(tmxr->targetCode(), 1);
+        date = tmp.attribute("creationdate");
+        date.remove(QRegExp("[A-Z]"));
+        if(isDateTime(date, &d, &t) == false)
+            return false;
+        tmxr->setDate(d); tmxr->setTime(t);
+        tmxr->setAuthor(tmp.attribute("creationid"));
+        tmxr->setAuthorId(tmp.attribute("usagecount"));
 	tmp = tmp.nextSiblingElement("tu");
     } while (tmp != body.lastChildElement("tu"));
 }
