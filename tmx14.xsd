@@ -1,0 +1,251 @@
+<schema
+  xmlns='http://www.w3.org/2000/10/XMLSchema'
+  targetNamespace='http://www.w3.org/namespace/'
+  xmlns:t='http://www.w3.org/namespace/'>
+
+ <element name='tmx'>
+  <complexType>
+   <sequence>
+    <element ref='t:header'/>
+    <element ref='t:body'/>
+   </sequence>
+   <attribute name='version' type='string' use='fixed' value='1.4'/>
+  </complexType>
+ </element>
+
+ <element name='header'>
+  <complexType>
+   <choice minOccurs='0' maxOccurs='unbounded'>
+    <element ref='t:note'/>
+    <element ref='t:prop'/>
+    <element ref='t:ude'/>
+   </choice>
+   <attribute name='creationtool' type='string' use='required'/>
+   <attribute name='creationtoolversion' type='string' use='required'/>
+   <attribute name='segtype' use='required'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='block'/>
+      <enumeration value='paragraph'/>
+      <enumeration value='sentence'/>
+      <enumeration value='phrase'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='o-tmf' type='string' use='required'/>
+   <attribute name='adminlang' type='string' use='required'/>
+   <attribute name='srclang' type='string' use='required'/>
+   <attribute name='datatype' type='string' use='required'/>
+   <attribute name='o-encoding' type='string' use='optional'/>
+   <attribute name='creationdate' type='string' use='optional'/>
+   <attribute name='creationid' type='string' use='optional'/>
+   <attribute name='changedate' type='string' use='optional'/>
+   <attribute name='changeid' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='body'>
+  <complexType>
+   <sequence>
+    <element ref='t:tu' minOccurs='0' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='note'>
+  <complexType mixed='true'>
+   <attribute name='o-encoding' type='string' use='optional'/>
+   <attribute name='xml:lang' type='string' use='optional'/>
+   <attribute name='lang' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='ude'>
+  <complexType>
+   <sequence>
+    <element ref='t:map' maxOccurs='unbounded'/>
+   </sequence>
+   <attribute name='name' type='string' use='required'/>
+   <attribute name='base' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='map'>
+  <complexType>
+   <attribute name='unicode' type='string' use='required'/>
+   <attribute name='code' type='string' use='optional'/>
+   <attribute name='ent' type='string' use='optional'/>
+   <attribute name='subst' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='prop'>
+  <complexType mixed='true'>
+   <attribute name='type' type='string' use='required'/>
+   <attribute name='xml:lang' type='string' use='optional'/>
+   <attribute name='o-encoding' type='string' use='optional'/>
+   <attribute name='lang' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='tu'>
+  <complexType>
+   <sequence>
+    <choice minOccurs='0' maxOccurs='unbounded'>
+     <element ref='t:note'/>
+     <element ref='t:prop'/>
+    </choice>
+    <element ref='t:tuv' maxOccurs='unbounded'/>
+   </sequence>
+   <attribute name='tuid' type='string' use='optional'/>
+   <attribute name='o-encoding' type='string' use='optional'/>
+   <attribute name='datatype' type='string' use='optional'/>
+   <attribute name='usagecount' type='string' use='optional'/>
+   <attribute name='lastusagedate' type='string' use='optional'/>
+   <attribute name='creationtool' type='string' use='optional'/>
+   <attribute name='creationtoolversion' type='string' use='optional'/>
+   <attribute name='creationdate' type='string' use='optional'/>
+   <attribute name='creationid' type='string' use='optional'/>
+   <attribute name='changedate' type='string' use='optional'/>
+   <attribute name='segtype' use='optional'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='block'/>
+      <enumeration value='paragraph'/>
+      <enumeration value='sentence'/>
+      <enumeration value='phrase'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='changeid' type='string' use='optional'/>
+   <attribute name='o-tmf' type='string' use='optional'/>
+   <attribute name='srclang' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='tuv'>
+  <complexType>
+   <sequence>
+    <choice minOccurs='0' maxOccurs='unbounded'>
+     <element ref='t:note'/>
+     <element ref='t:prop'/>
+    </choice>
+    <element ref='t:seg'/>
+   </sequence>
+   <attribute name='xml:lang' type='string' use='required'/>
+   <attribute name='o-encoding' type='string' use='optional'/>
+   <attribute name='datatype' type='string' use='optional'/>
+   <attribute name='usagecount' type='string' use='optional'/>
+   <attribute name='lastusagedate' type='string' use='optional'/>
+   <attribute name='creationtool' type='string' use='optional'/>
+   <attribute name='creationtoolversion' type='string' use='optional'/>
+   <attribute name='creationdate' type='string' use='optional'/>
+   <attribute name='creationid' type='string' use='optional'/>
+   <attribute name='changedate' type='string' use='optional'/>
+   <attribute name='o-tmf' type='string' use='optional'/>
+   <attribute name='changeid' type='string' use='optional'/>
+   <attribute name='lang' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='seg'>
+  <complexType mixed='true'>
+   <choice minOccurs='0' maxOccurs='unbounded'>
+    <element ref='t:bpt'/>
+    <element ref='t:ept'/>
+    <element ref='t:ph'/>
+    <element ref='t:it'/>
+    <element ref='t:hi'/>
+    <element ref='t:ut'/>
+   </choice>
+  </complexType>
+ </element>
+
+ <element name='bpt'>
+  <complexType mixed='true'>
+   <sequence minOccurs='0' maxOccurs='unbounded'>
+    <element ref='t:sub'/>
+   </sequence>
+   <attribute name='i' type='string' use='required'/>
+   <attribute name='x' type='string' use='optional'/>
+   <attribute name='type' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='ept'>
+  <complexType mixed='true'>
+   <sequence minOccurs='0' maxOccurs='unbounded'>
+    <element ref='t:sub'/>
+   </sequence>
+   <attribute name='i' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='sub'>
+  <complexType mixed='true'>
+   <choice minOccurs='0' maxOccurs='unbounded'>
+    <element ref='t:bpt'/>
+    <element ref='t:ept'/>
+    <element ref='t:it'/>
+    <element ref='t:ph'/>
+    <element ref='t:hi'/>
+    <element ref='t:ut'/>
+   </choice>
+   <attribute name='datatype' type='string' use='optional'/>
+   <attribute name='type' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='it'>
+  <complexType mixed='true'>
+   <sequence minOccurs='0' maxOccurs='unbounded'>
+    <element ref='t:sub'/>
+   </sequence>
+   <attribute name='pos' use='required'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='begin'/>
+      <enumeration value='end'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='x' type='string' use='optional'/>
+   <attribute name='type' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='ph'>
+  <complexType mixed='true'>
+   <sequence minOccurs='0' maxOccurs='unbounded'>
+    <element ref='t:sub'/>
+   </sequence>
+   <attribute name='x' type='string' use='optional'/>
+   <attribute name='assoc' type='string' use='optional'/>
+   <attribute name='type' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='hi'>
+  <complexType mixed='true'>
+   <choice minOccurs='0' maxOccurs='unbounded'>
+    <element ref='t:bpt'/>
+    <element ref='t:ept'/>
+    <element ref='t:it'/>
+    <element ref='t:ph'/>
+    <element ref='t:hi'/>
+    <element ref='t:ut'/>
+   </choice>
+   <attribute name='x' type='string' use='optional'/>
+   <attribute name='type' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='ut'>
+  <complexType mixed='true'>
+   <sequence minOccurs='0' maxOccurs='unbounded'>
+    <element ref='t:sub'/>
+   </sequence>
+   <attribute name='x' type='string' use='optional'/>
+  </complexType>
+ </element>
+</schema>
