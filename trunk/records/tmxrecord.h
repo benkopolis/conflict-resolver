@@ -11,6 +11,10 @@ Q_OBJECT
 public:
     explicit TMXRecord(QObject *parent = 0);
 
+    virtual QString toListString() const;
+    virtual QString toRecordString() const;
+    virtual QString toReversedRecordString() const;
+
 signals:
 
 public slots:

@@ -23,6 +23,8 @@ public:
     bool operator == (const bool& another) const;
     Error& operator = (const Error& another);
 
+    QString serializeToJson();
+
     inline bool isError() const { return _error; }
     inline void setError(bool err) { _error = err; }
 

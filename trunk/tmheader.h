@@ -25,6 +25,9 @@ public:
     inline QString sourceCode() const { return _sourceCode; }
     inline QString targetCode() const { return _targetCode; }
 
+    inline void setSourceCode(const QString& c) { _sourceCode = c; }
+    inline void setTargetCode(const QString& c) { _targetCode = c; }
+
     inline void setRecordCount(const unsigned rc) { _recordsCount = rc; }
     bool operator != (const TMHeader& another) const;
 
