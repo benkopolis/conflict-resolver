@@ -71,6 +71,8 @@ protected:
     unsigned _lineNumber;
     QFontMetrics _metrics;
 
+    QString _attributes[3];
+
     FuzzyStrings _source;
     FuzzyStrings _target;
     QString _comment;

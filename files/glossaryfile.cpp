@@ -221,7 +221,7 @@ int GlossaryFile::getCapCount(const QRegExp& r, const QString& t)
   *
   */
 bool GlossaryFile::isDateTime(const QString& str, QDate* date, QTime* time) const {
-    if(str.length() < 15)
+    if(str.length() < 14)
 	return false;
     bool ok;
     int y, m, d, h, min, s;
@@ -236,15 +236,30 @@ bool GlossaryFile::isDateTime(const QString& str, QDate* date, QTime* time) cons
 	return false;
     if(date != 0)
 	date->setDate(y, m, d);
-    h = str.mid(9, 2).toInt(&ok, 10);
-    if(ok == false)
-	return false;
-    min = str.mid(11, 2).toInt(&ok, 10);
-    if(ok == false)
-	return false;
-    s = str.mid(13, 2).toInt(&ok, 10);
-    if(ok == false)
-	return false;
+    if(str.contains(QRegExp("(~|=)")))
+    {
+	h = str.mid(9, 2).toInt(&ok, 10);
+	if(ok == false)
+	    return false;
+	min = str.mid(11, 2).toInt(&ok, 10);
+	if(ok == false)
+	    return false;
+	s = str.mid(13, 2).toInt(&ok, 10);
+	if(ok == false)
+	    return false;
+    }
+    else
+    {
+	h = str.mid(8, 2).toInt(&ok, 10);
+	if(ok == false)
+	    return false;
+	min = str.mid(10, 2).toInt(&ok, 10);
+	if(ok == false)
+	    return false;
+	s = str.mid(12, 2).toInt(&ok, 10);
+	if(ok == false)
+	    return false;
+    }
     if(time != 0)
 	time->setHMS(h, min, s);
     return true;

@@ -58,19 +58,21 @@ void MainWindow::changeEvent(QEvent *e)
 void MainWindow::on_startAnalyseing_clicked()
 {
     Error err;
+    int w, h, x, y;
+    this->geometry().getRect(&x, &y, &w, &h);
     if(_filesOpened->filesList().size() == 0) {
 	QMessageBox::critical(this, QString(tr("Uwaga")), QString(tr("Nie wybrano plików do analizy.")));
 	return;
     }
     if(ui->_tmx->isChecked())
     {
+	if(_tmxWindow != 0) {
+	    delete _tmxWindow;
+	    _tmxWindow = 0;
+	}
+	_tmxWindow = new TMXWindow(this);
 	for(QStringList::const_iterator ii = _filesOpened->filesList().begin(); ii != _filesOpened->filesList().end(); ++ii)
 	{
-	    if(_tmxWindow != 0) {
-		delete _tmxWindow;
-		_tmxWindow = 0;
-	    }
-	    _tmxWindow = new TMXWindow(this);
 	    if((err = _tmxWindow->addFile(*ii)) == false)
 	    {
 		QString errmsg; // ("Nie uda³o siê otworzyæ pliku. ");
@@ -85,6 +87,8 @@ void MainWindow::on_startAnalyseing_clicked()
 		QMessageBox::critical(this, QString("Otwieranie pliku"), errmsg);
 	    }
 	}
+	_tmxWindow->setGeometry(x+10, y+20, w, h+50);
+	_tmxWindow->show();
     }
     else
     {
@@ -114,8 +118,6 @@ void MainWindow::on_startAnalyseing_clicked()
 		QMessageBox::critical(this, QString("Otwieranie pliku"), errmsg);
 	    }
 	}
-	int w, h, x, y;
-	this->geometry().getRect(&x, &y, &w, &h);
 	_cmw->setGeometry(x+10, y+20, w, h+50);
 	_cmw->show();
     }

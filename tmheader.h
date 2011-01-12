@@ -28,7 +28,10 @@ public:
     inline void setSourceCode(const QString& c) { _sourceCode = c; }
     inline void setTargetCode(const QString& c) { _targetCode = c; }
 
-    inline void setRecordCount(const unsigned rc) { _recordsCount = rc; }
+    inline void setAtuhors(const QString& auth) { _authors = auth; }
+    inline void setRecordCount(unsigned rc) { _recordsCount = rc; }
+    inline void setDateTime(const QDateTime& dt) { _dt = dt; }
+
     bool operator != (const TMHeader& another) const;
 
 signals:

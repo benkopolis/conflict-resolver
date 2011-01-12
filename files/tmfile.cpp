@@ -62,7 +62,7 @@ Error  TMFile::processWithTabs(QFile & file) {
     QChar tab('\t'), nl('\n'), tempChar;
     while(!f.atEnd()) { // czytaj linie w pliku
 	QString line(f.readLine());
-	line.remove(QRegExp("\\s{12,}"));
+	line.remove(QRegExp("\\s{12,}")); // usuwanie nadmiaru spacji
 	if(line.contains(rexp) == false) {
 	    dstream << line << endl;
 	    ++_corrupted;
@@ -70,38 +70,46 @@ Error  TMFile::processWithTabs(QFile & file) {
 	}
 	QTextStream iline(&line);
 	iline >> temp;
-	if(this->isDateTime(temp, &d, &t) == false) {
+	if(this->isDateTime(temp, &d, &t) == false)
+	{ // wczytywanie daty i jezeli zla to do duties
 	    ++_corrupted;
 	    dstream << line << endl;
 	    continue;
 	}
 //	delete tmr;
+	// tworzenie rekordu
 	tmr = new TMRecord(this);
 	tmr->setDate(d);
 	tmr->setTime(t);
-	iline >> temp;
+	iline >> temp; // czytanie nastepnego slowa po dacie (autor)
 	if(iline.atEnd()){
 	    ++_corrupted;
 	    dstream << line << endl;
 	    continue;
 	}
 	tmr->setAuthor(temp);
-	iline >> temp;
+	iline >> temp; // czytanie nastepnego slowa - ilosc uzyc
 	if(iline.atEnd()){
 	    ++_corrupted;
 	    dstream << line << endl;
 	    continue;
 	}
 	tmr->setAuthorId(temp);
-	iline >> ln1;
+	iline >> ln1; // czytanie kodu jezyka zrodlowego
 	if(iline.atEnd()){
+	    ++_corrupted;
+	    dstream << line << endl;
+	    continue;
+	}
+	if(QString::compare(_rheader.sourceCode().mid(0, 2), ln1.mid(0, 2), Qt::CaseInsensitive) != 0)
+	{ // sprawdzenie czy jezyk zrodlowy zgadza sie z naglowkiem
 	    ++_corrupted;
 	    dstream << line << endl;
 	    continue;
 	}
 	tmr->setSourceCode(ln1);
 	bool con = false;
-	do {
+	do { // czytanie tekstu zrodlowego
 	    if(tempChar != QChar())
 		text = text.append(" ");
 	    iline >> temp;
@@ -115,8 +123,9 @@ Error  TMFile::processWithTabs(QFile & file) {
 	    }
 	} while(tempChar != tab);
 	if(con) continue;
-	text = correctText(text);
-	if(validateText(text, &store) == false) {
+	text = correctText(text); // poprawianie tekstu zrodlowego
+	if(validateText(text, &store) == false)
+	{ // sprawdzenie poprawnosci tekstu zrodlowego
 	    ++_corrupted;
 	    if(store == true)
 		dstream << line << endl;
@@ -125,15 +134,21 @@ Error  TMFile::processWithTabs(QFile & file) {
 	}
 	tmr->setSource(text);
 	text.clear();
-	iline >> ln2;
+	iline >> ln2; // czytanie kodu jezyka docelowego
 	if(iline.atEnd()){
+	    ++_corrupted;
+	    dstream << line << endl;
+	    continue;
+	}
+	if(QString::compare(_rheader.targetCode().mid(0, 2), ln2.mid(0, 2), Qt::CaseInsensitive) != 0)
+	{ // sprawdzenie czy jezyk docelowy zgadza sie z naglowkiem
 	    ++_corrupted;
 	    dstream << line << endl;
 	    continue;
 	}
 	tmr->setTargetCode(ln2);
 	tempChar = QChar();
-	do {
+	do {// wczytywanie tekstu docelowego
 	    if(tempChar != QChar())
 		text = text.append(" ");
 	    iline >> temp;
@@ -142,7 +157,7 @@ Error  TMFile::processWithTabs(QFile & file) {
 	    if(tempChar == tab){
 		break;
 	    }
-	} while(iline.atEnd() == false);
+	} while(tempChar != tab || iline.atEnd() == false);
 	if(con) continue;
 	text = correctText(text);
 	if(validateText(text, &store) == false) {
