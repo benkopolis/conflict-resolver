@@ -5,6 +5,7 @@
 #include <QtXml>
 #include "files/glossaryfile.h"
 #include "records/tmxrecord.h"
+#include <QMultiHash>
 
 class TMXFile : public GlossaryFile
 {
@@ -12,18 +13,21 @@ Q_OBJECT
 public:
     explicit TMXFile(QObject *parent = 0);
 
-    virtual bool processWithTabs(QFile & file) ;
+    virtual Error processWithTabs(QFile & file) ;
     virtual TMHeader header() const;
 
 signals:
 
 public slots:
 
+    virtual bool saveContent(QString file);
+    virtual bool saveReversedContent(QString file);
+
 protected:
 
-    virtual bool processHeader();
-    virtual bool processBody(QDomElement body);
-    virtual bool validateDocument(QString version);
+    virtual Error processHeader(QFile &file);
+    virtual Error processBody(QDomElement body, QFile &file);
+    virtual Error validateDocument(QString version, QFile &file);
 
 private:
 
@@ -31,7 +35,8 @@ private:
     TMHeader _tmxHeader;
     QDomElement _body;
     QDomElement _header;
-    QHash<QString, int> _langs;
+    QHash<QString, QMultiHash<FuzzyStrings, ContentRecord* > * > _langs;
+    TMHeader _rheader;
 };
 
 #endif // TMXFILE_H

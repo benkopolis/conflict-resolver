@@ -1,4 +1,6 @@
 #include "tmxfile.h"
+#include <QXmlSchema>
+#include "tmsaver.h"
 
 TMXFile::TMXFile(QObject *parent) :
     GlossaryFile(parent)
@@ -6,48 +8,85 @@ TMXFile::TMXFile(QObject *parent) :
 }
 
 
-bool TMXFile::processWithTabs(QFile & file)
+Error TMXFile::processWithTabs(QFile & file)
 {
+    Error err;
+    err.addAttribute("file_name", file.fileName());
     QDomElement root = _doc.documentElement();
     if(root.tagName() != "tmx")
-	return false;
+    {
+	err.setErrorMessage("Glowny tag nie nazywa sie tmx.");
+	return err;
+    }
     if(root.hasChildNodes() == false)
-	return false;
+    {
+	err.setErrorMessage("Glowny tag tmx nie posiada tagow podrzednych.");
+	return err;
+    }
     if(root.elementsByTagName("header").size() != 1)
-	return false;
+    {
+	err.setErrorMessage("Glowny tag nie tmx nie posiada tagu podrzednego header lub posiada ich za duzo.");
+	err.addAttribute("header_count", root.elementsByTagName("header").size());
+	return err;
+    }
     if(root.elementsByTagName("body").size() != 1)
-	return false;
-    QString _version = root.attribute("version", "1.4");
-    if(this->validateDocument(root.attribute("version", "1.4")))
+    {
+	err.setErrorMessage("Glowny tag nie tmx nie posiada tagu podrzednego body lub posiada ich za duzo.");
+	err.addAttribute("body_count", root.elementsByTagName("body").size());
+	return err;
+    }
+    if((err = this->validateDocument(root.attribute("version", "1.4"), file)) == false)
+	return err;
     _header = root.firstChildElement("header");
     _body = root.firstChildElement("body");
-    if(processHeader() == false)
-	return false;
-    if(processBody(_body) == false)
-	return false;
-    return true;
+    if((err = processHeader(file)) == false)
+	return err;
+    if((err = processBody(_body, file)) == false)
+	return err;
+    return Error();
 }
 
-bool TMXFile::validateDocument(QString version)
+Error TMXFile::validateDocument(QString version, QFile &file)
 {
+    QXmlSchema schema;
+    QFile f;
+    Error err;
+    err.addAttribute("file_name", file.fileName());
+    err.addAttribute("tmx14", ":/dtd/tmx14.xsd");
+    err.addAttribute("tmx13", ":/dtd/tmx13.xsd");
+    err.addAttribute("tmx12", ":/dtd/tmx12.xsd");
+    err.addAttribute("tmx11", ":/dtd/tmx11.xsd");
     if(QString::compare(version, "1.4") == 0)
-    {
-
-    }
+	f.setFileName(":/dtd/tmx14.xsd");
     else if (QString::compare(version, "1.3") == 0)
-    {
-
-    }
+	f.setFileName(":/dtd/tmx13.xsd");
     else if (QString::compare(version, "1.2") == 0)
-    {
-
-    }
+	f.setFileName(":/dtd/tmx12.xsd");
     else if (QString::compare(version, "1.1") == 0)
-    {
-    }
+	f.setFileName(":/dtd/tmx11.xsd");
     else
-        return false;
-    return true;
+    {
+	err.setErrorMessage("Niepoprawna wersja dokumentu tmx!");
+	return err;
+    }
+    err.addAttribute("tmx_name", f.fileName());
+    if(f.open(QIODevice::ReadOnly) == false)
+    {
+	err.setErrorMessage("Nie udalo sie otworzyc zasobu z definicja schematu tmx.");
+	return err;
+    }
+    if(schema.load(&f ,QUrl::fromLocalFile(f.fileName())) == false)
+    {
+	err.setErrorMessage("Nie udalo sie wczytac schematu - niepoprawny schemat tmx.");
+	return err;
+    }
+    QXmlSchemaValidator validator(schema);
+    if(validator.validate(QUrl::fromLocalFile(file.fileName())) == false)
+    {
+	err.setErrorMessage("Niepoprawny dokument tmx - nie przeszedl walidacji za pomoca schematu.");
+	return err;
+    }
+    return Error();
 }
 
 TMHeader TMXFile::header() const
@@ -55,19 +94,30 @@ TMHeader TMXFile::header() const
     return _tmxHeader;
 }
 
-bool TMXFile::processHeader()
+Error TMXFile::processHeader(QFile &file)
 {
+    Error err;
+    err.addAttribute("file_name", file.fileName());
     if(_header == QDomElement())
-	return false;
+    {
+	err.setErrorMessage("Niepoprawny naglowek - nie zostal wczytany.");
+	return err;
+    }
     QString dt = _header.attribute("creationdate");
     QRegExp dtrex("^[0-9]{8,8}T[0-9]{6,6}Z$");
     if(dt.contains(dtrex) == false)
-	return false;
+    {
+	err.setErrorMessage("Niepoprawna data w naglowku.");
+	return err;
+    }
     dt.remove(QRegExp("[A-Z]"));
     QDate date;
     QTime time;
     if(this->isDateTime(dt, &date, &time) == false);
-	return false;
+    {
+	err.setErrorMessage("Niepoprawna data w naglowku.");
+	return err;
+    }
     QString hh("%");
     hh.append(dt);
     hh.append(QChar('\t'));
@@ -75,7 +125,7 @@ bool TMXFile::processHeader()
     return _tmxHeader.readHeader(hh);
 }
 
-bool TMXFile::processBody(QDomElement body)
+Error TMXFile::processBody(QDomElement body, QFile &file)
 {
     QDomElement tmp = body.firstChildElement("tu");
     QString date;
@@ -87,19 +137,42 @@ bool TMXFile::processBody(QDomElement body)
 	tmxr->setTarget(tmp.lastChildElement().firstChildElement().text());
 	tmxr->setSourceCode(tmp.firstChildElement().attribute("xml:lang"));
 	tmxr->setTargetCode(tmp.lastChildElement().attribute("xml:lang"));
-        if(this->_langs.contains(tmxr->targetCode()))
-            this->_langs[tmxr->targetCode()] += 1;
-        else
-            this->_langs.insert(tmxr->targetCode(), 1);
+	if(this->_langs.contains(tmxr->targetCode()) == false)
+	    this->_langs.insert(tmxr->targetCode(), new QMultiHash<FuzzyStrings, ContentRecord* >());
         date = tmp.attribute("creationdate");
         date.remove(QRegExp("[A-Z]"));
         if(isDateTime(date, &d, &t) == false)
-            return false;
+	{
+	    delete tmxr;
+	    continue;
+	}
         tmxr->setDate(d); tmxr->setTime(t);
         tmxr->setAuthor(tmp.attribute("creationid"));
         tmxr->setAuthorId(tmp.attribute("usagecount"));
+	_content->insert(tmxr->sourceF(), tmxr);
+	this->_langs[tmxr->targetCode()]->insert(tmxr->sourceF(), tmxr);
 	tmp = tmp.nextSiblingElement("tu");
     } while (tmp != body.lastChildElement("tu"));
-    return true;
+    return Error();
+}
+
+/**
+  *
+  */
+bool TMXFile::saveContent(QString file) {
+    bool r=false;
+    TMSaver tms;
+    r = tms.saveContent(file, this->_rheader, *this->_content, this->_all);
+    return r;
+}
+
+/**
+  *
+  */
+bool TMXFile::saveReversedContent(QString file) {
+    bool r=false;
+    TMSaver tms;
+    r = tms.saveReversedContent(file, this->_rheader, *this->_content, this->_all);
+    return r;
 }
 

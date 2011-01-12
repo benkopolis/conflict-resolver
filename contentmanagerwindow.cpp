@@ -18,6 +18,8 @@ ContentManagerWindow::ContentManagerWindow(QWidget *parent) :
     ui->setupUi(this);
     _crw = 0;
     setWindowTitle(QString("TMs & Glossaries Manager::Content Manager Window"));
+    if(parent!=0)
+	this->setMaximumSize(parent->maximumSize());
 }
 
 ContentManagerWindow::ContentManagerWindow(bool fuzzySerach, const QStringList& files, ContentModel::ContentType type, QWidget *parent):
@@ -35,6 +37,8 @@ ContentManagerWindow::ContentManagerWindow(bool fuzzySerach, const QStringList& 
     QObject::connect(this, SIGNAL(requestSaveDump(QString)), _content, SLOT(onRequestSaveDump(QString)));
     QObject::connect(this->_content, SIGNAL(corruptedCount(uint)), this, SLOT(onCorrupted(uint)));
     QObject::connect(_content, SIGNAL(fuzzyCount(uint)), this, SLOT(onFuzzyCount(uint)));
+    if(parent!=0)
+	this->setMaximumSize(parent->maximumSize());
 //    QObject::connect(this->ui->_resolveConflicts, SIGNAL(clicked()), this, SLOT(on__resolveConflicts_clicked()));
 }
 

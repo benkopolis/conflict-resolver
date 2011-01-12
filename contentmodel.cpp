@@ -10,6 +10,7 @@
 #include "tmsaver.h"
 #include "files/tmfile.h"
 
+
 bool operator < (const QList<ContentRecord* >& one, const QList<ContentRecord* >& two) {
     return one.size() < two.size();
 }
@@ -104,14 +105,16 @@ bool ContentModel::setData ( const QModelIndex & index, const QVariant & value, 
 /**
   *
   */
-bool ContentModel::addFile(QString fileName, bool confront) {
+Error ContentModel::addFile(QString fileName, bool confront) {
     QFile file(fileName);
-    bool res = false;
+    Error res;
     _files.append(fileName);
     //qDebug() << "adding new file!" << endl;
     if(file.open(QIODevice::ReadWrite | QIODevice::Text) == false) {
 	//qDebug() << "Nie udalo sie otworzyc pliku" << endl;
-	return false;
+	res.addAttribute("file_name", fileName);
+	res.setErrorMessage("Nie udalo sie otworzyc pliku.");
+	return res;
     }
     GlossaryFile* gf = 0;
     if(_type == TM)
@@ -133,7 +136,11 @@ bool ContentModel::addFile(QString fileName, bool confront) {
         }
 	GlossaryFile *tmp_gf = _merger.mergeFiles(_mainFile, gf);
 	if(tmp_gf == 0)
-	    return false;
+	{
+	    res.addAttribute("file_name", fileName);
+	    res.setErrorMessage("Nie udalo sie zlaczyc zasobow.");
+	    return res;
+	}
 	_mainFile = tmp_gf;
     }
     if(_mainFile != 0)
@@ -145,7 +152,11 @@ bool ContentModel::addFile(QString fileName, bool confront) {
 	_conflicts = _mainFile->conflicts();
     }
     else
-	return false;
+    {
+	res.addAttribute("file_name", fileName);
+	res.setErrorMessage("Nie udalo sie zlaczyc zasobow, brak glownego zlaczenia.");
+	return res;
+    }
     emit totalRecords(_mainFile->allCount());
     emit corruptedCount(_mainFile->corrupted());
     emit fuzzyCount(_merger.fuzzyCount());

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDateTime>
 #include <QStringList>
+#include "commons/error.h"
 
 // Example headers
 // %20100422~120101	%+A!	%TU=00000308	%EN	%Wordfast translation memory version v.5	%PL
@@ -18,7 +19,7 @@ public:
     explicit TMHeader(QObject *parent = 0);
     TMHeader(const TMHeader& another);
 
-    bool readHeader(const QString& h);
+    Error readHeader(const QString& h);
     QString writeHeader();
     QString writeReversedHeader();
     inline QString sourceCode() const { return _sourceCode; }

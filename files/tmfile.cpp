@@ -38,7 +38,7 @@ bool TMFile::saveReversedContent(QString file) {
 /**
   *
   */
-bool  TMFile::processWithTabs(QFile & file) {
+Error  TMFile::processWithTabs(QFile & file) {
     QTextStream f(&file);
     QFile dump("duties.txt"); // TODO - wybor pliku, tak zeby dawalo rade zapisywac na win7
     dump.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
@@ -158,13 +158,13 @@ bool  TMFile::processWithTabs(QFile & file) {
 	++_all;
     }
     dump.close();
-    return true;
+    return Error();
 }
 
 
 /**
   *
   */
-bool TMFile::processHeader() {
+Error TMFile::processHeader() {
     return _rheader.readHeader(_header);
 }
