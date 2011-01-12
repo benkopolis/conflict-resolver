@@ -15,6 +15,7 @@
 #include "tmheader.h"
 #include "files/glossaryfile.h"
 #include "filemerger.h"
+#include "commons/error.h"
 
 
 //////
@@ -42,7 +43,7 @@ public:
       * Dodaje zawartosc pliku, do reszty zawartosci. W zaleznosci od przekazanych do modelu informacji
       * moze byc dokonywana automatyczna filtracja.
       */
-    virtual bool addFile(QString fileName, bool confront=false);
+    virtual Error addFile(QString fileName, bool confront=false);
 
     /**
       * Zapisywanie zawartosci.

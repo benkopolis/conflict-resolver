@@ -16,6 +16,8 @@ ConflictsWidget::ConflictsWidget(QWidget *parent) :
                        QApplication::desktop()->screenGeometry().size().height()-200);
     _gd = new QGridLayout(this);
     _gd->addWidget(sa, 1, 0, 7, 4);
+    sa->sizePolicy().setHorizontalPolicy(QSizePolicy::Expanding);
+    sa->sizePolicy().setVerticalPolicy(QSizePolicy::Expanding);
     initLayout(_gd);
     _index = 0;
     setWindowTitle("Konflikty");
@@ -24,6 +26,8 @@ ConflictsWidget::ConflictsWidget(QWidget *parent) :
     connect(_nextButton, SIGNAL(clicked()), this, SLOT(onNext()));
     connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(onCurrentIndexChanged(int)));
     connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(updateButtons(int)));;
+    if(parent!=0)
+	this->setMaximumSize(parent->maximumSize());
 }
 
 ConflictsWidget::~ConflictsWidget()

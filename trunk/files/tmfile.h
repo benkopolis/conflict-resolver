@@ -10,7 +10,7 @@ Q_OBJECT
 public:
     explicit TMFile(QObject *parent = 0);
 
-    virtual bool processWithTabs(QFile & file) ;
+    virtual Error processWithTabs(QFile & file) ;
     virtual TMHeader header() const;
 
 signals:
@@ -22,7 +22,7 @@ public slots:
 
 protected:
 
-    virtual bool processHeader();
+    virtual Error processHeader();
 
 
     TMHeader _rheader;

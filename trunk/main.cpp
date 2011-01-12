@@ -1,6 +1,7 @@
 #include <QtGui/QApplication>
 #include <QDebug>
 #include <QMultiMap>
+#include <QDesktopWidget>
 #include "mainwindow.h"
 #include "inifile.h"
 #include "tests/Tests.h"
@@ -18,6 +19,7 @@ int main(int argc, char *argv[])
     IniFile::instance()->setIniFileDir("./base.ini");
     IniFile::instance()->readIniFile();
     MainWindow w;
+    w.setMaximumSize(a.desktop()->availableGeometry().size());
     FuzzyEngineThread fet;
     IniFile::instance()->setFuzzyEngine(&fet);
     fet.buffSize(IniFile::instance()->fbufferX(), IniFile::instance()->fbufferY());

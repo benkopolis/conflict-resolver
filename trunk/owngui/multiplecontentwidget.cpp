@@ -86,6 +86,15 @@ void MultipleContentWidget::setupModel(ConflictRecord* data)
 	++rows;
     }
     this->setMinimumHeight(70*rows);
+    this->setMinimumWidth(100);
+}
+
+QSize MultipleContentWidget::sizeHint() const
+{
+    int r = this->_sourceEdits.size();
+    QSize s;
+    s.setHeight(70*r);
+    s.setWidth(200);
 }
 
 void MultipleContentWidget::updateButtons(int row)

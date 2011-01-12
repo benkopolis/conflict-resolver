@@ -41,6 +41,8 @@ public:
 
     inline QVector<QGroupBox* >& radios() { return _radios; }
 
+    virtual QSize sizeHint() const;
+
 public slots:
 
     void setupModel(ConflictRecord* data);

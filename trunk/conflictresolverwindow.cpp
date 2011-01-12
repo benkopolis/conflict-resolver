@@ -10,6 +10,8 @@ ConflictResolverWindow::ConflictResolverWindow(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle(QString("TMs & Glossaries Manager::Conflict Resolver Window"));
     _conflictsWidget = 0;
+    if(parent!=0)
+	this->setMaximumSize(parent->maximumSize());
 }
 
 ConflictResolverWindow::ConflictResolverWindow(ConflictsWidget* cw, ContentModel* model, QWidget *parent):
@@ -28,6 +30,8 @@ ConflictResolverWindow::ConflictResolverWindow(ConflictsWidget* cw, ContentModel
     _conflictsWidget = cw;
     ui->actionNext->setEnabled(cw->nextStatus());
     ui->actionPrevious->setEnabled(cw->prevStatus());
+    if(parent!=0)
+	this->setMaximumSize(parent->maximumSize());
 }
 
 ConflictResolverWindow::~ConflictResolverWindow()

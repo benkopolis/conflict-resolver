@@ -1,6 +1,7 @@
 #include "tmheader.h"
 #include <QTextStream>
 
+
 TMHeader::TMHeader(QObject *parent) :
     QObject(parent)
 {
@@ -41,9 +42,12 @@ bool TMHeader::operator != (const TMHeader& another) const {
 }
 
 
-bool TMHeader::readHeader(const QString &h) {
+Error TMHeader::readHeader(const QString &h) {
+    Error err;
+    err.addAttribute("error_source", h);
     if(this->isDateTime(h) == false) {
-	return false;
+	err.setErrorMessage("Niepoprawna data w naglowku");
+	return err;
     }
     QString hh(h);
     QTextStream in(&hh, QIODevice::ReadOnly | QIODevice::Text);
@@ -62,7 +66,10 @@ bool TMHeader::readHeader(const QString &h) {
     bool ok = false;
     _recordsCount = temp.mid(4, 8).toUInt(&ok);
     if(!ok)
-	return false;
+    {
+	err.setErrorMessage("Zly format liczby rekordow.");
+	return err;
+    }
     in >> _sourceCode;
     tempChar = QChar();
     do {
@@ -77,7 +84,7 @@ bool TMHeader::readHeader(const QString &h) {
 	in >> temp;
 	_rest = _rest.append(temp);
     }
-    return true;
+    return err;
 }
 /*
   %20101019~120420	%User ID,JD,JD jdebowska	%TU=00000000	%PL	%Wordfast TM v.546/00	%EN	%-----------

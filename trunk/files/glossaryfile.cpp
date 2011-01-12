@@ -24,7 +24,7 @@ TMHeader GlossaryFile::header() const
 /**
   *
   */
-bool GlossaryFile::processWithTabs(QFile & file) {
+Error GlossaryFile::processWithTabs(QFile & file) {
     QTextStream f(&file);
     QFile dump("duties.txt"); // TODO - wybor pliku, tak zeby dawalo rade zapisywac na win7
     dump.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
@@ -90,7 +90,7 @@ bool GlossaryFile::processWithTabs(QFile & file) {
 	++_all;
     }
     dump.close();
-    return true;
+    return Error();
 }
 
 /**
@@ -250,7 +250,7 @@ bool GlossaryFile::isDateTime(const QString& str, QDate* date, QTime* time) cons
     return true;
 }
 
-bool GlossaryFile::processHeader()
+Error GlossaryFile::processHeader()
 {
-    return false;
+    return Error();
 }
