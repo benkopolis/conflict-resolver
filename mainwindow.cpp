@@ -2,12 +2,14 @@
 #include <QItemSelection>
 #include <QMessageBox>
 #include <QScrollBar>
+#include <QTextStream>
 #include <QFileInfo>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "filessetdelegate.h"
 #include "inifile.h"
+#include "commons/error.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -27,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this->ui->_files->horizontalScrollBar(), SIGNAL(valueChanged(int)), (FilesSetDelegate*)ui->_files->itemDelegate(), SLOT(onHorizontalOffset(int)));
     QObject::connect(this->ui->_files->verticalScrollBar(), SIGNAL(valueChanged(int)),(FilesSetDelegate*)ui->_files->itemDelegate(), SLOT(onVerticalOffset(int)));
     _cmw = 0;
+    _tmxWindow = 0;
     setWindowTitle(QString("TMs & Glossaries Manager::Main Window"));
 }
 
@@ -54,42 +57,98 @@ void MainWindow::changeEvent(QEvent *e)
 
 void MainWindow::on_startAnalyseing_clicked()
 {
+    Error err;
     if(_filesOpened->filesList().size() == 0) {
 	QMessageBox::critical(this, QString(tr("Uwaga")), QString(tr("Nie wybrano plików do analizy.")));
 	return;
     }
-    if(_cmw != 0) {
-	delete _cmw;
-	_cmw = 0;
+    if(ui->_tmx->isChecked())
+    {
+	for(QStringList::const_iterator ii = _filesOpened->filesList().begin(); ii != _filesOpened->filesList().end(); ++ii)
+	{
+	    if(_tmxWindow != 0) {
+		delete _tmxWindow;
+		_tmxWindow = 0;
+	    }
+	    _tmxWindow = new TMXWindow(this);
+	    if((err = _tmxWindow->addFile(*ii)) == false)
+	    {
+		QString errmsg; // ("Nie uda³o siê otworzyæ pliku. ");
+		QTextStream stream(&errmsg);
+		stream << "Nie uda³o siê otworzyæ pliku " << *ii << endl;
+		stream << "Komunikat o bledzie: " << err.errorMessage() << endl;
+		QJson::Serializer s;
+		if(err.errorAttribs().size()!=0)
+		    stream << "Szczegoly: " << s.serialize(err.errorAttribs()) << endl;
+		else
+		    stream << "Szczegoly: " << "Brak szczegolow" << endl;
+		QMessageBox::critical(this, QString("Otwieranie pliku"), errmsg);
+	    }
+	}
     }
-    if(ui->_tm->isChecked()) {
-        _cmw = new ContentManagerWindow(this->ui->_fuzzySearch->isChecked(), _filesOpened->filesList(), ContentModel::TM, this);
+    else
+    {
+	if(_cmw != 0) {
+	    delete _cmw;
+	    _cmw = 0;
+	}
+	if(ui->_tm->isChecked()) {
+	    _cmw = new ContentManagerWindow(this->ui->_fuzzySearch->isChecked(), _filesOpened->filesList(), ContentModel::TM, this);
+	}
+	else if(ui->_gloss->isChecked()) {
+	    _cmw = new ContentManagerWindow(this->ui->_fuzzySearch->isChecked(), _filesOpened->filesList(), ContentModel::GLOSSARY, this);
+	}
+	for(QStringList::const_iterator ii = _filesOpened->filesList().begin(); ii != _filesOpened->filesList().end(); ++ii) {
+	    //QMessageBox::about(this, QString("Test"), QString("Dodano plik"));
+	    if((err = _cmw->content()->addFile(*ii)) == false)
+	    {
+		QString errmsg; // ("Nie uda³o siê otworzyæ pliku. ");
+		QTextStream stream(&errmsg);
+		stream << "Nie uda³o siê otworzyæ pliku " << *ii << endl;
+		stream << "Komunikat o bledzie: " << err.errorMessage() << endl;
+		QJson::Serializer s;
+		if(err.errorAttribs().size()!=0)
+		    stream << "Szczegoly: " << s.serialize(err.errorAttribs()) << endl;
+		else
+		    stream << "Szczegoly: " << "Brak szczegolow" << endl;
+		QMessageBox::critical(this, QString("Otwieranie pliku"), errmsg);
+	    }
+	}
+	int w, h, x, y;
+	this->geometry().getRect(&x, &y, &w, &h);
+	_cmw->setGeometry(x+10, y+20, w, h+50);
+	_cmw->show();
     }
-    else if(ui->_gloss->isChecked()) {
-        _cmw = new ContentManagerWindow(this->ui->_fuzzySearch->isChecked(), _filesOpened->filesList(), ContentModel::GLOSSARY, this);
-    }
-    for(QStringList::const_iterator ii = _filesOpened->filesList().begin(); ii != _filesOpened->filesList().end(); ++ii) {
-	//QMessageBox::about(this, QString("Test"), QString("Dodano plik"));
-	if(_cmw->content()->addFile(*ii) == false)
-	    QMessageBox::critical(this, QString("Otwieranie pliku"), QString("Nie uda³o siê otworzyæ pliku"));
-    }
-    int w, h, x, y;
-    this->geometry().getRect(&x, &y, &w, &h);
-    _cmw->setGeometry(x+10, y+20, w, h+50);
-    _cmw->show();
 }
 
 void MainWindow::on__openFile_clicked()
 {
-    QStringList files(QFileDialog::getOpenFileNames(this, QString(tr("Choose files.")), IniFile::instance()->lastPath(),
-                                                    "Text files (*.txt);;XML files (*.tmx)"));
-    if(files.isEmpty() == false) {
-	QString example = files.at(0);
-        QFileInfo info(example);
-        IniFile::instance()->setLastPath(info.path());
+    if(ui->_tmx->isChecked())
+    {
+	QString filter("XML files (*.tmx)");
+	QStringList files(QFileDialog::getOpenFileNames(this, QString(tr("Choose files.")), IniFile::instance()->lastPath(),
+							filter));
+	if(files.isEmpty() == false) {
+	    QString example = files.at(0);
+	    QFileInfo info(example);
+	    IniFile::instance()->setLastPath(info.path());
+	}
+	for(QStringList::iterator ii = files.begin(); ii != files.end(); ++ii)
+	    _filesOpened->setData(QModelIndex(), QVariant(*ii));
     }
-    for(QStringList::iterator ii = files.begin(); ii != files.end(); ++ii)
-	_filesOpened->setData(QModelIndex(), QVariant(*ii));
+    else
+    {
+	QString filter("Text files (*.txt)");
+	QStringList files(QFileDialog::getOpenFileNames(this, QString(tr("Choose files.")), IniFile::instance()->lastPath(),
+							filter));
+	if(files.isEmpty() == false) {
+	    QString example = files.at(0);
+	    QFileInfo info(example);
+	    IniFile::instance()->setLastPath(info.path());
+	}
+	for(QStringList::iterator ii = files.begin(); ii != files.end(); ++ii)
+	    _filesOpened->setData(QModelIndex(), QVariant(*ii));
+    }
 }
 
 void MainWindow::on__closeFile_clicked()

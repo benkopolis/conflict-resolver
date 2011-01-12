@@ -35,6 +35,13 @@ bool Error::operator == (const bool& another) const
     return _error != another;
 }
 
+QString Error::serializeToJson()
+{
+    QJson::Serializer s;
+    QVariantMap m = QJson::QObjectHelper::qobject2qvariant(this);
+    return QString(s.serialize(m));
+}
+
 Error& Error::operator = (const Error& another)
 {
     if(this == &another)

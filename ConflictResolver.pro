@@ -49,7 +49,8 @@ SOURCES += main.cpp \
     commons/errormanager.cpp \
     owngui/multiplecontentwidget.cpp \
     engine/fuzzyenginethread.cpp \
-    engine/simplehandler.cpp
+    engine/simplehandler.cpp \
+    tmxwindow.cpp
 HEADERS += mainwindow.h \
     contentmanagerwindow.h \
     conflictresolverwindow.h \
@@ -85,12 +86,14 @@ HEADERS += mainwindow.h \
     commons/errormanager.h \
     owngui/multiplecontentwidget.h \
     engine/fuzzyenginethread.h \
-    engine/simplehandler.h
+    engine/simplehandler.h \
+    tmxwindow.h
 FORMS += mainwindow.ui \
     contentmanagerwindow.ui \
     conflictresolverwindow.ui \
     filtersdialog.ui \
     editdialog.ui \
     glossaryextractordialog.ui \
-    fuzzyoptionsdialog.ui
+    fuzzyoptionsdialog.ui \
+    tmxwindow.ui
 RESOURCES += dtds.qrc

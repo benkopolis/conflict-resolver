@@ -5,6 +5,7 @@
 #include "contentmanagerwindow.h"
 #include "filesset.h"
 #include "filessetdelegate.h"
+#include "tmxwindow.h"
 
 namespace Ui {
     class MainWindow;
@@ -26,6 +27,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     ContentManagerWindow* _cmw;
+    TMXWindow* _tmxWindow;
 
 private slots:
     void on__filesChoosen_doubleClicked(QModelIndex index);

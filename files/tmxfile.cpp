@@ -12,10 +12,12 @@ Error TMXFile::processWithTabs(QFile & file)
 {
     Error err;
     err.addAttribute("file_name", file.fileName());
+    _doc.setContent(&file);
     QDomElement root = _doc.documentElement();
-    if(root.tagName() != "tmx")
+    if(QString::compare(root.tagName(), "tmx", Qt::CaseInsensitive) != 0)
     {
 	err.setErrorMessage("Glowny tag nie nazywa sie tmx.");
+	err.addAttribute("root_tag_name", root.tagName());
 	return err;
     }
     if(root.hasChildNodes() == false)
@@ -162,7 +164,15 @@ Error TMXFile::processBody(QDomElement body, QFile &file)
 bool TMXFile::saveContent(QString file) {
     bool r=false;
     TMSaver tms;
-    r = tms.saveContent(file, this->_rheader, *this->_content, this->_all);
+    foreach(QString k, this->_langs.keys())
+    {
+	QString rf = file;
+	rf.append(k);
+	this->_rheader.setTargetCode(k);
+	r = tms.saveContent(rf, this->_rheader, *(this->_langs.value(k)), this->_all);
+	if(!r)
+	    return false;
+    }
     return r;
 }
 
@@ -172,7 +182,15 @@ bool TMXFile::saveContent(QString file) {
 bool TMXFile::saveReversedContent(QString file) {
     bool r=false;
     TMSaver tms;
-    r = tms.saveReversedContent(file, this->_rheader, *this->_content, this->_all);
+    foreach(QString k, this->_langs.keys())
+    {
+	QString rf = file;
+	rf.append(k);
+	this->_rheader.setTargetCode(k);
+	r = tms.saveReversedContent(rf, this->_rheader, *(this->_langs.value(k)), this->_all);
+	if(!r)
+	    return false;
+    }
     return r;
 }
 
