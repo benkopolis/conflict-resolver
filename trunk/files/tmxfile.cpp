@@ -59,7 +59,7 @@ Error TMXFile::validateDocument(QString version, QFile &file)
     err.addAttribute("tmx12", ":/dtd/tmx12.xsd");
     err.addAttribute("tmx11", ":/dtd/tmx11.xsd");
     if(QString::compare(version, "1.4") == 0)
-	f.setFileName(":/dtd/tmx14.xsd");
+	f.setFileName("tmx14.xsd");
     else if (QString::compare(version, "1.3") == 0)
 	f.setFileName(":/dtd/tmx13.xsd");
     else if (QString::compare(version, "1.2") == 0)
@@ -72,22 +72,22 @@ Error TMXFile::validateDocument(QString version, QFile &file)
 	return err;
     }
     err.addAttribute("tmx_name", f.fileName());
-    if(f.open(QIODevice::ReadOnly) == false)
-    {
-	err.setErrorMessage("Nie udalo sie otworzyc zasobu z definicja schematu tmx.");
-	return err;
-    }
-    if(schema.load(&f ,QUrl::fromLocalFile(f.fileName())) == false)
-    {
-	err.setErrorMessage("Nie udalo sie wczytac schematu - niepoprawny schemat tmx.");
-	return err;
-    }
-    QXmlSchemaValidator validator(schema);
-    if(validator.validate(QUrl::fromLocalFile(file.fileName())) == false)
-    {
-	err.setErrorMessage("Niepoprawny dokument tmx - nie przeszedl walidacji za pomoca schematu.");
-	return err;
-    }
+//    if(f.open(QIODevice::ReadOnly) == false)
+//    {
+//	err.setErrorMessage("Nie udalo sie otworzyc zasobu z definicja schematu tmx.");
+//	return err;
+//    }
+//    if(schema.load(&f ,QUrl::fromLocalFile("tmx14.xsd")) == false)
+//    {
+//	err.setErrorMessage("Nie udalo sie wczytac schematu - niepoprawny schemat tmx.");
+//	return err;
+//    }
+//    QXmlSchemaValidator validator(schema);
+//    if(validator.validate(QUrl::fromLocalFile(file.fileName())) == false)
+//    {
+//	err.setErrorMessage("Niepoprawny dokument tmx - nie przeszedl walidacji za pomoca schematu.");
+//	return err;
+//    }
     return Error();
 }
 
@@ -106,30 +106,37 @@ Error TMXFile::processHeader(QFile &file)
 	return err;
     }
     QString dt = _header.attribute("creationdate");
-    QRegExp dtrex("^[0-9]{8,8}T[0-9]{6,6}Z$");
+    QRegExp dtrex("[0-9]{8,8}T[0-9]{6,6}Z");
     if(dt.contains(dtrex) == false)
     {
 	err.setErrorMessage("Niepoprawna data w naglowku.");
+	err.addAttribute("err_src", dt);
+	err.addAttribute("tag_name", _header.tagName());
 	return err;
     }
     dt.remove(QRegExp("[A-Z]"));
     QDate date;
     QTime time;
-    if(this->isDateTime(dt, &date, &time) == false);
+    bool okdate = this->isDateTime(dt, &date, &time);
+    if(okdate == false)
     {
 	err.setErrorMessage("Niepoprawna data w naglowku.");
+	err.addAttribute("err_src", dt);
+	err.addAttribute("tag_name", _header.tagName());
 	return err;
     }
     QString hh("%");
     hh.append(dt);
     hh.append(QChar('\t'));
+    _rheader.setDateTime(QDateTime(date, time));
 
-    return _tmxHeader.readHeader(hh);
+    return Error();
 }
 
 Error TMXFile::processBody(QDomElement body, QFile &file)
 {
     QDomElement tmp = body.firstChildElement("tu");
+    _rheader.setSourceCode(tmp.firstChildElement().attribute("xml:lang"));
     QString date;
     QDate d;
     QTime t;
@@ -153,7 +160,8 @@ Error TMXFile::processBody(QDomElement body, QFile &file)
         tmxr->setAuthorId(tmp.attribute("usagecount"));
 	_content->insert(tmxr->sourceF(), tmxr);
 	this->_langs[tmxr->targetCode()]->insert(tmxr->sourceF(), tmxr);
-	tmp = tmp.nextSiblingElement("tu");
+	if(tmp != body.lastChildElement("tu"))
+	    tmp = tmp.nextSiblingElement("tu");
     } while (tmp != body.lastChildElement("tu"));
     return Error();
 }
@@ -169,6 +177,7 @@ bool TMXFile::saveContent(QString file) {
 	QString rf = file;
 	rf.append(k);
 	this->_rheader.setTargetCode(k);
+	this->_rheader.setRecordCount(this->_langs.value(k)->size());
 	r = tms.saveContent(rf, this->_rheader, *(this->_langs.value(k)), this->_all);
 	if(!r)
 	    return false;

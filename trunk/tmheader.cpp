@@ -6,6 +6,8 @@ TMHeader::TMHeader(QObject *parent) :
     QObject(parent)
 {
     _recordsCount = 0;
+    _rest = QString("%---58775581");
+    _comment = QString("%Wordfast TM v.546/00");
 }
 
 TMHeader::TMHeader(const TMHeader& another) :
@@ -61,7 +63,7 @@ Error TMHeader::readHeader(const QString &h) {
 	in >> temp;
 	_authors = _authors.append(temp);
 	in >> tempChar;
-    } while(tempChar != tab);
+    } while(tempChar != tab || in.atEnd() == true);
     in >> temp;
     bool ok = false;
     _recordsCount = temp.mid(4, 8).toUInt(&ok);
@@ -79,11 +81,13 @@ Error TMHeader::readHeader(const QString &h) {
 	_comment = _comment.append(temp);
 	in >> tempChar;
     } while(tempChar != tab);
+    _comment = QString("%Wordfast TM v.546/00");
     in >> _targetCode;
     while(in.atEnd() == false) {
 	in >> temp;
 	_rest = _rest.append(temp);
     }
+    _rest = QString("%---58775581");
     return err;
 }
 /*
@@ -110,7 +114,7 @@ QString TMHeader::writeHeader() {
     ret = ret.append(QChar('\t'));
     ret = ret.append(_targetCode);
     ret = ret.append(QChar('\t'));
-    ret = ret.append("%-----------");
+    ret = ret.append("%---58775581");
     return ret;
 }
 
@@ -134,7 +138,7 @@ QString TMHeader::writeReversedHeader() {
     ret = ret.append(QChar('\t'));
     ret = ret.append(_sourceCode); // with this
     ret = ret.append(QChar('\t'));
-    ret = ret.append("%-----------");
+    ret = ret.append("%---58775581");
     return ret;
 }
 
