@@ -24,9 +24,9 @@ signals:
 
 public slots:
 
-    void countFuzzy(QString one, QString two);
-    void buffSize(uint x, uint y);
-    void resetBuff(uint x, uint y, uint newX, uint newY);
+    virtual void countFuzzy(QString one, QString two);
+    virtual void buffSize(uint x, uint y);
+    virtual void resetBuff(uint x, uint y, uint newX, uint newY);
 
 protected:
 
