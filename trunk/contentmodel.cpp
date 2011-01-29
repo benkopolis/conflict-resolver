@@ -129,6 +129,20 @@ Error ContentModel::addFile(QString fileName, bool confront) {
 	_mainFile = gf;
     else
     {
+	res.addAttribute("file_name", fileName);
+	if(_type == TM)
+	{
+	    if(QString::compare(gf->header().sourceCode().mid(1,2), _mainFile->header().sourceCode().mid(1,2)) != 0 ||
+	       QString::compare(gf->header().targetCode().mid(1,2), _mainFile->header().targetCode().mid(1,2)) != 0)
+	    {
+		res.addAttribute("srcCode_newfile", gf->header().sourceCode());
+		res.addAttribute("trgCode_newfile", gf->header().targetCode());
+		res.addAttribute("srcCode_actual", _mainFile->header().sourceCode());
+		res.addAttribute("trgCode_actual", _mainFile->header().targetCode());
+		res.setErrorMessage("Naglowek pliku sie nie zgadza z juz wczytanym, nie mozna ich polaczyc.");
+		return res;
+	    }
+	}
         if(confront == true)
         {
             _merger.findConflictsInContext(_mainFile, gf);
@@ -137,7 +151,6 @@ Error ContentModel::addFile(QString fileName, bool confront) {
 	GlossaryFile *tmp_gf = _merger.mergeFiles(_mainFile, gf);
 	if(tmp_gf == 0)
 	{
-	    res.addAttribute("file_name", fileName);
 	    res.setErrorMessage("Nie udalo sie zlaczyc zasobow.");
 	    return res;
 	}

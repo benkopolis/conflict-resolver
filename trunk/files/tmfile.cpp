@@ -101,7 +101,9 @@ Error  TMFile::processWithTabs(QFile & file) {
 	    dstream << line << endl;
 	    continue;
 	}
-	if(QString::compare(_rheader.sourceCode().mid(0, 2), ln1.mid(0, 2), Qt::CaseInsensitive) != 0)
+	QString wz = _rheader.sourceCode().mid(1, 2);
+	QString wr = ln1.mid(0, 2);
+	if(QString::compare(wz, wr, Qt::CaseInsensitive) != 0)
 	{ // sprawdzenie czy jezyk zrodlowy zgadza sie z naglowkiem
 	    ++_corrupted;
 	    dstream << line << endl;
@@ -140,7 +142,7 @@ Error  TMFile::processWithTabs(QFile & file) {
 	    dstream << line << endl;
 	    continue;
 	}
-	if(QString::compare(_rheader.targetCode().mid(0, 2), ln2.mid(0, 2), Qt::CaseInsensitive) != 0)
+	if(QString::compare(_rheader.targetCode().mid(1, 2), ln2.mid(0, 2), Qt::CaseInsensitive) != 0)
 	{ // sprawdzenie czy jezyk docelowy zgadza sie z naglowkiem
 	    ++_corrupted;
 	    dstream << line << endl;
@@ -157,7 +159,7 @@ Error  TMFile::processWithTabs(QFile & file) {
 	    if(tempChar == tab){
 		break;
 	    }
-	} while(tempChar != tab || iline.atEnd() == false);
+	} while(tempChar != tab && iline.atEnd() == false);
 	if(con) continue;
 	text = correctText(text);
 	if(validateText(text, &store) == false) {

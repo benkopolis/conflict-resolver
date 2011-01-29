@@ -11,8 +11,8 @@ Q_OBJECT
 public:
     explicit FileMerger(QObject *parent = 0);
 
-    void findInnerConflicts(GlossaryFile* it);
-    void findConflictsInContext(GlossaryFile* it, GlossaryFile* context);
+    virtual void findInnerConflicts(GlossaryFile* it);
+    virtual void findConflictsInContext(GlossaryFile* it, GlossaryFile* context);
     inline unsigned duplicatedCount() const { return _duplicatedCount; }
     inline unsigned conflictsCount() const { return _conflictsCount; }
     inline unsigned fuzzyCount() const { return _fuzzyCount; }
@@ -31,7 +31,7 @@ public slots:
       * trzeba pamietac o tym, zeby oba parametry byly tego samego typu - ale moze dzialac chyba tez przy roznych typach,
       * tylko wtedy zrobi sie mieszany plik.
       */
-    GlossaryFile* mergeFiles(GlossaryFile* one, GlossaryFile* two) const;
+    virtual GlossaryFile* mergeFiles(GlossaryFile* one, GlossaryFile* two) const;
 
 private:
 
