@@ -1,0 +1,1 @@
+Project which is ment to upgrade your work with CAT tools such as WordFast Pro. It allows to compare few TMs or Glossaries, resolve conflicts, generate Glossary from TM, merge TMs and manage quality of TMs.
